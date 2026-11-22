@@ -19,3 +19,5 @@ __pycache__/
 .impeccable/review/
 .impeccable/mocks/
 .impeccable/decision/
+
+.claude/

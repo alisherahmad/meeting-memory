@@ -14,7 +14,8 @@ _Last updated: 2026-11-22. Deadline: 2026-11-23._
 - [x] Bounded agent loop with verified `submit_answer`, terminal states, dedup, budgets
 - [x] Brief generator (model prose over a code-selected digest; deterministic fallback)
 - [x] Gold set: 12 questions on 6 teams disjoint from the 25; 36/36 evidence quotes re-verified by code
-- [x] Retrieval eval (BM25): see EVALUATION_REPORT
+- [x] Chunk embeddings: 5,052 chunks in 503 s on CPU (MiniLM, local)
+- [x] Retrieval eval (`evaluation/results/retrieval_eval.json`), gold evidence recall, single query = raw question: k=5 BM25 0.36 / dense 0.33 / hybrid 0.44; k=20 BM25 0.64 / dense 0.61 / hybrid 0.72
 - [x] 43 automated tests passing (no network)
 - [x] Web UI running; empty states inspected at desktop width
 - [x] Git checkpoints

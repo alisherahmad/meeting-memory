@@ -197,6 +197,56 @@ def check_answers(args, settings) -> None:
             print(r)
 
 
+# What each Catalist question exercises (from docs/QUESTION_ANALYSIS.md). Tags only:
+# the expected answers are held back by Catalist and are not reconstructed here.
+CATALIST_TAGS = {
+    "Q01": "change,reason", "Q02": "change,reason", "Q03": "attribution,change", "Q04": "change,numbers",
+    "Q05": "change,attribution", "Q06": "change,attribution,reason", "Q07": "commitment,numbers,attribution",
+    "Q08": "attribution,reason", "Q09": "numbers,attribution,change", "Q10": "reason", "Q11": "commitment,reason",
+    "Q12": "change,reason", "Q13": "change", "Q14": "numbers,reason", "Q15": "numbers,change",
+    "Q16": "attribution,change,numbers", "Q17": "change,numbers", "Q18": "change,attribution",
+    "Q19": "change,attribution", "Q20": "commitment,attribution", "Q21": "commitment,numbers,change",
+    "Q22": "attribution,reason,change", "Q23": "reason,change", "Q24": "change,attribution", "Q25": "reason,change",
+}
+EXPECTED_BEHAVIOUR = ("Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; "
+                      "1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; "
+                      "check later meetings before stating what was final; cite both sides of a change when possible.")
+
+
+def build_cases(args, settings) -> None:
+    store = _store(settings)
+    spec = json.loads(Path(args.questions).read_text(encoding="utf-8"))
+    runs = {r["question_id"]: r for r in json.loads(Path(args.runs).read_text(encoding="utf-8"))}
+    cases = []
+    for q in spec["questions"]:
+        r = runs.get(q["question_id"])
+        actual, checks = None, {}
+        if r:
+            valid = [c for c in r["citations"] if quote_is_valid([t.text for t in store.turns(c["meeting_id"])], c["quote"])
+                     and c["meeting_id"].startswith(q["team"])]
+            sentences = len(_SENT_RE.findall(r["answer"].strip())) or 1
+            checks = {
+                "state": r["state"], "citations": len(r["citations"]), "citations_valid": len(valid),
+                "meetings_cited": sorted({c["meeting_id"] for c in r["citations"]}), "sentences": sentences,
+                "steps": r["steps"], "tool_calls": r["tool_calls"], "cost_usd": r["usage"]["cost_usd"],
+            }
+            checks["auto_pass"] = bool(r["answer"]) and 1 <= len(r["citations"]) <= 3 and len(valid) == len(r["citations"]) and sentences <= 3
+            actual = {"answer": r["answer"], "citations": [{"meeting_id": c["meeting_id"], "quote": c["quote"]} for c in r["citations"]]}
+        cases.append({
+            "case_id": q["question_id"], "team": q["team"], "original_question": q["question"],
+            "tests": CATALIST_TAGS.get(q["question_id"], "").split(","), "expected_behaviour": EXPECTED_BEHAVIOUR,
+            "required_evidence": "at least two meetings of the named team (per questions.json)",
+            "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+            "actual": actual, "automatic_checks": checks,
+            "pass_fail": None if not r else ("pass (automatic checks only)" if checks["auto_pass"] else "fail (automatic checks)"),
+            "failure_explanation": "" if not r or checks["auto_pass"] else "see automatic_checks",
+        })
+    out = EVAL_DIR / "catalist_cases.json"
+    out.write_text(json.dumps(cases, indent=2, ensure_ascii=False), encoding="utf-8")
+    n = sum(1 for c in cases if c["actual"])
+    print(f"{len(cases)} cases ({n} with results, {sum(1 for c in cases if c['pass_fail'] and c['pass_fail'].startswith('pass'))} pass automatic checks) -> {out}")
+
+
 def main(argv=None) -> None:
     p = argparse.ArgumentParser(prog="meeting_memory.evaluate")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -209,9 +259,12 @@ def main(argv=None) -> None:
     c.add_argument("--answers", default=str(PROJECT_ROOT / "answers.json"))
     c.add_argument("--questions", default=str(PROJECT_ROOT / "data" / "questions.json"))
     c.add_argument("-v", "--verbose", action="store_true")
+    b = sub.add_parser("cases")
+    b.add_argument("--questions", default=str(PROJECT_ROOT / "data" / "questions.json"))
+    b.add_argument("--runs", required=True, help="agent_runs.json from an answer-all run")
     args = p.parse_args(argv)
     settings = get_settings()
-    {"build-gold": build_gold, "retrieval": eval_retrieval, "gold": eval_gold, "check-answers": check_answers}[args.cmd](args, settings)
+    {"cases": build_cases, "build-gold": build_gold, "retrieval": eval_retrieval, "gold": eval_gold, "check-answers": check_answers}[args.cmd](args, settings)
 
 
 if __name__ == "__main__":

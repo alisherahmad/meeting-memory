@@ -45,6 +45,8 @@ class Settings:
     llm_request_timeout_s: float = field(default_factory=lambda: float(_env("MM_LLM_TIMEOUT_S", "240")))
     llm_max_retries: int = field(default_factory=lambda: int(_env("MM_LLM_MAX_RETRIES", "4")))
     ingest_concurrency: int = field(default_factory=lambda: int(_env("MM_INGEST_CONCURRENCY", "6")))
+    # Hard stop: no new model calls once the ledger's total spend reaches this (0 = off).
+    max_spend_usd: float = field(default_factory=lambda: float(_env("MM_MAX_SPEND_USD", "0")))
     use_refusal_fallback: bool = field(default_factory=lambda: _env("MM_REFUSAL_FALLBACK", "1") not in ("0", "false", "off"))
 
     def has_llm_credentials(self) -> bool:

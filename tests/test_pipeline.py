@@ -188,3 +188,33 @@ def test_extraction_refusal_retries_on_agent_model(settings):
     assert seen_models == ["claude-haiku-5-5", "claude-opus-5-5", "claude-haiku-5-5"]
     assert rep.extraction_stats["refusal_fallbacks"] == 1
     assert store.meeting_row("ZZ0001a")["extract_model"] == "claude-opus-5-5"
+
+
+def test_spend_cap_blocks_further_calls(settings):
+    from meeting_memory.llm import LLMUnavailable
+
+    store = Store(settings.db_path)
+    settings.max_spend_usd = 0.01
+    store.log_llm_call(purpose="x", model="claude-haiku-5-5", cost_usd=0.02, ok=True)
+    llm = LLM(settings, store, backend=FakeBackend([]))
+    try:
+        llm.create(purpose="t", model="claude-haiku-5-5", effort="low", messages=[])
+        raise AssertionError("expected the cap to stop the call")
+    except LLMUnavailable as e:
+        assert "Spend cap" in str(e)
+
+
+def test_linked_item_is_refiled_into_target_thread(store, meetings):
+    from meeting_memory.extraction import validate_extraction
+
+    a = validate_extraction({"summary": "", "roles": [], "items": [
+        {"kind": "decision", "thread": "new:energy", "topic": "energy source", "relation": "new", "related": [],
+         "statement": "Use solar cells.", "speakers": ["A"], "owner": "", "value": "",
+         "evidence": [{"turn": 3, "quote": "for now we go with solar cells as the energy source"}]}]}, meetings[0], store)
+    store.replace_meeting_memory("ZZ0001a", "", a.items, a.new_threads, a.touched_threads, "h", "m")
+    b = validate_extraction({"summary": "", "roles": [], "items": [
+        {"kind": "decision", "thread": "new:battery", "topic": "battery choice", "relation": "replaces", "related": ["ZZ0001a-001"],
+         "statement": "Battery instead.", "speakers": ["A"], "owner": "", "value": "",
+         "evidence": [{"turn": 3, "quote": "we drop the solar cells and use a rechargeable battery"}]}]}, meetings[1], store)
+    assert b.items[0]["thread_id"] == "ZZ0001a-T01" and b.new_threads == [] and b.touched_threads == ["ZZ0001a-T01"]
+    assert b.stats["rethreaded"] == 1

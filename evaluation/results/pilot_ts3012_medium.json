@@ -1,0 +1,47 @@
+{
+  "meetings_found": 4,
+  "meetings_parsed": 0,
+  "meetings_unchanged": 4,
+  "parse_errors": [],
+  "turns": 1922,
+  "words": 25483,
+  "chunks": 5052,
+  "embedded_chunks": 0,
+  "embedded_items": 0,
+  "embeddings_note": "disabled (MM_EMBEDDINGS=0)",
+  "extracted": [
+    "TS3012a",
+    "TS3012b",
+    "TS3012c",
+    "TS3012d"
+  ],
+  "extraction_skipped": [],
+  "extraction_failed": {},
+  "blocked": [],
+  "extraction_stats": {
+    "items_in": 108,
+    "items_kept": 108,
+    "dropped_kind": 0,
+    "unknown_thread": 30,
+    "dropped_links": 0,
+    "quotes_in": 116,
+    "quotes_exact": 111,
+    "quotes_repaired": 2,
+    "quotes_failed": 3,
+    "items_unverified": 1
+  },
+  "usage": {
+    "input_tokens": 68474,
+    "output_tokens": 58214,
+    "cache_read": 9268,
+    "cache_write": 0,
+    "cost_usd": 0.0361,
+    "calls": 4,
+    "latency_ms": 231343
+  },
+  "seconds": {
+    "parse_index": 0.05,
+    "extract": 231.64,
+    "total": 231.69
+  }
+}

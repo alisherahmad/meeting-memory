@@ -124,6 +124,7 @@ class LLM:
     def create(self, *, purpose: str, ref: str = "", model: str, effort: str, **kwargs: Any) -> tuple[Any, Usage]:
         if self.backend is None:
             raise LLMUnavailable("No ANTHROPIC_API_KEY configured (set it in .env).")
+        self._check_budget()
         kwargs.setdefault("max_tokens", 16000)
         t0 = time.monotonic()
         ok, err, resp = True, None, None
@@ -144,6 +145,16 @@ class LLM:
                     )
                 except Exception:  # ledger must never break a request
                     log.exception("failed to log LLM call")
+
+    def spent_usd(self) -> float:
+        if self.store is None:
+            return 0.0
+        return float(self.store.query("SELECT COALESCE(SUM(cost_usd), 0) c FROM llm_calls")[0]["c"])
+
+    def _check_budget(self) -> None:
+        cap = self.settings.max_spend_usd
+        if cap > 0 and self.spent_usd() >= cap:
+            raise LLMUnavailable(f"Spend cap reached (MM_MAX_SPEND_USD={cap}); no further model calls.")
 
     @staticmethod
     def _usage(model: str, resp: Any, t0: float) -> Usage:

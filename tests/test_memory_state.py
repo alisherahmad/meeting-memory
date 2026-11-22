@@ -60,3 +60,10 @@ def test_render_prior_state_mentions_ids_and_status():
     text = render_prior_state(compute_state(items))
     assert "THREAD T1" in text and "a1 [decision, current] Use solar cells" in text
     assert render_prior_state({}) .startswith("(no earlier")
+
+
+def test_reopen_by_decision_supersedes_but_by_question_only_reopens():
+    items = [item("b1", 2, 0, "decision"), item("c1", 3, 0, "decision", relation="reopens", related=["b1"])]
+    assert statuses(compute_state(items)) == {"b1": "superseded", "c1": "current"}
+    items = [item("b1", 2, 0, "decision"), item("c1", 3, 0, "question", relation="reopens", related=["b1"])]
+    assert statuses(compute_state(items))["b1"] == "reopened"

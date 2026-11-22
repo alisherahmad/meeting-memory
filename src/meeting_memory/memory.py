@@ -101,7 +101,9 @@ def compute_state(items: list[dict], as_of_ordinal: int | None = None) -> dict[s
             elif rel == "answers" and t["kind"] in ("question", "action_item"):
                 new = "answered" if t["kind"] == "question" else "done"
             elif rel == "reopens" and t["kind"] == "decision":
-                new = "reopened"
+                # A later *decision* that reopens an earlier one settles it differently;
+                # a question or objection only puts it back in play.
+                new = "superseded" if it["kind"] == "decision" else "reopened"
             if new:
                 st.status, st.by = new, st.by + [it["item_id"]]
 
@@ -117,7 +119,7 @@ def compute_state(items: list[dict], as_of_ordinal: int | None = None) -> dict[s
 
     threads: dict[str, ThreadState] = {}
     for tid, its in by_thread.items():
-        topic = its[-1]["topic"]
+        topic = its[0]["topic"]  # the topic the thread was created with; later items don't relabel it
         threads[tid] = ThreadState(tid, topic, [status[i["item_id"]] for i in its])
     return threads
 

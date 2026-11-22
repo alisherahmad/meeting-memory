@@ -15,7 +15,7 @@
         <p class="brand-sub">Ask a team's meetings anything. Every answer is quoted from the transcript.</p>
       </div>
     </div>
-    <dl class="status" id="status" aria-live="polite"></dl>
+    <dl class="status" id="status" aria-label="Index status"></dl>
   </header>
 
   <nav class="tabs" role="tablist" aria-label="Views">
@@ -30,8 +30,8 @@
       <div class="ask-grid">
         <form id="ask-form" class="panel" novalidate>
           <label for="q" class="label">Question</label>
-          <textarea id="q" rows="4" maxlength="600" required placeholder="e.g. Team ES2002: what power source did they first agree on, and what did the final design use?"></textarea>
-          <p class="field-error" id="q-error" role="alert" hidden></p>
+          <textarea id="q" rows="4" maxlength="600" required aria-required="true" placeholder="e.g. Team ES2002: what power source did they first agree on, and what did the final design use?"></textarea>
+          <p class="field-error" id="q-error" hidden></p>
           <div class="row">
             <div class="field">
               <label for="ask-team" class="label">Team</label>
@@ -44,9 +44,9 @@
           </div>
           <button type="submit" class="primary" id="ask-btn">Ask</button>
           <h2 class="section-title">Agent steps</h2>
-          <ol id="trace" class="trace" aria-live="polite"><li class="empty">Steps appear here as the agent retrieves and verifies.</li></ol>
+          <ol id="trace" class="trace" aria-label="Agent steps"><li class="empty">Steps appear here as the agent retrieves and verifies.</li></ol>
         </form>
-        <article id="answer" class="panel answer" aria-live="polite">
+        <article id="answer" class="panel answer" aria-label="Answer" aria-busy="false">
           <div class="empty-state">
             <h2>No question yet</h2>
             <p>The agent searches the memory store, checks the transcripts, and only finishes when every quote it cites is found word for word in one speaker turn.</p>
@@ -72,7 +72,7 @@
         </div>
       </div>
       <div id="meetings-strip" class="meetings-strip"></div>
-      <div id="threads" class="threads"></div>
+      <div id="threads" class="threads" aria-busy="false"></div>
     </section>
 
     <!-- BRIEF -->
@@ -89,7 +89,7 @@
         <label class="check"><input type="checkbox" id="brief-llm" checked> Write prose with the model</label>
         <button type="submit" class="primary" id="brief-btn">Write brief</button>
       </form>
-      <article id="brief" class="panel brief">
+      <article id="brief" class="panel brief" aria-label="Brief" aria-busy="false">
         <div class="empty-state">
           <h2>Pre-meeting brief</h2>
           <p>Built only from meetings before the one you prepare for: what is decided, what changed, open actions with owners, and disagreements still open. Each point cites the transcript.</p>
@@ -98,14 +98,17 @@
     </section>
   </main>
 
-  <aside id="drawer" class="drawer" aria-hidden="true" aria-labelledby="drawer-title" role="dialog">
+  <div id="drawer" class="drawer" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="drawer-title">
     <div class="drawer-head">
       <h2 id="drawer-title">Transcript</h2>
       <button class="ghost" id="drawer-close" aria-label="Close transcript">Close</button>
     </div>
-    <div id="drawer-body" class="drawer-body" tabindex="-1"></div>
-  </aside>
+    <div id="drawer-body" class="drawer-body" tabindex="-1" aria-busy="false"></div>
+  </div>
   <div id="scrim" class="scrim" hidden></div>
+  <!-- One polite region for short outcome messages: loading started, answer ready, failures. -->
+  <p id="announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
+  <p id="alerter" class="visually-hidden" role="alert" aria-atomic="true"></p>
   <script src="/static/app.js" type="module"></script>
 </body>
 </html>

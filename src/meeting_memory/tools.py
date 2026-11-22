@@ -123,14 +123,15 @@ TOOL_DEFS: list[dict[str, Any]] = [
     {
         "name": "submit_answer",
         "description": f"Submit the final answer. 1-3 citations; each quote must be at least {MIN_QUOTE_WORDS} words copied exactly from ONE turn of the cited meeting (give the turn number). Quotes are checked by code; if any fail you will be told which.",
+        "strict": True,
         "input_schema": {
             "type": "object",
             "properties": {
                 "answer": {"type": "string", "description": "One to three plain sentences."},
                 "citations": {
-                    "type": "array", "minItems": 1, "maxItems": 3,
+                    "type": "array", "description": "1 to 3 citations (enforced by code; strict schemas cannot express array bounds)",
                     "items": {"type": "object", "properties": {"meeting_id": {"type": "string"}, "turn": {"type": "integer"}, "quote": {"type": "string"}},
-                              "required": ["meeting_id", "quote"], "additionalProperties": False},
+                              "required": ["meeting_id", "turn", "quote"], "additionalProperties": False},
                 },
             },
             "required": ["answer", "citations"], "additionalProperties": False,

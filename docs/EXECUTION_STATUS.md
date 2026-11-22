@@ -3,42 +3,32 @@
 _Last updated: 2026-11-22. Deadline: 2026-11-23._
 
 ## Current phase
-**Stage D → F blocked on one external input: an Anthropic API key.** Everything that doesn't call the model is built, tested and inspected. Memory extraction, the 25 answers, the gold-set score, the TS3012 brief and the measured cost all need the key.
+**G: Delivery.** All P0 requirements have evidence (REQUIREMENTS.md). What's left is the applicant's own: study the code, and record a walkthrough or prepare the live demo.
 
 ## Completed milestones
-- [x] Reconnaissance: PDF (2 pages), zip listed then extracted, `questions.json`, credits; inventory in SOURCE_LEDGER
-- [x] Requirements, question analysis, product spec, architecture, decision log, data flow
-- [x] Parse + index all 138 meetings: 676,745 words, 48,148 turns, 5,052 chunks in ~9 s, no model
-- [x] Memory model (relations → status in code) with `as_of` replay
-- [x] Per-meeting extraction with prior memory as context + code validation and quote verification
-- [x] Bounded agent loop with verified `submit_answer`, terminal states, dedup, budgets
-- [x] Brief generator (model prose over a code-selected digest; deterministic fallback)
-- [x] Gold set: 12 questions on 6 teams disjoint from the 25; 36/36 evidence quotes re-verified by code
-- [x] Chunk embeddings: 5,052 chunks in 503 s on CPU (MiniLM, local)
-- [x] Retrieval eval (`evaluation/results/retrieval_eval.json`), gold evidence recall, single query = raw question: k=5 BM25 0.36 / dense 0.33 / hybrid 0.44; k=20 BM25 0.64 / dense 0.61 / hybrid 0.72
-- [x] 45 automated tests passing (no network)
-- [x] Web UI running; empty states inspected at desktop width
-- [x] Git checkpoints
+- [x] Reconnaissance, source ledger, requirements, question analysis, spec, architecture, decisions, data flow
+- [x] Parse + index 138 meetings (676,745 words) in ~9 s; chunk embeddings in 503 s on CPU
+- [x] Pilot extraction on TS3012 (low vs medium effort measured); prompt + code fixes (re-filing, reopen rule)
+- [x] Full extraction on Haiku 5.5: 138/138 meetings, 3,379 items (98.9% verifiable), $1.11, two passes (rate-limit failures resumed)
+- [x] Gold set: 12 questions, three rounds; final human read 9 correct / 2 mostly / 1 wrong
+- [x] `answers.json`: 25/25 answered, 70/70 citations valid, TS3012 brief 34/34 valid
+- [x] Bugs found and fixed: Q04 submit loop, strict-schema 400, rate limits, format leakage
+- [x] UI inspected with real data (desktop + 375 px), no console errors
+- [x] Evaluation report, write-up, final review, walkthrough, interview prep
+- [x] 55 tests passing; git checkpoints
 
-## Remaining mandatory work (in order, once a key is set)
-1. `python -m meeting_memory ingest --report evaluation/results/ingest_report.json` (full extraction; measures cost/time)
-2. `python -m meeting_memory.evaluate gold` (score, find failures, fix, rerun)
-3. `python -m meeting_memory answer-all` → `answers.json` + TS3012 brief; `evaluate check-answers`
-4. Fill EVALUATION_REPORT (measured numbers, 3 failures), WRITEUP cost section, FINAL_REVIEW
-5. UI inspection with real memory (desktop + mobile)
+## Remaining
+| Item | Owner | Note |
+|---|---|---|
+| Walkthrough recording (3–5 min) or live-demo prep | applicant | Script in INTERVIEW_PREPARATION.md |
+| Reply to Catalist with links | applicant | Decide where to host the repo (private by default; don't publish the transcripts or questions) |
+| Fix role resolution across letter swaps | optional | Design in EVALUATION_REPORT §3 failure 2 |
 
 ## Blockers
-| Blocker | Impact | Smallest decision needed |
-|---|---|---|
-| No `ANTHROPIC_API_KEY` on this machine (no `ant` profile either) | All model-dependent P0 items | Add the key to `.env` |
+None.
 
 ## Failed tests
-None (45/45).
+None (55/55).
 
-## Decisions requiring attention
-- Decided: extraction on `claude-haiku-5-5`, agent and brief on `claude-opus-5-5`. A Haiku refusal retries that meeting on Opus.
-
-## Next three actions
-1. Full ingest with extraction
-2. Gold-set evaluation and failure analysis
-3. Generate `answers.json` and the brief
+## Spend
+$1.49 of the $4.72 balance (cap set at $4.00 in `.env`).

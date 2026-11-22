@@ -25,13 +25,18 @@ Ingest extracts each meeting **once**, in order per team. The extractor sees tha
   2. Speaker letters are not identities (IS1000 swaps C/D between meetings c and d), so roles are resolved per meeting.
   3. CPU embeddings: 5,052 chunks took 503 s, the slowest ingest stage. At scale, embed on GPU or via an API.
   4. A single retrieval pass finds only 44% of gold evidence (k=5, hybrid; BM25 alone 36%). This is the reason for an iterating agent plus a memory layer.
-  5. Operational: the project lives on an external SSD that disconnected mid-run. Per-meeting transactions + idempotent re-runs meant no corruption and no repeated spend.
+  5. Rate limits: 12 parallel extractions × ~14k output tokens each hit 429s (5 of 121 meetings failed, blocking 8 later ones by design). Fix: 30/60/120 s backoff in ingest, then a resume pass at concurrency 4 that skipped finished work (13/13, $0.13).
+  6. Agent loop: a run spent all 14 steps re-sending a malformed `submit_answer` because my error message didn't name the missing field, and truncated (`max_tokens`) tool calls weren't screened. Both fixed; `submit_answer` is now `strict` (whose schema rejects `maxItems`, a 400 caught on a single-question test).
+  7. Operational: the project lives on an external SSD that disconnected mid-run. Per-meeting transactions + idempotent re-runs meant no corruption and no repeated spend.
 
 ## Results (details: EVALUATION_REPORT.md)
-_Filled from measured runs: gold-set score, citation validity on the 25, three failures, cost._
+- **Catalist 25:** 25/25 answered; **70/70 citations verbatim-valid**; every answer 1–3 sentences with 1–3 citations; 23/25 cite ≥2 meetings. $0.041 for all 25, median 10 s each. Correctness is Catalist's to score.
+- **TS3012 brief:** built from meetings a–c only; 4 sections; 34/34 citations valid.
+- **Our 12 checked questions (6 teams not in the 25):** human read **9 correct, 2 mostly correct, 1 wrong**, plus a role error inside one otherwise-correct answer; 100% of citations valid.
+- **Three wrong:** (1) TS3008: "who proposed the base". Extraction merged the PM's "stand it up like a vase" remark into the base proposal, and the agent trusted memory over transcript order. (2) IS1000 meeting d: the extractor carried the previous meeting's letter-to-role mapping across a swap the transcript reveals ("Right, Matthew?"). (3) TS3005: answered the "status before the final meeting" with a true but secondary fact and missed the PM's "unique idea".
 
-## Cost and time for 1,000 meetings
-_Filled from the `llm_calls` ledger of the full run._
+## Cost and time for 1,000 meetings (measured on 134 meetings)
+Extraction: ~15.5k input + ~13.8k output tokens per meeting on Haiku 5.5 = **$0.0082/meeting → ≈ $8.20 per 1,000 (≈ $4.10 with the Batch API)**. Wall clock: one call takes 70–100 s, but teams run in parallel; we sustained ~10 s/meeting at 12 concurrent before hitting rate limits, so **≈ 3 h per 1,000**, bounded by the output-token rate limit. CPU embeddings add ≈ 1 h (minutes on a GPU). Answering costs $0.0016 per question. The entire build, including pilots and three evaluation rounds, cost **$1.49**.
 
 ## What production would need at real scale
 Postgres (FTS + pgvector) instead of SQLite for concurrent writers and ANN search; a job queue with per-team ordering for ingest and the Message Batches API (50% cheaper) for backfills; bounded prior-memory context via retrieval over a team's threads for long series; incremental re-extraction when a transcript is corrected (already cascades per team); auth, tenancy and audit on the API; a regression suite of checked questions run on every prompt or model change; and a human-review queue for low-confidence items (unverified quotes, inferred resolutions).

@@ -1,0 +1,32 @@
+[
+  {
+    "question_id": "Q04",
+    "question": "Team TS3011 chose a combined energy source for their remote. What was the combination, and what happened to it when the costs were added up?",
+    "team": "TS3011",
+    "state": "failed",
+    "answer": "",
+    "citations": [],
+    "steps": 1,
+    "tool_calls": 0,
+    "trace": [
+      {
+        "step": 1,
+        "kind": "error",
+        "name": "",
+        "detail": "Bad request: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': \"tools.5.custom: For 'array' type, property 'maxItems' is not supported\"}, 'request_id': 'req_011ChHr2Jv7fs1PM8iHRPDhP'}",
+        "ms": 0
+      }
+    ],
+    "usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_read": 0,
+      "cache_write": 0,
+      "cost_usd": 0.0,
+      "calls": 0,
+      "latency_ms": 0
+    },
+    "seconds": 1.0,
+    "error": "Bad request: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': \"tools.5.custom: For 'array' type, property 'maxItems' is not supported\"}, 'request_id': 'req_011ChHr2Jv7fs1PM8iHRPDhP'}"
+  }
+]

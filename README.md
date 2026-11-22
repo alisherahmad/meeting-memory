@@ -30,15 +30,15 @@ $env:PYTHONPATH = "src"
 
 | Step | Command | Needs key | Time / cost (measured) |
 |---|---|---|---|
-| Tests (no network) | `python -m pytest -q` | no | ~12 s |
+| Tests (no network) | `python -m pytest -q` | no | ~10 s |
 | Parse + index only | `python -m meeting_memory ingest --no-extract` | no | ~9 s (+ embeddings, see below) |
-| Full ingest (memory extraction) | `python -m meeting_memory ingest --report evaluation/results/ingest_report.json` | yes | see EVALUATION_REPORT |
+| Full ingest (memory extraction) | `python -m meeting_memory ingest --report evaluation/results/ingest_report.json` | yes | ~25 min, ~$1.10 (Haiku 5.5; use `MM_INGEST_CONCURRENCY=4` to avoid rate limits) |
 | Ask one question | `python -m meeting_memory ask "Team ES2002: what power source did they first agree on?"` | yes | |
-| The submission | `python -m meeting_memory answer-all` → `answers.json` (+ TS3012 brief) | yes | |
+| The submission | `python -m meeting_memory answer-all --concurrency 3` → `answers.json` (+ TS3012 brief) | yes | ~2 min, ~$0.05 |
 | Brief only | `python -m meeting_memory brief --team TS3012` (`--no-llm` for the deterministic version) | optional | |
 | Web UI | `python -m meeting_memory serve` → http://127.0.0.1:8765 | for Ask | |
 | Check answers.json like the grader | `python -m meeting_memory.evaluate check-answers -v` | no | |
-| Score our 12 gold questions | `python -m meeting_memory.evaluate gold` | yes | |
+| Score our 12 gold questions | `python -m meeting_memory.evaluate gold --concurrency 3` | yes | ~1 min, ~$0.03 |
 | Retrieval recall (BM25 / dense / hybrid) | `python -m meeting_memory.evaluate retrieval` | no | |
 | Cost ledger | `python -m meeting_memory stats` | no | |
 
@@ -54,13 +54,16 @@ src/meeting_memory/
   agent.py        tools.py                   bounded tool-use agent + read-only tools
   brief.py                                   pre-meeting brief (code picks facts, model writes prose)
   llm.py  ingest.py  cli.py  server.py  static/  evaluate.py
-tests/            45 tests, no network (fake model backend)
+tests/            55 tests, no network (fake model backend)
 evaluation/       gold_set.json (12 checked questions), results/
 docs/             specification, architecture, decisions, evaluation, walkthrough
 ```
 
+## Results at a glance
+25/25 Catalist questions answered with **70/70 citations verbatim-valid**; TS3012 brief with 34/34 valid citations; our 12 hand-checked questions: **9 correct, 2 mostly correct, 1 wrong** (human read); ≈ **$8 per 1,000 meetings** to ingest; the whole build cost **$1.49** on Claude Haiku 5.5. Details and the three failures: [docs/EVALUATION_REPORT.md](docs/EVALUATION_REPORT.md).
+
 ## Known limitations
-See [docs/EVALUATION_REPORT.md](docs/EVALUATION_REPORT.md) and [docs/FINAL_REVIEW.md](docs/FINAL_REVIEW.md). In short: memory quality depends on one extraction pass per meeting; the agent can still choose the wrong passage when several meetings discuss the same topic; the UI has no authentication (local use only).
+See [docs/EVALUATION_REPORT.md](docs/EVALUATION_REPORT.md) and [docs/FINAL_REVIEW.md](docs/FINAL_REVIEW.md). In short: speaker roles can be wrong in meetings where the letters swap (IS1000d); "who first proposed X" can inherit an extraction mistake; memory quality depends on one extraction pass per meeting; the UI has no authentication (local use only).
 
 ## Data
 AMI Meeting Corpus, University of Edinburgh and partners, CC BY 4.0, as reformatted by Catalist. Transcripts, questions and the brief are not committed to this repository.

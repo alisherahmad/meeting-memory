@@ -1,0 +1,1920 @@
+{
+  "summary": {
+    "cases": 12,
+    "mean_fact_recall": 0.917,
+    "mean_fact_recall_excl_ambiguous": 0.932,
+    "all_facts_matched": 8,
+    "answered": 12,
+    "citations_valid_rate": 1.0,
+    "cites_gold_meeting_rate": 1.0,
+    "mean_steps": 4.75,
+    "mean_seconds": 17.3,
+    "total_cost_usd": 0.028,
+    "model": "claude-haiku-5-5",
+    "effort": "medium"
+  },
+  "results": [
+    {
+      "case_id": "G-ES2005-1",
+      "team": "ES2005",
+      "category": "number",
+      "ambiguous": false,
+      "question": "Team ES2005 had a per-unit production cost target from the start of the project. In the final meeting, what did the prototype first come to, what was the target, and how did they get back under budget?",
+      "gold_answer": "The target was 12.50 Euros per unit (half the 25 Euro selling price). In the final meeting the Project Manager (C) said the prototype would cost 14.6 Euros; he suggested flattening the shape, and the Industrial Designer (A) noticed the double-curved case had been entered twice in the cost sheet. Taking out the duplicate brought it to 11.60 Euros, under the 12.50 limit.",
+      "answer": "In the final meeting (ES2005d), Speaker C (Project Manager) reported the prototype's unit cost first came to 14.60 EUR, above the 12.50 EUR production cost target. They got back under budget by removing three costed items, including a duplicate double-curve on the casing, which brought the cost to 11.60 EUR. Flattening the shape was considered but was noted as saving less than hoped.",
+      "state": "answered",
+      "citations": [
+        {
+          "meeting_id": "ES2005d",
+          "quote": "unfortunately the unit we are currently going to produce minus the extra scroll buttons, uh it's gonna cost us fourteen point six Euros.",
+          "turn": 71,
+          "speaker": "C",
+          "time": "00:05:58",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "ES2005d",
+          "quote": "Um okay, so that would take away three, which would give us",
+          "turn": 107,
+          "speaker": "C",
+          "time": "00:08:28",
+          "method": "exact"
+        }
+      ],
+      "score": {
+        "fact_recall": 1.0,
+        "facts": [
+          {
+            "fact": "Production cost target was 12.50 Euros per unit",
+            "matched": "12.50"
+          },
+          {
+            "fact": "Prototype initially costed at 14.6 Euros",
+            "matched": "14.6"
+          },
+          {
+            "fact": "Revised cost was 11.60 Euros",
+            "matched": "11.6"
+          },
+          {
+            "fact": "Saving came from the double-curved case (counted twice / flattening the shape)",
+            "matched": "double-curve"
+          }
+        ],
+        "citations": 2,
+        "citations_valid": 2,
+        "cites_gold_meeting": true,
+        "meetings_cited": [
+          "ES2005d"
+        ]
+      },
+      "steps": 5,
+      "tool_calls": 4,
+      "seconds": 38.17,
+      "usage": {
+        "input_tokens": 12,
+        "output_tokens": 1305,
+        "cache_read": 19182,
+        "cache_write": 7256,
+        "cost_usd": 0.0018,
+        "calls": 5,
+        "latency_ms": 9250
+      },
+      "trace": [
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "list_meetings",
+          "detail": "{\"team\": \"ES2005\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "list_meetings",
+          "detail": "ES2005a (meeting 1, 60 turns) roles: A=User Interface Designer, B=Marketing Expert, C=Project Manager summary: Kick-off meeting for the remote control project. …",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "search_memory",
+          "detail": "{\"query\": \"per-unit production cost target prototype over budget\", \"team\": \"ES2005\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "search_memory",
+          "detail": "ES2005c-002 [figure, noted] thread=ES2005a-T02 (production cost target) speakers=C value=12.50 EUR Production cost must stay within 12.50 EUR per remote, restat…",
+          "ms": 28890
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"ES2005d\", \"start\": 68, \"end\": 112}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[68] 00:05:48 A: Just let it lie down, it wont stand. [69] 00:05:52 C: Um main problem that we have unfortunately being finance. [70] 00:05:57 D: Oh. [71] 00:05…",
+          "ms": 15
+        },
+        {
+          "step": 3,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"ES2005d\", \"start\": 107, \"end\": 120}",
+          "ms": 0
+        },
+        {
+          "step": 3,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[107] 00:08:28 C: No maybe the shift button's stuck in. Um okay, so that would take away three, which would give us [108] 00:08:32 A: Yeah. [109] 00:08:34 B: Mm…",
+          "ms": 0
+        },
+        {
+          "step": 4,
+          "kind": "submit_rejected",
+          "name": "submit_answer",
+          "detail": "citation 3: quote not found verbatim in any single turn of ES2005d (need >= 6 exact words)",
+          "ms": 0
+        },
+        {
+          "step": 5,
+          "kind": "submit_accepted",
+          "name": "submit_answer",
+          "detail": "2 verified citation(s)",
+          "ms": 0
+        }
+      ]
+    },
+    {
+      "case_id": "G-ES2005-2",
+      "team": "ES2005",
+      "category": "decision_change",
+      "ambiguous": false,
+      "question": "In ES2005's second meeting the Industrial Designer assumed the remote would run on ordinary batteries. What energy source did the team end up with, which alternatives were rejected, and who argued for the final choice?",
+      "gold_answer": "In meeting b the Industrial Designer (A) suggested just regular batteries. In meeting c A offered a hand dynamo and solar power; the Marketing Expert Raj (B) argued against both and proposed a rechargeable battery, and the Project Manager (C) backed it with a recharging stand. The final prototype in meeting d has a yellow charging stand.",
+      "answer": "ES2005's team chose a rechargeable battery recharged on a base station that doubles as a stand, rather than the regular batteries Arlo (Industrial Designer) had assumed in meeting 2. The hand-dynamo was rejected because users would have to crank or shake the remote before voice activation, and solar was rejected because the remote would need sunlight and fails on days without sun. Speaker B (Marketing Expert, Raj) argued for the rechargeable battery in meeting ES2005c, and Speaker C (Project Manager) backed him.",
+      "state": "answered",
+      "citations": [
+        {
+          "meeting_id": "ES2005b",
+          "quote": "An energy source which'd probably just be uh your regular batteries",
+          "turn": 157,
+          "speaker": "A",
+          "time": "00:18:24",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "ES2005c",
+          "quote": "I think we should a rechargeable battery will be a good idea. They can they can recharge it.",
+          "turn": 381,
+          "speaker": "B",
+          "time": "00:31:25",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "ES2005c",
+          "quote": "I'm I'm with uh Raj on that, I think, you know",
+          "turn": 384,
+          "speaker": "C",
+          "time": "00:31:33",
+          "method": "exact"
+        }
+      ],
+      "score": {
+        "fact_recall": 1.0,
+        "facts": [
+          {
+            "fact": "Initial assumption was regular batteries",
+            "matched": "regular batter"
+          },
+          {
+            "fact": "Final choice was a rechargeable battery (with charging stand)",
+            "matched": "rechargeable"
+          },
+          {
+            "fact": "Dynamo and solar power were rejected",
+            "matched": "dynamo"
+          },
+          {
+            "fact": "The Marketing Expert (B, Raj) proposed the rechargeable battery",
+            "matched": "marketing"
+          }
+        ],
+        "citations": 3,
+        "citations_valid": 3,
+        "cites_gold_meeting": true,
+        "meetings_cited": [
+          "ES2005b",
+          "ES2005c"
+        ]
+      },
+      "steps": 3,
+      "tool_calls": 4,
+      "seconds": 36.16,
+      "usage": {
+        "input_tokens": 8,
+        "output_tokens": 1247,
+        "cache_read": 6750,
+        "cache_write": 6602,
+        "cost_usd": 0.0015,
+        "calls": 3,
+        "latency_ms": 7061
+      },
+      "trace": [
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "list_meetings",
+          "detail": "{\"team\": \"ES2005\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "list_meetings",
+          "detail": "ES2005a (meeting 1, 60 turns) roles: A=User Interface Designer, B=Marketing Expert, C=Project Manager summary: Kick-off meeting for the remote control project. …",
+          "ms": 15
+        },
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "search_memory",
+          "detail": "{\"query\": \"energy source battery remote power\", \"team\": \"ES2005\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "search_memory",
+          "detail": "ES2005c-024 [decision, current] thread=ES2005b-T05 (rechargeable battery instead of dynamo or solar) speakers=B,C,A value=rechargeable battery with base station…",
+          "ms": 29031
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"ES2005c\", \"start\": 368, \"end\": 392}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[368] 00:30:53 A: Okay. So if it if it's not working, I guess people's natural reaction anyway is to just shake the thing. [369] 00:30:54 C: Okay. [370] 00:30:5…",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"ES2005b\", \"start\": 155, \"end\": 168}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[155] 00:18:20 C: Ah now it's fif fifty million Euros we've gotta uh we've g gotta make profit, so we're making that at twelve and a half Euros a time. [156] 00…",
+          "ms": 0
+        },
+        {
+          "step": 3,
+          "kind": "submit_accepted",
+          "name": "submit_answer",
+          "detail": "3 verified citation(s)",
+          "ms": 0
+        }
+      ]
+    },
+    {
+      "case_id": "G-ES2012-1",
+      "team": "ES2012",
+      "category": "decision_change",
+      "ambiguous": false,
+      "question": "In ES2012's third meeting the team decided what kind of chip the remote would use, so that it could support voice control. What did they decide then, what did the Project Manager change it to in the final costing, and what costly component did he keep?",
+      "gold_answer": "In meeting c they decided on a custom-designed chip, because the Industrial Designer Kate (B) said voice control would probably need the company's own chip. In the final meeting the Project Manager (A) said they would instead have to find a regular standard chip, while keeping the expensive voice sensor as fundamental. The costing then came in exactly on the 12.5 Euro target.",
+      "answer": "In ES2012's third meeting (ES2012c) the team decided on a custom-designed chip rather than an off-the-shelf one, so the remote could support voice recognition. In the final costing (ES2012d), Speaker A (Project Manager) switched this to a regular standard chip, and he kept the voice sensor, which he called expensive but fundamental to the design.",
+      "state": "answered",
+      "citations": [
+        {
+          "meeting_id": "ES2012c",
+          "quote": "We're having a a custom chip, but given the the we've cut the functions down",
+          "turn": 289,
+          "speaker": "A",
+          "time": "00:33:32",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "ES2012d",
+          "quote": "we will have to find a s a regular standard chip to to do this with",
+          "turn": 57,
+          "speaker": "A",
+          "time": "00:05:15",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "ES2012d",
+          "quote": "the the voice sensor is is expensive but we we made a a basic decision",
+          "turn": 57,
+          "speaker": "A",
+          "time": "00:05:15",
+          "method": "exact"
+        }
+      ],
+      "score": {
+        "fact_recall": 0.75,
+        "facts": [
+          {
+            "fact": "Meeting c decision was a custom-designed chip",
+            "matched": "custom"
+          },
+          {
+            "fact": "Final costing switched to a regular/standard chip",
+            "matched": "standard chip"
+          },
+          {
+            "fact": "The expensive voice sensor (voice recognition) was kept",
+            "matched": "voice sensor"
+          },
+          {
+            "fact": "Final costing was exactly on the 12.5 Euro target",
+            "matched": null
+          }
+        ],
+        "citations": 3,
+        "citations_valid": 3,
+        "cites_gold_meeting": true,
+        "meetings_cited": [
+          "ES2012c",
+          "ES2012d"
+        ]
+      },
+      "steps": 4,
+      "tool_calls": 5,
+      "seconds": 37.31,
+      "usage": {
+        "input_tokens": 10,
+        "output_tokens": 1275,
+        "cache_read": 18939,
+        "cache_write": 13918,
+        "cost_usd": 0.0026,
+        "calls": 4,
+        "latency_ms": 7998
+      },
+      "trace": [
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "list_meetings",
+          "detail": "{\"team\": \"ES2012\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "list_meetings",
+          "detail": "ES2012a (meeting 1, 91 turns) roles: A=Project Manager, B=Industrial Designer, C=User Interface Designer (Kendra), D=Marketing Expert (Andrew) summary: First me…",
+          "ms": 15
+        },
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "search_memory",
+          "detail": "{\"query\": \"chip remote voice control\", \"team\": \"ES2012\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "search_memory",
+          "detail": "ES2012c-001 [decision, superseded by ES2012d-009] thread=ES2012c-T01 (custom or off-the-shelf chip) speakers=A,D value=custom chip The remote will use a custom-…",
+          "ms": 29031
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "search_transcripts",
+          "detail": "{\"query\": \"chip cost voice sensor expensive\", \"team\": \"ES2012\", \"limit\": 8}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "search_transcripts",
+          "detail": "== ES2012c turns 4-15 == [4] A: Okay, so how um sorry, can you uh just put that one back up again, please? Um. [5] B: Mm. Oh yep, sorry. Yep. [6] A: Uh d d d ok…",
+          "ms": 78
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "search_transcripts",
+          "detail": "{\"query\": \"voice recognition chip standard chip custom chip\", \"meeting_id\": \"ES2012c\", \"limit\": 8}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "search_transcripts",
+          "detail": "== ES2012c turns 4-15 == [4] A: Okay, so how um sorry, can you uh just put that one back up again, please? Um. [5] B: Mm. Oh yep, sorry. Yep. [6] A: Uh d d d ok…",
+          "ms": 61
+        },
+        {
+          "step": 3,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"ES2012d\", \"start\": 57, \"end\": 100}",
+          "ms": 0
+        },
+        {
+          "step": 3,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[57] 00:05:15 A: Oh right. Ah. Good, this is why we need to make these things simple so that the uh the the the boss can understand. Now I've um this is the com…",
+          "ms": 0
+        },
+        {
+          "step": 4,
+          "kind": "submit_accepted",
+          "name": "submit_answer",
+          "detail": "3 verified citation(s)",
+          "ms": 0
+        }
+      ]
+    },
+    {
+      "case_id": "G-ES2012-2",
+      "team": "ES2012",
+      "category": "attribution",
+      "ambiguous": false,
+      "question": "In ES2012, who first proposed a rechargeable battery or charging dock, who argued for a different power solution instead, and what energy source was confirmed in the third meeting?",
+      "gold_answer": "The Industrial Designer Kate (B) proposed a rechargeable battery or battery dock in meeting b. The Project Manager (A) argued people forget to recharge things and proposed a sealed, long-life battery with no battery compartment, replaced free if it ever ran down. In meeting c the PM confirmed a long-term battery expected to last five to ten years and guaranteed for five years.",
+      "answer": "Speaker B (Industrial Designer, Kate) first proposed a rechargeable battery or battery dock in the second ES2012 meeting. Speaker A (Project Manager) then argued instead for a sealed, long-life battery with no battery compartment. The third meeting confirmed a long-term battery source (lasting 5-10 years), not a rechargeable one.",
+      "state": "answered",
+      "citations": [
+        {
+          "meeting_id": "ES2012b",
+          "quote": "perhaps some sort of rechargeable battery or a battery dock you could place it in",
+          "turn": 141,
+          "speaker": "B",
+          "time": "00:28:59",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "ES2012b",
+          "quote": "by not even having a battery compartment",
+          "turn": 147,
+          "speaker": "A",
+          "time": "00:30:41",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "ES2012c",
+          "quote": "we will go for a a long term battery source",
+          "turn": 283,
+          "speaker": "A",
+          "time": "00:32:47",
+          "method": "exact"
+        }
+      ],
+      "score": {
+        "fact_recall": 1.0,
+        "facts": [
+          {
+            "fact": "The Industrial Designer (Kate, B) proposed a rechargeable battery / battery dock",
+            "matched": "industrial designer"
+          },
+          {
+            "fact": "The Project Manager (A) argued instead for a sealed, permanent battery",
+            "matched": "project manager"
+          },
+          {
+            "fact": "Confirmed energy source was a long-life battery sealed for the product's life",
+            "matched": "long-life"
+          },
+          {
+            "fact": "Guaranteed for five years (expected to last 5-10 years)",
+            "matched": "10 year"
+          }
+        ],
+        "citations": 3,
+        "citations_valid": 3,
+        "cites_gold_meeting": true,
+        "meetings_cited": [
+          "ES2012b",
+          "ES2012c"
+        ]
+      },
+      "steps": 5,
+      "tool_calls": 5,
+      "seconds": 11.48,
+      "usage": {
+        "input_tokens": 14,
+        "output_tokens": 2069,
+        "cache_read": 27023,
+        "cache_write": 8731,
+        "cost_usd": 0.0024,
+        "calls": 5,
+        "latency_ms": 11234
+      },
+      "trace": [
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "list_meetings",
+          "detail": "{\"team\": \"ES2012\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "list_meetings",
+          "detail": "ES2012a (meeting 1, 91 turns) roles: A=Project Manager, B=Industrial Designer, C=User Interface Designer (Kendra), D=Marketing Expert (Andrew) summary: First me…",
+          "ms": 15
+        },
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "search_memory",
+          "detail": "{\"query\": \"rechargeable battery charging dock power solution\", \"team\": \"ES2012\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "search_memory",
+          "detail": "ES2012b-029 [proposal, open] thread=ES2012b-T16 (rechargeable power) speakers=B owner=B Kate proposes a big energy source that does not run out, such as a recha…",
+          "ms": 125
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"ES2012b\", \"start\": 138, \"end\": 160}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[138] 00:26:47 C: Oh yeah. That's kind of strange. [139] 00:26:52 B: That's not cool. Oh well. Anyways. Um alright, yeah, so um I'll just do my presentation on …",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"ES2012c\", \"start\": 145, \"end\": 170}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[145] 00:22:14 A: Also means you can drop it without damaging it. [146] 00:22:15 D: Yeah. That's c cool. [147] 00:22:16 B: Uh, yeah, it's good as well. Mm-hmm. …",
+          "ms": 0
+        },
+        {
+          "step": 3,
+          "kind": "tool_call",
+          "name": "search_transcripts",
+          "detail": "{\"query\": \"long-life battery sealed five to ten years guarantee\", \"meeting_id\": \"ES2012c\", \"limit\": 4}",
+          "ms": 0
+        },
+        {
+          "step": 3,
+          "kind": "tool_result",
+          "name": "search_transcripts",
+          "detail": "== ES2012c turns 281-291 == [281] B: Play with play-dough. [282] D: Hmm. Uh can I just get some things clear just for my sake. Our energy source is gonna be [28…",
+          "ms": 77
+        },
+        {
+          "step": 4,
+          "kind": "note",
+          "name": "",
+          "detail": "no tool call; asked to call submit_answer",
+          "ms": 0
+        },
+        {
+          "step": 5,
+          "kind": "submit_accepted",
+          "name": "submit_answer",
+          "detail": "3 verified citation(s)",
+          "ms": 0
+        }
+      ]
+    },
+    {
+      "case_id": "G-IS1000-1",
+      "team": "IS1000",
+      "category": "commitment",
+      "ambiguous": false,
+      "question": "In IS1000's third meeting the Industrial Designer promised to bring cost figures to the next meeting. What costs were reported for the two prototype designs, and what did the team finally decide given the 12.50 Euro budget?",
+      "gold_answer": "The Industrial Designer Mael promised an exact cost price, and the PM asked for two designs, one less and one more advanced. In the final meeting the basic surfboard-shaped TV remote was put at about 8 Euros and the advanced one (LCD, speech recognition, cover) at 16 Euros, of which speech recognition was about 3 Euros. After recosting with the PM's company price sheet, they cut the LCD and speech recognition and went back to the basic design at about 12 Euros, 50 cents under budget.",
+      "answer": "In IS1000d the basic prototype was costed at about 8 EUR and the advanced prototype (with speech recognition and an LCD display) at about 16 EUR, which was over the 12.50 EUR budget. The team dropped the LCD display and speech recognition, added two buttons, and settled on the basic design at roughly 12 EUR with a plastic case.",
+      "state": "answered",
+      "citations": [
+        {
+          "meeting_id": "IS1000d",
+          "quote": "would cost us to build it about eight Euros",
+          "turn": 65,
+          "speaker": "D",
+          "time": "00:06:07",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "IS1000d",
+          "quote": "And this one was sixteen Euros.",
+          "turn": 339,
+          "speaker": "A",
+          "time": "00:22:55",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "IS1000d",
+          "quote": "you uh cut the L_C_D_ screen and introduce two more buttons",
+          "turn": 719,
+          "speaker": "D",
+          "time": "00:41:35",
+          "method": "exact"
+        }
+      ],
+      "score": {
+        "fact_recall": 0.75,
+        "facts": [
+          {
+            "fact": "Basic design costed at about 8 Euros",
+            "matched": "8 eur"
+          },
+          {
+            "fact": "Advanced design costed at 16 Euros (over budget)",
+            "matched": "16"
+          },
+          {
+            "fact": "LCD and speech recognition were cut; basic/first design chosen",
+            "matched": "basic"
+          },
+          {
+            "fact": "Final price about 12 Euros, fifty cents under the 12.50 budget",
+            "matched": null
+          }
+        ],
+        "citations": 3,
+        "citations_valid": 3,
+        "cites_gold_meeting": true,
+        "meetings_cited": [
+          "IS1000d"
+        ]
+      },
+      "steps": 6,
+      "tool_calls": 4,
+      "seconds": 11.92,
+      "usage": {
+        "input_tokens": 14,
+        "output_tokens": 1877,
+        "cache_read": 46115,
+        "cache_write": 12271,
+        "cost_usd": 0.0029,
+        "calls": 6,
+        "latency_ms": 11513
+      },
+      "trace": [
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "list_meetings",
+          "detail": "{\"team\": \"IS1000\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "list_meetings",
+          "detail": "IS1000a (meeting 1, 297 turns) roles: A=Marketing Expert, D=Industrial Designer summary: Kick-off meeting IS1000a for the remote control project. Team sets pric…",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "search_transcripts",
+          "detail": "{\"query\": \"cost prototype Euro budget bring figures next meeting\", \"meeting_id\": \"IS1000c\", \"limit\": 8}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "search_transcripts",
+          "detail": "== IS1000c turns 218-235 == [218] A: Mm-hmm. [219] B: Mm-hmm. So when the more expensive chip you mentioned there is is possible in the in the given budget, uh …",
+          "ms": 217
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "search_transcripts",
+          "detail": "{\"query\": \"basic design advanced design cost euro\", \"meeting_id\": \"IS1000d\", \"limit\": 8}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "search_transcripts",
+          "detail": "== IS1000d turns 121-147 == [121] C: Oh actually well. [122] B: That th that's true. Mm. [123] D: it it is it is is is it gives a protec it's more robust that w…",
+          "ms": 141
+        },
+        {
+          "step": 3,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"IS1000d\", \"start\": 692, \"end\": 730}",
+          "ms": 0
+        },
+        {
+          "step": 3,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[692] 00:40:15 B: Yes. Yes. Yes. One man one vote. S so who thinks the the L_C_D_ disply display should be i should be in it? [693] 00:40:17 C: Okay. [694] 00:4…",
+          "ms": 0
+        },
+        {
+          "step": 4,
+          "kind": "submit_rejected",
+          "name": "submit_answer",
+          "detail": "Invalid submission: Field required",
+          "ms": 0
+        },
+        {
+          "step": 5,
+          "kind": "submit_rejected",
+          "name": "submit_answer",
+          "detail": "Invalid submission: Field required",
+          "ms": 0
+        },
+        {
+          "step": 6,
+          "kind": "submit_accepted",
+          "name": "submit_answer",
+          "detail": "3 verified citation(s)",
+          "ms": 0
+        }
+      ]
+    },
+    {
+      "case_id": "G-IS1000-2",
+      "team": "IS1000",
+      "category": "attribution",
+      "ambiguous": false,
+      "question": "In IS1000, who suggested building an LCD display into the remote in the third meeting, and in the final meeting who argued it had to go, who decided to cut it, and what replaced it?",
+      "gold_answer": "In meeting c the Industrial Designer Mael said very cheap LCDs were available and that they might fit one into the remote (the PM backed one advanced chip to run the LCD and a scroll wheel). In the final meeting the Marketing Expert Anna (A) argued it could not fit the 12.50 Euro budget, and the Project Manager (B) decided to cut the LCD screen. The UI Designer Matthew suggested adding two more buttons instead.",
+      "answer": "In the third meeting, Speaker D (Industrial Designer) suggested integrating an LCD into the remote, after a supplier offered very cheap LCDs. In the final meeting, Speaker A (Marketing Expert) argued it had to go because it couldn't be afforded within the 12.50 EUR budget. Speaker B (Project Manager) made the call to cut it, and it was replaced by two extra buttons.",
+      "state": "answered",
+      "citations": [
+        {
+          "meeting_id": "IS1000c",
+          "quote": "I think we might be able to integrate L_C_D_ into our R_C_.",
+          "turn": 192,
+          "speaker": "D",
+          "time": "00:23:43",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "IS1000d",
+          "quote": "unless we can really drive these prices down we need to get rid of the L_C_D_ display.",
+          "turn": 682,
+          "speaker": "A",
+          "time": "00:39:23",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "IS1000d",
+          "quote": "I think we should we should cut the L_C_D_ screen.",
+          "turn": 716,
+          "speaker": "B",
+          "time": "00:41:34",
+          "method": "exact"
+        }
+      ],
+      "score": {
+        "fact_recall": 1.0,
+        "facts": [
+          {
+            "fact": "The Industrial Designer (Mael) suggested integrating a cheap LCD",
+            "matched": "industrial designer"
+          },
+          {
+            "fact": "The Marketing Expert (Anna, A) argued the LCD had to be removed for budget",
+            "matched": "marketing"
+          },
+          {
+            "fact": "The Project Manager (B) decided to cut the LCD",
+            "matched": "project manager"
+          },
+          {
+            "fact": "Replaced by extra buttons",
+            "matched": "button"
+          }
+        ],
+        "citations": 3,
+        "citations_valid": 3,
+        "cites_gold_meeting": true,
+        "meetings_cited": [
+          "IS1000c",
+          "IS1000d"
+        ]
+      },
+      "steps": 6,
+      "tool_calls": 5,
+      "seconds": 10.59,
+      "usage": {
+        "input_tokens": 16,
+        "output_tokens": 1881,
+        "cache_read": 32076,
+        "cache_write": 6959,
+        "cost_usd": 0.0021,
+        "calls": 6,
+        "latency_ms": 10404
+      },
+      "trace": [
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "list_meetings",
+          "detail": "{\"team\": \"IS1000\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "list_meetings",
+          "detail": "IS1000a (meeting 1, 297 turns) roles: A=Marketing Expert, D=Industrial Designer summary: Kick-off meeting IS1000a for the remote control project. Team sets pric…",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "search_memory",
+          "detail": "{\"query\": \"LCD display in the remote\", \"team\": \"IS1000\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "search_memory",
+          "detail": "IS1000d-001 [decision, current] thread=IS1000c-T09 (LCD display) speakers=A,B,C,D owner=B value=LCD display removed The team drops the LCD display because the b…",
+          "ms": 94
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"IS1000d\", \"start\": 655, \"end\": 730}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[655] 00:37:43 C: But [656] 00:37:51 B: So is it possible? [657] 00:37:52 A: But that's seven basic buttons right, seven buttons without any adds-on, without sp…",
+          "ms": 15
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"IS1000c\", \"start\": 186, \"end\": 196}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[186] 00:23:23 B: Well well m m maybe m maybe we can give the uh the uh the case a very uh uh normal a v very normal case but, with the changeable covers to fan…",
+          "ms": 0
+        },
+        {
+          "step": 3,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"IS1000d\", \"start\": 695, \"end\": 722}",
+          "ms": 0
+        },
+        {
+          "step": 3,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[695] 00:40:27 B: Mm. Mm-hmm mm-hmm. [696] 00:40:28 D: I think but [697] 00:40:29 C: We need to be. [698] 00:40:30 A: Bu y you're a power voter uh veto anyway a…",
+          "ms": 15
+        },
+        {
+          "step": 4,
+          "kind": "note",
+          "name": "",
+          "detail": "no tool call; asked to call submit_answer",
+          "ms": 0
+        },
+        {
+          "step": 5,
+          "kind": "submit_rejected",
+          "name": "submit_answer",
+          "detail": "Invalid submission: List should have at most 3 items after validation, not 4",
+          "ms": 0
+        },
+        {
+          "step": 6,
+          "kind": "submit_accepted",
+          "name": "submit_answer",
+          "detail": "3 verified citation(s)",
+          "ms": 0
+        }
+      ]
+    },
+    {
+      "case_id": "G-IS1004-1",
+      "team": "IS1004",
+      "category": "decision_change",
+      "ambiguous": false,
+      "question": "In team IS1004's conceptual design meeting, the Industrial Designer proposed a two-part power supply for the remote. What was it, what power source did the team end up with in the final meeting, and who questioned the original plan?",
+      "gold_answer": "In meeting c the Industrial Designer (Speaker C) proposed batteries, rechargeable in a base station, plus solar cells. In the final meeting the User Interface Designer (Speaker B) said the solar cells were no longer needed because there was a recharging base station. During costing the team dropped the solar cells (and kinetic/dynamo) and kept only the rechargeable battery.",
+      "answer": "In the conceptual design meeting (IS1004c), Speaker C (Industrial Designer, Hemant) proposed two power supplies: standard batteries, chargeable via a base station, plus solar cells that work when lighting is good. In the final meeting (IS1004d) the team dropped the solar cells and settled on rechargeable batteries charged by the base station alone. Speaker B questioned the plan, saying \"I don't really know if the solar cells are actually necessary any more if you have a recharging base station\"; Speaker A had also raised the combined power plan when asking about it.",
+      "state": "answered",
+      "citations": [
+        {
+          "meeting_id": "IS1004c",
+          "quote": "we can have two kind of power supplies, one is the usual batteries",
+          "turn": 207,
+          "speaker": "C",
+          "time": "00:20:09",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "IS1004d",
+          "quote": "I don't really know if the solar cells are actually necessary any more if you have a recharging base station.",
+          "turn": 78,
+          "speaker": "B",
+          "time": "00:06:46",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "IS1004d",
+          "quote": "I think rechargeable batteries will take care of the power thing.",
+          "turn": 362,
+          "speaker": "C",
+          "time": "00:22:12",
+          "method": "exact"
+        }
+      ],
+      "score": {
+        "fact_recall": 1.0,
+        "facts": [
+          {
+            "fact": "Original plan combined (rechargeable) batteries with solar cells",
+            "matched": "solar"
+          },
+          {
+            "fact": "Final power source was the rechargeable battery only (solar cells dropped)",
+            "matched": "rechargeable batter"
+          },
+          {
+            "fact": "Speaker B, the User Interface Designer, questioned the need for solar cells",
+            "matched": "speaker b"
+          }
+        ],
+        "citations": 3,
+        "citations_valid": 3,
+        "cites_gold_meeting": true,
+        "meetings_cited": [
+          "IS1004c",
+          "IS1004d"
+        ]
+      },
+      "steps": 4,
+      "tool_calls": 5,
+      "seconds": 7.84,
+      "usage": {
+        "input_tokens": 10,
+        "output_tokens": 1161,
+        "cache_read": 14722,
+        "cache_write": 7050,
+        "cost_usd": 0.0016,
+        "calls": 4,
+        "latency_ms": 7515
+      },
+      "trace": [
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "list_meetings",
+          "detail": "{\"team\": \"IS1004\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "list_meetings",
+          "detail": "IS1004a (meeting 1, 51 turns) roles: A=Project Manager (Sebastian), B=User Interface Designer, C=Industrial Designer (Hemant), D=Marketing Expert summary: Kick-…",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "search_memory",
+          "detail": "{\"query\": \"power supply remote two-part\", \"team\": \"IS1004\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "search_memory",
+          "detail": "IS1004c-017 [proposal, cancelled by IS1004d-025] thread=IS1004c-T02 (Power source) speakers=C C proposes two power supplies: standard batteries, rechargeable wi…",
+          "ms": 109
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "get_thread",
+          "detail": "{\"thread_id\": \"IS1004c-T02\"}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "get_thread",
+          "detail": "THREAD IS1004c-T02 — Power source (current decision items: IS1004d-025) IS1004c-017 [proposal, cancelled by IS1004d-025] C proposes two power supplies: standard…",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"IS1004c\", \"start\": 205, \"end\": 225}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[205] 00:20:04 C: That's right. [206] 00:20:08 A: Okay. [207] 00:20:09 C: So this is going to be about the component design. So first thing is we need power sou…",
+          "ms": 15
+        },
+        {
+          "step": 3,
+          "kind": "tool_call",
+          "name": "search_transcripts",
+          "detail": "{\"query\": \"solar cells\", \"team\": \"IS1004\"}",
+          "ms": 0
+        },
+        {
+          "step": 3,
+          "kind": "tool_result",
+          "name": "search_transcripts",
+          "detail": "== IS1004d turns 354-371 == [354] C: Yeah, sure. [355] A: So I already uh put some pu some numbers here, okay. We are going to go through so this is the number …",
+          "ms": 155
+        },
+        {
+          "step": 4,
+          "kind": "submit_accepted",
+          "name": "submit_answer",
+          "detail": "3 verified citation(s)",
+          "ms": 0
+        }
+      ]
+    },
+    {
+      "case_id": "G-IS1004-2",
+      "team": "IS1004",
+      "category": "number",
+      "ambiguous": false,
+      "question": "Team IS1004's kickoff set a target selling price for the remote. What was it, what production-cost limit did the Project Manager use in the final costing, and what change, suggested by whom, brought the design back within budget?",
+      "gold_answer": "The target selling price was 25 Euro (meant to give a 50 million Euro profit). In the final meeting the PM said production cost had to be below 12.5 Euro. The design came out over budget, so the User Interface Designer (Speaker B) suggested making the case plastic instead of rubber (C agreed), which brought it roughly on budget and then under the limit.",
+      "answer": "The kickoff (IS1004a) set a target selling price of 25 EUR. In the final costing (IS1004d), Speaker A, the Project Manager, required production cost to stay below 12.50 EUR. The team was over budget until Speaker B (User Interface Designer) suggested replacing the rubber casing with plastic, which Speaker C (Industrial Designer) also proposed; that, plus removing the sample speaker, brought costs back under the target.",
+      "state": "answered",
+      "citations": [
+        {
+          "meeting_id": "IS1004a",
+          "quote": "we should target selling price of twenty-five Euro for this remote control",
+          "turn": 36,
+          "speaker": "A",
+          "time": "00:10:09",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "IS1004d",
+          "quote": "We should we should be below twelve point five.",
+          "turn": 353,
+          "speaker": "A",
+          "time": "00:21:02",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "IS1004d",
+          "quote": "Make it plastic instead of rubber. And then we're basically o on budget",
+          "turn": 448,
+          "speaker": "B",
+          "time": "00:26:32",
+          "method": "exact"
+        }
+      ],
+      "score": {
+        "fact_recall": 1.0,
+        "facts": [
+          {
+            "fact": "Target selling price was 25 Euro",
+            "matched": "25"
+          },
+          {
+            "fact": "Production cost had to be below 12.5 Euro",
+            "matched": "12.5"
+          },
+          {
+            "fact": "Switching from rubber to plastic brought it within budget",
+            "matched": "replac"
+          },
+          {
+            "fact": "Speaker B (User Interface Designer) suggested the switch",
+            "matched": "speaker b"
+          }
+        ],
+        "citations": 3,
+        "citations_valid": 3,
+        "cites_gold_meeting": true,
+        "meetings_cited": [
+          "IS1004a",
+          "IS1004d"
+        ]
+      },
+      "steps": 5,
+      "tool_calls": 5,
+      "seconds": 8.8,
+      "usage": {
+        "input_tokens": 12,
+        "output_tokens": 1305,
+        "cache_read": 21545,
+        "cache_write": 6417,
+        "cost_usd": 0.0017,
+        "calls": 5,
+        "latency_ms": 8654
+      },
+      "trace": [
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "list_meetings",
+          "detail": "{\"team\": \"IS1004\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "list_meetings",
+          "detail": "IS1004a (meeting 1, 51 turns) roles: A=Project Manager (Sebastian), B=User Interface Designer, C=Industrial Designer (Hemant), D=Marketing Expert summary: Kick-…",
+          "ms": 15
+        },
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "search_memory",
+          "detail": "{\"query\": \"target selling price remote production cost budget\", \"team\": \"IS1004\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "search_memory",
+          "detail": "IS1004a-004 [figure, noted] thread=IS1004a-T03 (Target selling price) speakers=A value=25 EUR Target selling price for the remote control is 25 EUR. evidence: I…",
+          "ms": 62
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"IS1004d\", \"start\": 340, \"end\": 460}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[340] 00:20:29 C: Mm-hmm. [341] 00:20:31 B: Is there some some formula you're using that says you have to sum them up? [342] 00:20:35 D: Uh no I didn't anything…",
+          "ms": 0
+        },
+        {
+          "step": 3,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"IS1004d\", \"start\": 380, \"end\": 460}",
+          "ms": 0
+        },
+        {
+          "step": 3,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[380] 00:23:18 C: Uh-huh. [381] 00:23:19 A: That's what [382] 00:23:20 C: Mm-hmm. Mm-hmm. [383] 00:23:21 A: Okay so I'll remove it. [384] 00:23:23 B: Yeah. I sa…",
+          "ms": 0
+        },
+        {
+          "step": 4,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"IS1004d\", \"start\": 420, \"end\": 470}",
+          "ms": 0
+        },
+        {
+          "step": 4,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[420] 00:24:58 C: No that is a scroll wheel itself, it'll be put in that. [421] 00:24:59 B: Huh. [422] 00:25:01 A: No no. We have two scroll, and we have three …",
+          "ms": 0
+        },
+        {
+          "step": 5,
+          "kind": "submit_accepted",
+          "name": "submit_answer",
+          "detail": "3 verified citation(s)",
+          "ms": 0
+        }
+      ]
+    },
+    {
+      "case_id": "G-TS3005-1",
+      "team": "TS3005",
+      "category": "decision_change",
+      "ambiguous": false,
+      "question": "Team TS3005 treated speech recognition as a planned feature in its earlier meetings. What was its status before the final meeting, what happened to it in the final costing, and why?",
+      "gold_answer": "In meeting b the PM recorded speech recognition as an extra only 'when we have enough money left'. In meeting c he called speech control the unique idea of the remote, and the meeting-d prototype had a microphone. In the final costing the design came to about 18.5 against a 12.50 Euro limit, so the Marketing Expert (D) proposed scrapping the sample speaker and the PM agreed. The team dropped speech recognition (together with the push-scroll wheel) even though the UI Designer (B) objected that it was a special new feature.",
+      "answer": "Before the final meeting, speech recognition was only an optional feature to add \"if there's enough money\" after cost (TS3005b), and in TS3005c its chip support was still in a test phase. In the final costing (TS3005d), the team dropped speech recognition together with the sample speaker, microphone and scroll wheel to bring production cost from 18.5 points down to the 12.50 EUR limit, because it was optional and the cost had to be cut.",
+      "state": "answered",
+      "citations": [
+        {
+          "meeting_id": "TS3005b",
+          "quote": "and if there's enough money, speech recognition.",
+          "turn": 399,
+          "speaker": "A",
+          "time": "00:30:51",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "TS3005d",
+          "quote": "we we dropped the speech recognition together with the speaker.",
+          "turn": 696,
+          "speaker": "A",
+          "time": "00:29:44",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "TS3005d",
+          "quote": "we have to scrap four points.",
+          "turn": 610,
+          "speaker": "D",
+          "time": "00:26:11",
+          "method": "exact"
+        }
+      ],
+      "score": {
+        "fact_recall": 0.75,
+        "facts": [
+          {
+            "fact": "Speech recognition was removed in the final costing",
+            "matched": "drop"
+          },
+          {
+            "fact": "Production cost limit was 12.50 Euro",
+            "matched": "12.50"
+          },
+          {
+            "fact": "First cost estimate was about 18.5, over budget",
+            "matched": "18.5"
+          },
+          {
+            "fact": "Speaker D (Marketing Expert) proposed scrapping the sample speaker",
+            "matched": null
+          }
+        ],
+        "citations": 3,
+        "citations_valid": 3,
+        "cites_gold_meeting": true,
+        "meetings_cited": [
+          "TS3005b",
+          "TS3005d"
+        ]
+      },
+      "steps": 3,
+      "tool_calls": 3,
+      "seconds": 8.0,
+      "usage": {
+        "input_tokens": 8,
+        "output_tokens": 1387,
+        "cache_read": 8796,
+        "cache_write": 7696,
+        "cost_usd": 0.0017,
+        "calls": 3,
+        "latency_ms": 7686
+      },
+      "trace": [
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "list_meetings",
+          "detail": "{\"team\": \"TS3005\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "list_meetings",
+          "detail": "TS3005a (meeting 1, 223 turns) roles: A=Project Manager, B=User Interface Designer, C=Industrial Designer, D=Marketing Expert summary: First meeting of team TS3…",
+          "ms": 15
+        },
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "search_memory",
+          "detail": "{\"query\": \"speech recognition\", \"team\": \"TS3005\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "search_memory",
+          "detail": "TS3005b-029 [decision, cancelled by TS3005c-007,TS3005c-008,TS3005d-004] thread=TS3005b-T09 (Speech recognition only if money left) speakers=A,B,C,D Speech reco…",
+          "ms": 109
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "search_transcripts",
+          "detail": "{\"query\": \"speech recognition speaker cost dropped\", \"meeting_id\": \"TS3005d\", \"limit\": 8}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "search_transcripts",
+          "detail": "== TS3005d turns 687-716 == [687] A: So the battery, we have um advanced chip on print. [688] B: One. So it would be curved, single curve. [689] A: Because of t…",
+          "ms": 157
+        },
+        {
+          "step": 3,
+          "kind": "submit_accepted",
+          "name": "submit_answer",
+          "detail": "3 verified citation(s)",
+          "ms": 0
+        }
+      ]
+    },
+    {
+      "case_id": "G-TS3005-2",
+      "team": "TS3005",
+      "category": "attribution",
+      "ambiguous": false,
+      "question": "In team TS3005's functional design meeting, who argued for an LCD touch screen and with what evidence, who warned it clashed with keeping the remote cheap, and did the LCD survive the final costing?",
+      "gold_answer": "The Marketing Expert (Speaker D) pushed for the LCD, citing survey figures: 81% of 16-25 year olds were interested in an LCD screen, and the target group was 16-45. The Industrial Designer (Speaker C) warned that LCD screens are very expensive and clash with the mission to make it cheap. The PM settled on 'for now it's LCD', with buttons as a backup. In the final meeting the LCD screen was kept, and the scroll wheel and speech recognition were cut instead.",
+      "answer": "In TS3005b, the functional design meeting, Speaker D (Marketing Expert) argued for the LCD touch screen using survey data: 81% of 16–25-year-olds, 66% of 26–35s and 55% of 36–45s were interested in LCD screens, and touch screens avoid worn printed buttons. Speaker C (Industrial Designer) warned that this \"collides with our mission to make it very cheap\" because LCD and touch screens are expensive. The LCD survived the final costing in TS3005d: when the team checked the cost against the 12.50 EUR limit, they cut speech recognition, the microphone, the speaker and the scroll wheel instead, and Speaker D said the LCD could not be removed because \"otherwise we don't have an L_C_D_ screen.\"",
+      "state": "answered",
+      "citations": [
+        {
+          "meeting_id": "TS3005b",
+          "quote": "are f eighty one percent interested in L_C_D_ screen",
+          "turn": 113,
+          "speaker": "D",
+          "time": "00:17:47",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "TS3005b",
+          "quote": "But I think that uh that collides with our mission to make it very cheap.",
+          "turn": 116,
+          "speaker": "C",
+          "time": "00:18:23",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "TS3005d",
+          "quote": "No, otherwise we don't have an L_C_D_ screen.",
+          "turn": 592,
+          "speaker": "D",
+          "time": "00:25:46",
+          "method": "exact"
+        }
+      ],
+      "score": {
+        "fact_recall": 1.0,
+        "facts": [
+          {
+            "fact": "Speaker D (Marketing Expert) argued for the LCD",
+            "matched": "speaker d"
+          },
+          {
+            "fact": "Cited 81% of 16-25 year olds interested in an LCD",
+            "matched": "81"
+          },
+          {
+            "fact": "Speaker C (Industrial Designer) warned it was expensive / against making it cheap",
+            "matched": "speaker c"
+          },
+          {
+            "fact": "The LCD screen was kept in the final design",
+            "matched": "survived"
+          }
+        ],
+        "citations": 3,
+        "citations_valid": 3,
+        "cites_gold_meeting": true,
+        "meetings_cited": [
+          "TS3005b",
+          "TS3005d"
+        ]
+      },
+      "steps": 6,
+      "tool_calls": 7,
+      "seconds": 13.52,
+      "usage": {
+        "input_tokens": 16,
+        "output_tokens": 2534,
+        "cache_read": 52092,
+        "cache_write": 15766,
+        "cost_usd": 0.0038,
+        "calls": 6,
+        "latency_ms": 13233
+      },
+      "trace": [
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "list_meetings",
+          "detail": "{\"team\": \"TS3005\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "list_meetings",
+          "detail": "TS3005a (meeting 1, 223 turns) roles: A=Project Manager, B=User Interface Designer, C=Industrial Designer, D=Marketing Expert summary: First meeting of team TS3…",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "search_memory",
+          "detail": "{\"query\": \"LCD touch screen remote cheap\", \"team\": \"TS3005\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "search_memory",
+          "detail": "TS3005b-002 [objection, open] thread=TS3005a-T02 (LCD screen cost versus cheap remote) speakers=C owner=C C objects that an LCD screen collides with the mission…",
+          "ms": 77
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"TS3005b\", \"start\": 104, \"end\": 143}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[104] 00:17:14 D: to user. Yeah. So that it easy and fast. [105] 00:17:25 B: Yeah. [106] 00:17:28 D: Yeah. [107] 00:17:31 B: Yeah. Yeah, so you should have that…",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "search_transcripts",
+          "detail": "{\"query\": \"LCD screen cost twelve fifty production cost\", \"team\": \"TS3005\", \"limit\": 8}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "search_transcripts",
+          "detail": "== TS3005b turns 145-163 == [145] B: Well we had twelve fifty, I guess, for uh production? Yeah. I dunno how expensive an L_C_D_ screen is. [146] D: Yeah. [147]…",
+          "ms": 77
+        },
+        {
+          "step": 3,
+          "kind": "tool_call",
+          "name": "search_transcripts",
+          "detail": "{\"query\": \"L_C_D_ screen cost too expensive keep screen production cost total\", \"meeting_id\": \"TS3005d\", \"limit\": 8}",
+          "ms": 0
+        },
+        {
+          "step": 3,
+          "kind": "tool_result",
+          "name": "search_transcripts",
+          "detail": "== TS3005d turns 955-968 == [955] D: Yeah, okay. Yeah, okay. [956] B: Then it pops up pop up screen came. Five minutes in the meeting. No. [957] D: Mm-hm. Mm. Y…",
+          "ms": 62
+        },
+        {
+          "step": 3,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"TS3005d\", \"start\": 585, \"end\": 595}",
+          "ms": 0
+        },
+        {
+          "step": 3,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[585] 00:25:36 D: No, one. [586] 00:25:38 B: Sixteen point three. [587] 00:25:38 C: Oh, okay, indeed. [588] 00:25:39 D: So we don't Yeah, we also have to [589] …",
+          "ms": 0
+        },
+        {
+          "step": 4,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"TS3005d\", \"start\": 596, \"end\": 625}",
+          "ms": 0
+        },
+        {
+          "step": 4,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[596] 00:25:52 B: We changed th Yeah, and the single curved to uncurved. [597] 00:25:54 D: Single curved. Flat. [598] 00:25:56 A: Oh, but it's just one [599] 00…",
+          "ms": 0
+        },
+        {
+          "step": 5,
+          "kind": "note",
+          "name": "",
+          "detail": "no tool call; asked to call submit_answer",
+          "ms": 0
+        },
+        {
+          "step": 6,
+          "kind": "submit_accepted",
+          "name": "submit_answer",
+          "detail": "3 verified citation(s)",
+          "ms": 0
+        }
+      ]
+    },
+    {
+      "case_id": "G-TS3008-1",
+      "team": "TS3008",
+      "category": "attribution",
+      "ambiguous": false,
+      "question": "In team TS3008's conceptual design meeting, who pushed for an LCD display on the remote and how was it settled? In the final meeting, what did the component information say a display would need, and which chip did the team choose?",
+      "gold_answer": "The Industrial Designer (Speaker C) pushed for an LCD (programme info, a trendy colour LCD). The PM (Speaker A) opposed it because it did not fit the sturdy, simple design and the docking station was already the special feature; D raised cost and fragility and B called it too much. A concluded 'we skip the LCD display'. In the final meeting the component information said a display requires an advanced chip, so with no display the team chose the simple chip.",
+      "answer": "In TS3008c, Speaker C (Industrial Designer) pushed for an LCD on the remote, suggesting a TV guide or programme information, while Speaker A (Project Manager) argued it was vulnerable and didn't fit the sturdy, simple concept; the team skipped the LCD, with the decision recorded as settled against it after A invoked a veto and B and D agreed. In the final meeting, TS3008d, the component list said a display requires an advanced chip (Speaker B, User Interface Designer), and the team chose the simple chip, since a push-button needs only a simple chip and the display was dropped.",
+      "state": "answered",
+      "citations": [
+        {
+          "meeting_id": "TS3008c",
+          "quote": "But I don't think a L_C_D_ display fits in that image. You know, it's like more vulnerable, and it adds nothing really",
+          "turn": 214,
+          "speaker": "A",
+          "time": "00:21:48",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "TS3008d",
+          "quote": "The display requires an advanced chip.",
+          "turn": 603,
+          "speaker": "B",
+          "time": "00:36:22",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "TS3008d",
+          "quote": "So we're gonna use the simple chip.",
+          "turn": 629,
+          "speaker": "A",
+          "time": "00:37:32",
+          "method": "exact"
+        }
+      ],
+      "score": {
+        "fact_recall": 1.0,
+        "facts": [
+          {
+            "fact": "Speaker C (Industrial Designer) pushed for the LCD",
+            "matched": "speaker c"
+          },
+          {
+            "fact": "The LCD was rejected/skipped",
+            "matched": "skip"
+          },
+          {
+            "fact": "A display requires an advanced chip",
+            "matched": "advanced chip"
+          },
+          {
+            "fact": "The team chose the simple chip",
+            "matched": "simple chip"
+          }
+        ],
+        "citations": 3,
+        "citations_valid": 3,
+        "cites_gold_meeting": true,
+        "meetings_cited": [
+          "TS3008c",
+          "TS3008d"
+        ]
+      },
+      "steps": 4,
+      "tool_calls": 5,
+      "seconds": 7.44,
+      "usage": {
+        "input_tokens": 10,
+        "output_tokens": 1215,
+        "cache_read": 17652,
+        "cache_write": 11127,
+        "cost_usd": 0.0022,
+        "calls": 4,
+        "latency_ms": 7169
+      },
+      "trace": [
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "list_meetings",
+          "detail": "{\"team\": \"TS3008\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "list_meetings",
+          "detail": "TS3008a (meeting 1, 233 turns) roles: A=Project Manager (Martin), D=Marketing Expert (Joost) summary: Kick-off meeting of team TS3008 for designing a new televi…",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "search_memory",
+          "detail": "{\"query\": \"LCD display on the remote\", \"team\": \"TS3008\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "search_memory",
+          "detail": "TS3008c-001 [decision, current] thread=TS3008c-T01 (LCD display on the remote) speakers=A,B,D value=skipped The LCD display is skipped: it is vulnerable, adds n…",
+          "ms": 47
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"TS3008c\", \"start\": 200, \"end\": 235}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[200] 00:21:03 B: Well well what would you display on it then? [201] 00:21:05 C: Uh, programme uh information or or or or g or a guide [202] 00:21:07 D: Program…",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "search_transcripts",
+          "detail": "{\"query\": \"chip display component cost\", \"meeting_id\": \"TS3008d\"}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "search_transcripts",
+          "detail": "== TS3008d turns 404-416 == [404] D: We probably will. [405] A: I probably have already opened it here. try it again. First of all, the mm all the docking stati…",
+          "ms": 140
+        },
+        {
+          "step": 3,
+          "kind": "tool_call",
+          "name": "search_transcripts",
+          "detail": "{\"query\": \"LCD display remote\", \"meeting_id\": \"TS3008c\", \"limit\": 8}",
+          "ms": 0
+        },
+        {
+          "step": 3,
+          "kind": "tool_result",
+          "name": "search_transcripts",
+          "detail": "== TS3008c turns 233-246 == [233] B: But how does it display then? W when I go to the second channel, what what does it show me? [234] C: Uh, then you push a bu…",
+          "ms": 47
+        },
+        {
+          "step": 4,
+          "kind": "submit_accepted",
+          "name": "submit_answer",
+          "detail": "3 verified citation(s)",
+          "ms": 0
+        }
+      ]
+    },
+    {
+      "case_id": "G-TS3008-2",
+      "team": "TS3008",
+      "category": "decision_change",
+      "ambiguous": true,
+      "question": "Team TS3008 adopted a base/docking station in its functional design meeting. Who proposed it and what was it for, and what happened to it in the final costing meeting?",
+      "gold_answer": "In meeting b the Marketing Expert (Speaker D) proposed a base with a button that makes a lost remote beep (about 50% of users often lose their remote), and the PM (A) added making it rechargeable; in meeting c the PM called the docking station 'our killer feature'. In the final costing the docking station was not on the cost sheet. With one battery and a simple chip about 2.30 Euro of the 12.50 budget was left. D and B argued a docking station could be built for that, but the PM thought it unrealistic and suggested forgetting it (pushing kinetic power instead, which was not adopted), so the final concept had no docking station.",
+      "answer": "In the second functional design meeting (TS3008b), Speaker A (Project Manager) proposed a rechargeable base, comparing it to mouse docks, so the remote would never need batteries and could always be found; Speaker D (Marketing Expert) added a button on the base to make the lost remote beep. It was only tentatively accepted, tied to the 12.50 EUR production cost. In the detailed design/costing meeting (TS3008d) it did not survive as planned: the cost sheet had no docking station line, A judged it would cost about a fifth of the remote's price, and it was left open, with kinetic power floated as a compromise.",
+      "state": "answered",
+      "citations": [
+        {
+          "meeting_id": "TS3008b",
+          "quote": "And then also you don't even need batteries, because you can make it uh chargeable.",
+          "turn": 288,
+          "speaker": "A",
+          "time": "00:28:29",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "TS3008d",
+          "quote": "Yeah, but be serious, then uh the docking station will be a fifth of the price of the remote control.",
+          "turn": 665,
+          "speaker": "A",
+          "time": "00:39:58",
+          "method": "exact"
+        },
+        {
+          "meeting_id": "TS3008d",
+          "quote": "Well, let's leave it open for uh for us later to see what,",
+          "turn": 309,
+          "speaker": "A",
+          "time": "00:19:35",
+          "method": "repaired"
+        }
+      ],
+      "score": {
+        "fact_recall": 0.75,
+        "facts": [
+          {
+            "fact": "Speaker D (Marketing Expert) proposed the base",
+            "matched": "speaker d"
+          },
+          {
+            "fact": "The base was to make a lost remote beep / help find it",
+            "matched": "beep"
+          },
+          {
+            "fact": "The docking station was dropped in the final meeting",
+            "matched": "no docking"
+          },
+          {
+            "fact": "About 2.30 Euro was left in the budget",
+            "matched": null
+          }
+        ],
+        "citations": 3,
+        "citations_valid": 3,
+        "cites_gold_meeting": true,
+        "meetings_cited": [
+          "TS3008b",
+          "TS3008d"
+        ]
+      },
+      "steps": 6,
+      "tool_calls": 8,
+      "seconds": 16.0,
+      "usage": {
+        "input_tokens": 14,
+        "output_tokens": 2858,
+        "cache_read": 47632,
+        "cache_write": 16233,
+        "cost_usd": 0.0039,
+        "calls": 6,
+        "latency_ms": 15579
+      },
+      "trace": [
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "list_meetings",
+          "detail": "{\"team\": \"TS3008\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "list_meetings",
+          "detail": "TS3008a (meeting 1, 233 turns) roles: A=Project Manager (Martin), D=Marketing Expert (Joost) summary: Kick-off meeting of team TS3008 for designing a new televi…",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_call",
+          "name": "search_memory",
+          "detail": "{\"query\": \"base docking station\", \"team\": \"TS3008\"}",
+          "ms": 0
+        },
+        {
+          "step": 1,
+          "kind": "tool_result",
+          "name": "search_memory",
+          "detail": "TS3008d-020 [objection, open] thread=TS3008c-T09 (Standard docking station for other products) speakers=D owner=D D objects that one docking station is very dif…",
+          "ms": 108
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "search_memory",
+          "detail": "{\"query\": \"docking station decision rechargeable base unit\", \"team\": \"TS3008\", \"kinds\": [\"decision\", \"proposal\"], \"limit\": 15}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "search_memory",
+          "detail": "TS3008d-018 [proposal, open] thread=TS3008b-T10 (Dropping the docking station) speakers=A owner=A value=no docking station; kinetic power A suggests dropping th…",
+          "ms": 93
+        },
+        {
+          "step": 2,
+          "kind": "tool_call",
+          "name": "search_transcripts",
+          "detail": "{\"query\": \"docking station\", \"meeting_id\": \"TS3008b\"}",
+          "ms": 0
+        },
+        {
+          "step": 2,
+          "kind": "tool_result",
+          "name": "search_transcripts",
+          "detail": "== TS3008b turns 269-279 == [269] D: Yes, it it it should be f be visible nearly anywhere in the room. As I uh as I said during my presentation, fifty percent u…",
+          "ms": 47
+        },
+        {
+          "step": 3,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"TS3008b\", \"start\": 280, \"end\": 296}",
+          "ms": 0
+        },
+        {
+          "step": 3,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[280] 00:28:14 D: fifty percent often loses remote control. [281] 00:28:16 A: Yeah, but but when you when it gets lost, how can you press the button to make it …",
+          "ms": 0
+        },
+        {
+          "step": 3,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"TS3008d\", \"start\": 640, \"end\": 690}",
+          "ms": 0
+        },
+        {
+          "step": 3,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[640] 00:38:09 B: Mm-hmm. But it's original. [641] 00:38:16 D: No, that's true. [642] 00:38:22 A: Instead of the rechargeable the rechargeable thing was somethi…",
+          "ms": 0
+        },
+        {
+          "step": 4,
+          "kind": "tool_call",
+          "name": "search_transcripts",
+          "detail": "{\"query\": \"docking station cost too high\", \"meeting_id\": \"TS3008d\", \"limit\": 8}",
+          "ms": 0
+        },
+        {
+          "step": 4,
+          "kind": "tool_result",
+          "name": "search_transcripts",
+          "detail": "== TS3008d turns 504-522 == [504] D: Yeah, I dunno. [505] B: Plastic. [506] C: Sh yeah. [507] B: Plastic, I think. [508] C: Classic? Oh, plastic. [509] B: Plast…",
+          "ms": 61
+        },
+        {
+          "step": 4,
+          "kind": "tool_call",
+          "name": "read_turns",
+          "detail": "{\"meeting_id\": \"TS3008b\", \"start\": 296, \"end\": 306}",
+          "ms": 0
+        },
+        {
+          "step": 4,
+          "kind": "tool_result",
+          "name": "read_turns",
+          "detail": "[296] 00:28:59 A: Yeah, but we would d ma we'd do it in Taiwan and So, it's not gonna be that expen [297] 00:29:00 B: Production. [298] 00:29:03 D: Yeah, okay. …",
+          "ms": 0
+        },
+        {
+          "step": 5,
+          "kind": "submit_rejected",
+          "name": "submit_answer",
+          "detail": "Invalid submission: String should have at most 1200 characters; Field required",
+          "ms": 0
+        },
+        {
+          "step": 6,
+          "kind": "submit_accepted",
+          "name": "submit_answer",
+          "detail": "3 verified citation(s)",
+          "ms": 0
+        }
+      ]
+    }
+  ]
+}

@@ -40,8 +40,8 @@ Code parses, indexes and searches. A model reads each meeting once, with the tea
 6. Step budget (14) or wall clock (300 s) → `budget_exhausted`, keeping the last verified submission if there was one.
 
 ## 7. How the AI components work
-- **Extraction:** Haiku 5.5 (refusals retried on Opus 5.5), adaptive thinking (on by default), `effort=medium`, structured output (`output_config.format` JSON schema), streaming, max 48k output tokens. System prompt cached.
-- **Agent:** Opus 5.5, `effort=medium`, 6 client tools, parallel tool calls allowed, system + conversation cached (`cache_control`), server-side refusal fallback.
+- **Extraction:** Haiku 5.5 (a refusal retries on the agent model when that differs), adaptive thinking (on by default), `effort=medium`, structured output (`output_config.format` JSON schema), streaming, max 48k output tokens. System prompt cached.
+- **Agent:** Haiku 5.5 (configurable; Opus 5.5 is one env var), `effort=medium`, 6 client tools (`submit_answer` is `strict`), parallel tool calls allowed, system + conversation cached (`cache_control`), server-side refusal fallback only on models that accept it (not Haiku). Truncated (`max_tokens`) responses never execute their tool calls; one round of format feedback (≤3 sentences, no system talk, cite earlier meetings) with a hard sentence limit.
 - **Embeddings:** local `all-MiniLM-L6-v2` (384-d), offline.
 
 ## 8. How external tools are invoked
@@ -57,7 +57,7 @@ Only one external service: the Anthropic Messages API, via `llm.AnthropicBackend
 See the table in ARCHITECTURE.md. The principle: every failure ends in a named state that is visible in the CLI output, the trace, the UI, or the ingest report. Nothing fails silently, and nothing unverified is cited.
 
 ## 11. How it is tested
-- `tests/` (45 tests, ~12 s, no network): parsing; quote verification incl. cross-turn rejection and repair; time-aware state (supersede, as-of replay, forward-link rejection, fulfil, inferred resolution); extraction validation; ingest end to end with a fake model (idempotency, failure cascade, no-key mode); every agent terminal state; duplicate and invalid tool calls; cross-team citations; refusal; server endpoints and input validation.
+- `tests/` (55 tests, ~12 s, no network): parsing; quote verification incl. cross-turn rejection and repair; time-aware state (supersede, as-of replay, forward-link rejection, fulfil, inferred resolution); extraction validation; ingest end to end with a fake model (idempotency, failure cascade, no-key mode); every agent terminal state; duplicate and invalid tool calls; cross-team citations; refusal; server endpoints and input validation.
 - `evaluate.py retrieval`: recall of gold evidence passages for BM25 / dense / hybrid.
 - `evaluate.py gold`: the agent on 12 hand-checked questions; key facts + verbatim citations.
 - `evaluate.py check-answers`: grader emulation on `answers.json` and the brief.

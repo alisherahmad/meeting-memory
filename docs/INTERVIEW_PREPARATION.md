@@ -8,7 +8,7 @@ Everything here describes what the code actually does. If an answer isn't in the
 3. **(90 s) Ask view.** Pick a gold question (e.g. G-IS1000-2) or a new one the interviewer gives you. Narrate the live trace: list_meetings (roles per meeting: IS1000 swaps C/D), search_memory, search_transcripts, read_turns, submit_answer. If a quote is rejected, point at it: "code refused a quote that wasn't verbatim, and the agent fixed it".
 4. **(30 s) Click a citation.** The transcript drawer opens at the exact turn with the quote highlighted.
 5. **(60 s) Brief view → TS3012 → prepare for TS3012d.** "Built from a–c only; code picks the facts by status, the model writes sentences, code attaches the quotes."
-6. **(30 s) Close on numbers:** gold-set score, 25/25 citation validity, cost per 1,000 meetings, and one failure you understand.
+6. **(30 s) Close on numbers:** 70/70 valid citations on the 25; 9/12 gold correct by human read; ≈ $8 per 1,000 meetings; whole build $1.49. Then one failure you understand (IS1000 role swap, "Right, Matthew?").
 
 Fallback if the network or API fails: `python -m meeting_memory brief --team TS3012 --no-llm` (no model), the Memory view (no model), and `pytest -q` (no network).
 
@@ -32,10 +32,10 @@ Raw layer (turns, chunks, FTS5, embeddings) → per-meeting extraction with prio
 14. **Prompt injection?** Transcripts are data. Tools are read-only, with no write, network or file tools, so an injected instruction can't do anything. The UI renders text with `textContent`. A test fixture contains an injection line.
 15. **How did you evaluate?** 12 hand-checked questions on 6 teams not in the 25; key-fact string matching + verbatim citation checks + reading the answers myself. Retrieval recall separately. Grader emulation on answers.json.
 16. **Why not LLM-as-judge?** It grades the model with the model. I used transparent checks and a human read.
-17. **What does ingesting 1,000 meetings cost?** From the ledger: see EVALUATION_REPORT ("Cost and time").
+17. **What does ingesting 1,000 meetings cost?** Measured $0.0082/meeting on Haiku 5.5 (~15.5k in, ~13.8k out tokens), so ≈ $8.20 per 1,000 (≈ $4.10 with Batches), ≈ 3 h bounded by the output-token rate limit, plus ≈ 1 h CPU embeddings.
 18. **How is state managed?** Persistent: SQLite. Derived on read: statuses. Per run: messages, tool cache, trace. No hidden memory between questions.
 19. **How would you add a new meeting tomorrow?** Drop the file in and run `ingest`: unchanged meetings are skipped by hash, and only the new meeting is extracted, with its team's memory as context.
-20. **What's tested?** 48 tests without network: parsing, quotes (incl. cross-turn rejection), time logic, extraction validation, ingest with a fake model, every agent terminal state, server validation.
+20. **What's tested?** 55 tests without network: parsing, quotes (incl. cross-turn rejection), time logic, extraction validation, ingest with a fake model, every agent terminal state, server validation.
 
 ## Ten difficult follow-ups
 1. **"Your key-fact matching is gameable. Why trust it?"** It's a proxy; I report it next to a human read of every gold answer, and list where the strings over- or under-match.

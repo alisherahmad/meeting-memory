@@ -1,0 +1,1112 @@
+[
+  {
+    "case_id": "Q01",
+    "team": "TS3006",
+    "original_question": "Team TS3006 planned both an LCD screen and speech recognition. When the costs forced a cut, which of the two did they drop, which did they keep, and what reason was given for keeping it?",
+    "tests": [
+      "change",
+      "reason"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "Team TS3006 dropped speech recognition and kept the LCD screen, decided in meeting TS3006d. The screen was kept because removing it would mean losing the whole concept and needing many extra buttons, as Speaker B (User Interface Designer) and Speaker A (Project Manager) argued. Speech recognition went because it had never been integrated into the system and dropping it saved about 4 EUR.",
+      "citations": [
+        {
+          "meeting_id": "TS3006d",
+          "quote": "We lose our whole concept. Uh so No we just We keep the L_C_D_."
+        },
+        {
+          "meeting_id": "TS3006d",
+          "quote": "We uh we we haven't really integrated this the speech into the system"
+        },
+        {
+          "meeting_id": "TS3006c",
+          "quote": "do we uh do the speech just for the basic options, for the simple buttons?"
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "TS3006c",
+        "TS3006d"
+      ],
+      "sentences": 3,
+      "steps": 5,
+      "tool_calls": 3,
+      "cost_usd": 0.0021,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q02",
+    "team": "ES2003",
+    "original_question": "Team ES2003 leaned towards one material for the case and then switched to another. What did they lean towards first, what did they end with, and why did they switch?",
+    "tests": [
+      "change",
+      "reason"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "ES2003 first leaned towards a spongy rubber case (stress-ball type material) in the conceptual design meeting, where Speaker A (User Interface Designer) said they liked the spongy idea. They ended with a solid plastic case with a single curve, which Speaker B (Project Manager) proposed in the prototype review because the team was about four euros over budget and the LCD and chip drove most of the cost, and plastic incurred no cost while rubber did.",
+      "citations": [
+        {
+          "meeting_id": "ES2003c",
+          "quote": "but the spongy idea I like. I like it a lot."
+        },
+        {
+          "meeting_id": "ES2003d",
+          "quote": "we have an amazing four Euros over budget for what we were hoping to do"
+        },
+        {
+          "meeting_id": "ES2003d",
+          "quote": "plastic for some reason incurs no cost, which I've had to very much make advantage of"
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "ES2003c",
+        "ES2003d"
+      ],
+      "sentences": 2,
+      "steps": 3,
+      "tool_calls": 3,
+      "cost_usd": 0.0014,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q03",
+    "team": "TS3009",
+    "original_question": "Team TS3009 planned a titanium back for their remote. Who first proposed replacing the titanium, what did they propose instead, and was the titanium kept in the end?",
+    "tests": [
+      "attribution",
+      "change"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "Speaker B (User Interface Designer) first proposed replacing the titanium, suggesting a titanium-coloured plastic instead, after the team hit a cost problem against the 12.50 EUR target. The titanium was not kept in the end: the team agreed to drop it for titanium-coloured plastic for the back, although Speaker B objected at the time.",
+      "citations": [
+        {
+          "meeting_id": "TS3009c",
+          "quote": "Alright. Yeah, for the front and then titanium for the back."
+        },
+        {
+          "meeting_id": "TS3009d",
+          "quote": "why don't we replace the titanium with uh"
+        },
+        {
+          "meeting_id": "TS3009d",
+          "quote": "So titanium-coloured plastic for the back."
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "TS3009c",
+        "TS3009d"
+      ],
+      "sentences": 2,
+      "steps": 4,
+      "tool_calls": 4,
+      "cost_usd": 0.0017,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q04",
+    "team": "TS3011",
+    "original_question": "Team TS3011 chose a combined energy source for their remote. What was the combination, and what happened to it when the costs were added up?",
+    "tests": [
+      "change",
+      "numbers"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "Speaker C (Industrial Designer) chose a combination of traditional batteries with solar cells, judged more reliable and cheaper than the kinetic dynamo. When the costs were added up in the evaluation meeting, the production cost came to 22 EUR against a 12.50 EUR limit, and the solar cells were identified as a main reason for the high price. Speaker A (Project Manager) dropped the solar cells and voice recognition to reach 12.40 EUR, but that was still judged too expensive, so the solar-cell option was effectively abandoned.",
+      "citations": [
+        {
+          "meeting_id": "TS3011c",
+          "quote": "I've chosen the more battery with solar cell uh solution for the energy. It's more reliable, it's cheaper."
+        },
+        {
+          "meeting_id": "TS3011d",
+          "quote": "And what makes it very expensive is uh for example the solar cell."
+        },
+        {
+          "meeting_id": "TS3011d",
+          "quote": "Twelve Euro forty cents I came up with by leaving out the solar cells"
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "TS3011c",
+        "TS3011d"
+      ],
+      "sentences": 3,
+      "steps": 4,
+      "tool_calls": 5,
+      "cost_usd": 0.0016,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q05",
+    "team": "TS3007",
+    "original_question": "Team TS3007's energy source changed between meetings. What did they first settle on, what did they end with, and who proposed the change?",
+    "tests": [
+      "change",
+      "attribution"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "TS3007 first settled on a simple standard battery, which Speaker C (Industrial Designer) proposed in the second meeting. In the third meeting the team moved to a battery combined with kinetic charging, with Speaker C (Industrial Designer) raising kinetic and Speaker B (User Interface Designer) suggesting it as a back-up. The team ended with a battery only: in the fourth meeting Speaker A (Project Manager) proposed skipping kinetic charging as not innovative and too costly.",
+      "citations": [
+        {
+          "meeting_id": "TS3007b",
+          "quote": "The energy source would be a battery, simple uh battery uh that you can find anywhere."
+        },
+        {
+          "meeting_id": "TS3007c",
+          "quote": "you should we should A combination. Uh, you use the battery and w charge it up with kinetic."
+        },
+        {
+          "meeting_id": "TS3007d",
+          "quote": "can we just skip it, because uh you have to shake it, but that's not really innovative."
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "TS3007b",
+        "TS3007c",
+        "TS3007d"
+      ],
+      "sentences": 3,
+      "steps": 5,
+      "tool_calls": 5,
+      "cost_usd": 0.0023,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q06",
+    "team": "ES2008",
+    "original_question": "Team ES2008 wanted a feature to stop the remote getting lost. What happened to that feature, who raised the main objection to it, and what was the objection?",
+    "tests": [
+      "change",
+      "attribution",
+      "reason"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "The lost-remote feature was wanted in the functional design meeting (ES2008b), but in the detailed design meeting (ES2008d) the team decided not to address it for now, since the bright, distinctive design would stand out and a loss feature needed more development than the afternoon allowed. The main objection came from Speaker C (User Interface Designer), who said a beeper-style finder would be technically difficult because an infrared signal cannot reach a remote lost under the settee, and that it might be just a gimmick.",
+      "citations": [
+        {
+          "meeting_id": "ES2008d",
+          "quote": "I think it would be difficult technologically, because if your if your remote's lost it's probably under the settee"
+        },
+        {
+          "meeting_id": "ES2008d",
+          "quote": "we've decided not to worry about that for now"
+        },
+        {
+          "meeting_id": "ES2008b",
+          "quote": "Um so we want something to keep it from getting lost."
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "ES2008b",
+        "ES2008d"
+      ],
+      "sentences": 2,
+      "steps": 3,
+      "tool_calls": 3,
+      "cost_usd": 0.0007,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q07",
+    "team": "IS1008",
+    "original_question": "In Team IS1008, a team member was asked to find out what adding a display would cost. Who was it, and what figure did they come back with?",
+    "tests": [
+      "commitment",
+      "numbers",
+      "attribution"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "Speaker D (Marketing Expert, Ed) was asked to work out the extra cost of a display, and came back with about 2 to 3 EUR per remote, bringing the unit cost to roughly 12 to 12.50 EUR. The task was given in the third meeting by Speaker A (Project Manager), and the figure was reported in the fourth.",
+      "citations": [
+        {
+          "meeting_id": "IS1008c",
+          "quote": "Then meantime you can come up with the price, how much it's cost as extra for uh the display."
+        },
+        {
+          "meeting_id": "IS1008d",
+          "quote": "if we add approximately two to three Euro per"
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 2,
+      "citations_valid": 2,
+      "meetings_cited": [
+        "IS1008c",
+        "IS1008d"
+      ],
+      "sentences": 2,
+      "steps": 3,
+      "tool_calls": 4,
+      "cost_usd": 0.0007,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q08",
+    "team": "ES2007",
+    "original_question": "A health complaint about remote controls came up in Team ES2007's meetings. Who brought it up, what was it, and how did the team's design respond to it?",
+    "tests": [
+      "attribution",
+      "reason"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "Speaker D (Marketing Expert) raised repetitive strain injury (RSI) in the second meeting, saying people who change channels too often may hurt their wrists, and buttons were implicated. The team responded by asking for ergonomics and medical research, consulting legal, and suggesting lower or flat buttons or touch input; the final design became a rubber, double-curved remote with simple push-buttons that the team marketed as anti-RSI (Speaker A, Project Manager, noted in the third meeting that any button is still repetitive).",
+      "citations": [
+        {
+          "meeting_id": "ES2007b",
+          "quote": "people who watch T_V_ maybe too often, keep changing channel hurts their wrist"
+        },
+        {
+          "meeting_id": "ES2007c",
+          "quote": "the the people have the R_ people were getting the complaining about R_S_I_, and this is anti-R_S_I_."
+        },
+        {
+          "meeting_id": "ES2007d",
+          "quote": "whilst all these other remotes uh actually do give you repetitive strain injury, our one does the complete opposite"
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "ES2007b",
+        "ES2007c",
+        "ES2007d"
+      ],
+      "sentences": 2,
+      "steps": 4,
+      "tool_calls": 4,
+      "cost_usd": 0.0025,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q09",
+    "team": "IS1002",
+    "original_question": "What selling price was Team IS1002 working with at first, what price range did they settle on later, and which speaker pushed hardest for a higher, more exclusive price?",
+    "tests": [
+      "numbers",
+      "attribution",
+      "change"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "The first working price was 25 EUR, which Speaker A (Project Manager) called the selling price in the second meeting; it was later clarified as a wholesale price. The team later agreed on a sales bracket of 35–50 EUR in the third meeting. Speaker D (Marketing Expert) pushed hardest for a higher, exclusive price, proposing 89 EUR retail, and 50–60 EUR wholesale.",
+      "citations": [
+        {
+          "meeting_id": "IS1002b",
+          "quote": "Twenty-five Euros is the selling price, we really have to innovate here I guess."
+        },
+        {
+          "meeting_id": "IS1002b",
+          "quote": "I need to make it special with a high price tag. I don't want to make it economically"
+        },
+        {
+          "meeting_id": "IS1002c",
+          "quote": "Thirty five to fifty Euros is our sales bracket okay."
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "IS1002b",
+        "IS1002c"
+      ],
+      "sentences": 3,
+      "steps": 3,
+      "tool_calls": 4,
+      "cost_usd": 0.0009,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q10",
+    "team": "TS3003",
+    "original_question": "Which age group did Team TS3003 decide to design for, and why that group rather than another?",
+    "tests": [
+      "reason"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "Team TS3003 settled on customers aged sixty to eighty, narrowing an earlier \"forty plus\" group, mainly because the trend research for that group showed older buyers wanted familiar shapes, dark colours and wood, and the team wanted a simple, few-button remote with teletext and large subtitles for them. Speaker A (Project Manager) argued the forty-plus market was broad, and Speaker D (Marketing Expert) had pushed for younger customers, so the group chose the narrower older segment. In the final meeting, Speaker D questioned this and proposed refocusing on younger people, but that was left open.",
+      "citations": [
+        {
+          "meeting_id": "TS3003c",
+          "quote": "for our um group, we're focusing on the people of sixty to eighty y years old"
+        },
+        {
+          "meeting_id": "TS3003c",
+          "quote": "And we're going to target uh sixty to to eighty year old customers."
+        },
+        {
+          "meeting_id": "TS3003d",
+          "quote": "it'd be more for the younger people than for the older people. So maybe we should just re-focus."
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "TS3003c",
+        "TS3003d"
+      ],
+      "sentences": 3,
+      "steps": 4,
+      "tool_calls": 5,
+      "cost_usd": 0.0025,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q11",
+    "team": "ES2011",
+    "original_question": "Team ES2011's project manager said they would check what one of the new project requirements meant. What was the question, and what was the answer when it came up again?",
+    "tests": [
+      "commitment",
+      "reason"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "Speaker A (Project Manager) asked whether the \"television only\" requirement meant no DVD functions or only no internet-type features, and said they would check it. When it came up again in the next meeting, Speaker A reported that the remote will not have DVD functions, so the television-only requirement means no DVD.",
+      "citations": [
+        {
+          "meeting_id": "ES2011b",
+          "quote": "I'm not sure if they meant o onl use only for television as in not for D_V_D_ or just not internet type things"
+        },
+        {
+          "meeting_id": "ES2011c",
+          "quote": "We're, um, we're actually not having D_V_D_, that was one of th I I was sorry"
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 2,
+      "citations_valid": 2,
+      "meetings_cited": [
+        "ES2011b",
+        "ES2011c"
+      ],
+      "sentences": 2,
+      "steps": 3,
+      "tool_calls": 4,
+      "cost_usd": 0.0006,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q12",
+    "team": "ES2004",
+    "original_question": "Team ES2004 considered voice recognition as a way to find the remote when it is lost. What happened to it in the final design, why, and what did they say would still make the remote easy to find?",
+    "tests": [
+      "change",
+      "reason"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "In the final design, voice recognition was taken out of the base specification and offered only as an upgrade for business-class customers, because including it pushed the production cost over the 12.50 EUR budget (removing it brought the cost back near budget). Speaker D (Marketing Expert) said the distinctive product design itself would still make the remote easier to locate, and the team's rating for \"easy to locate\" stayed at the top score.",
+      "citations": [
+        {
+          "meeting_id": "ES2004d",
+          "quote": "our object is so distinctive that that in itself is gonna make it easier to locate"
+        },
+        {
+          "meeting_id": "ES2004d",
+          "quote": "we can offer the voice recognition initially to business class customers"
+        },
+        {
+          "meeting_id": "ES2004c",
+          "quote": "So we can if financially voice recognition is not feasible we could go for a whistle"
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "ES2004c",
+        "ES2004d"
+      ],
+      "sentences": 2,
+      "steps": 5,
+      "tool_calls": 5,
+      "cost_usd": 0.0021,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q13",
+    "team": "TS3004",
+    "original_question": "Team TS3004 changed its mind about speech recognition more than once. Was speech recognition in their final design, and in which of their four meetings did they last reverse their position on it?",
+    "tests": [
+      "change"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "Yes, speech recognition is in the final design: Speaker B (User Interface Designer) confirmed in the last meeting that it goes in, and Speaker A (Project Manager) said it fits the budget. The team last reversed its position in TS3004c (meeting 3), when it reinstated speech recognition after dropping it in TS3004b; TS3004d (meeting 4) only confirmed that position.",
+      "citations": [
+        {
+          "meeting_id": "TS3004c",
+          "quote": "Okay, we just put it in, because it's a good feature. We have to stop now."
+        },
+        {
+          "meeting_id": "TS3004d",
+          "quote": "Okay yeah. Well then then we're gonna put it in."
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 2,
+      "citations_valid": 2,
+      "meetings_cited": [
+        "TS3004c",
+        "TS3004d"
+      ],
+      "sentences": 2,
+      "steps": 3,
+      "tool_calls": 4,
+      "cost_usd": 0.0011,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q14",
+    "team": "IS1009",
+    "original_question": "Team IS1009 left one feature pending more research into its cost. In their final costing, what total did they reach, and was that feature included in the total?",
+    "tests": [
+      "numbers",
+      "reason"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "Speaker A (Project Manager) totalled the prototype's production cost at 8.20 EUR, well within the 12.50 EUR limit. The feature left pending cost research, speech recognition (the voice recogniser), was not included, since Speaker A said the financing had no room for it.",
+      "citations": [
+        {
+          "meeting_id": "IS1009c",
+          "quote": "pending some more research from our industrial engineer on how expensive that is."
+        },
+        {
+          "meeting_id": "IS1009d",
+          "quote": "Eight point two, right? So, we looks like we are well within budget."
+        },
+        {
+          "meeting_id": "IS1009d",
+          "quote": "In the financing there was no room for our voice recogniser."
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "IS1009c",
+        "IS1009d"
+      ],
+      "sentences": 2,
+      "steps": 4,
+      "tool_calls": 5,
+      "cost_usd": 0.0021,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q15",
+    "team": "ES2016",
+    "original_question": "Team ES2016's first full costing of their design came out over budget. What total did they get, what was the limit, and which component did they remove to fix it?",
+    "tests": [
+      "numbers",
+      "change"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "Speaker A (Project Manager) totalled the first full costing at 15.50 EUR, about 3 EUR over the 12.50 EUR production-cost limit. To fix it, the team removed the LCD screen, leaving the scroll wheel as the only interface, so the remote came back to 12.50 EUR.",
+      "citations": [
+        {
+          "meeting_id": "ES2016d",
+          "quote": "So our total is fifteen point five. Which I believe is"
+        },
+        {
+          "meeting_id": "ES2016d",
+          "quote": "Twelve and a half Euros is what supposed to cost us."
+        },
+        {
+          "meeting_id": "ES2016d",
+          "quote": "you could maybe take out the L_C_D_ dis display even"
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "ES2016d"
+      ],
+      "sentences": 2,
+      "steps": 5,
+      "tool_calls": 4,
+      "cost_usd": 0.0013,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q16",
+    "team": "TS3010",
+    "original_question": "Team TS3010's project manager favoured a particular kind of control for navigating. What was it, what replaced it in the final costed design, and what else was given up at the same time to reach the budget?",
+    "tests": [
+      "attribution",
+      "change",
+      "numbers"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "Speaker A (Project Manager) favoured a small joystick for navigating channels and volume, rather than the scroll or switch controls. In the final costed design the joystick was dropped for four normal push buttons (channel up/down, volume left/right), which brought the cost to about 12.50 EUR. To reach the budget the team also gave up the special coloured buttons and used a normal colour instead.",
+      "citations": [
+        {
+          "meeting_id": "TS3010c",
+          "quote": "I think a joystick is better. A small one. So, please look at it."
+        },
+        {
+          "meeting_id": "TS3010d",
+          "quote": "No joystick. Push-buttons. No special colour. Twelve and a half Euros."
+        },
+        {
+          "meeting_id": "TS3010d",
+          "quote": "then we uh lose two Euros. Then we have thirteen Euros. Half a Euro too much."
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "TS3010c",
+        "TS3010d"
+      ],
+      "sentences": 3,
+      "steps": 3,
+      "tool_calls": 4,
+      "cost_usd": 0.0019,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q17",
+    "team": "ES2009",
+    "original_question": "Team ES2009 provisionally chose a touch screen. In which of their meetings was it dropped, what feature did they keep instead, and what cost per remote was estimated for the touch screen?",
+    "tests": [
+      "change",
+      "numbers"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "The touch screen, provisionally chosen in ES2009b, was dropped in ES2009c (the third meeting), where the team kept voice recognition instead. Speaker B (Industrial Designer) estimated the touch screen would cost upwards of 17.50 EUR per remote, though he described it as only an estimate.",
+      "citations": [
+        {
+          "meeting_id": "ES2009b",
+          "quote": "let's provisionally let's go for a touch screen one with several submenus"
+        },
+        {
+          "meeting_id": "ES2009c",
+          "quote": "We will omit the touch screen in favour of voice recognition."
+        },
+        {
+          "meeting_id": "ES2009c",
+          "quote": "it's gonna cost us upwards of seventeen fifty Euro per remote"
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "ES2009b",
+        "ES2009c"
+      ],
+      "sentences": 2,
+      "steps": 5,
+      "tool_calls": 5,
+      "cost_usd": 0.0012,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q18",
+    "team": "ES2014",
+    "original_question": "How did Team ES2014 first plan to let people find a lost remote, what did that plan change to, and who suggested how the new version should be presented to buyers?",
+    "tests": [
+      "change",
+      "attribution"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "The first plan was a whistle-back function so a lost remote would answer a whistle, proposed by Speaker C (User Interface Designer) in ES2014b. It changed to a clap-activated locator because not everyone can whistle, a switch Speaker A (Project Manager) raised and Speakers B and D agreed to. Speaker C (User Interface Designer) suggested in ES2014c that the product be marketed as a finder function rather than against leading voice-control remotes, and Speaker A (Project Manager) confirmed that framing.",
+      "citations": [
+        {
+          "meeting_id": "ES2014b",
+          "quote": "it'd be a big advantage if we did have some sort of um kind of whistle back kind of function"
+        },
+        {
+          "meeting_id": "ES2014b",
+          "quote": "No, clapping, I think clapping, yeah."
+        },
+        {
+          "meeting_id": "ES2014c",
+          "quote": "it might be a good idea to market it as a um finder function"
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "ES2014b",
+        "ES2014c"
+      ],
+      "sentences": 3,
+      "steps": 4,
+      "tool_calls": 5,
+      "cost_usd": 0.0023,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q19",
+    "team": "IS1003",
+    "original_question": "Team IS1003 picked a natural material for the case and later changed it. What was the material, what replaced it, and who suggested the switch?",
+    "tests": [
+      "change",
+      "attribution"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "The team first chose wood for the remote's casing (wood-based casing, with rubber for the touch buttons), then switched to plastic in the detailed design meeting. Speaker B (Industrial Designer) proposed the change, and Speaker A (Project Manager) agreed it would be better, with Speaker C (User Interface Designer) noting plastic is free.",
+      "citations": [
+        {
+          "meeting_id": "IS1003d",
+          "quote": "I think you can transform the wood into plastic, maybe. Because uh it seems that this can be"
+        },
+        {
+          "meeting_id": "IS1003c",
+          "quote": "if you we want to put fashion in electronics maybe we can try to do something with wood."
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 2,
+      "citations_valid": 2,
+      "meetings_cited": [
+        "IS1003c",
+        "IS1003d"
+      ],
+      "sentences": 2,
+      "steps": 4,
+      "tool_calls": 5,
+      "cost_usd": 0.0019,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q20",
+    "team": "ES2008",
+    "original_question": "Early on, a Team ES2008 member asked whether the remote should only have buttons for the television. Who said they would look into it, and what answer was reported back?",
+    "tests": [
+      "commitment",
+      "attribution"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "Speaker A (Project Manager) said they would look into whether the remote should be television-only, after Speaker C (User Interface Designer) asked in the first meeting. At the second meeting, Speaker A reported back that the remote is just for television, since adding video recorder functions would make it too complex and the product needs to go out quickly.",
+      "citations": [
+        {
+          "meeting_id": "ES2008a",
+          "quote": "It's a good question. Um. I'll look into that."
+        },
+        {
+          "meeting_id": "ES2008b",
+          "quote": "Just for television. That's what we're focused on. Um otherwise becomes to complex, we wanna get this out"
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 2,
+      "citations_valid": 2,
+      "meetings_cited": [
+        "ES2008a",
+        "ES2008b"
+      ],
+      "sentences": 2,
+      "steps": 4,
+      "tool_calls": 5,
+      "cost_usd": 0.0012,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q21",
+    "team": "IS1007",
+    "original_question": "In Team IS1007, one member said they would check the prices of components. Who was it, what total did they report for a version with all the functions, and what did the team then decide about the LCD?",
+    "tests": [
+      "commitment",
+      "numbers",
+      "change"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "Speaker C (Industrial Designer) said they would check the component prices. They reported about 15 USD as the total for the version with all functions, and the team then decided to make the remote without an LCD screen, since the LCD would raise the price without adding enough value.",
+      "citations": [
+        {
+          "meeting_id": "IS1007c",
+          "quote": "So for my part I will check the prices the um the prices difference"
+        },
+        {
+          "meeting_id": "IS1007d",
+          "quote": "the total cost if you if you want all the fuct functionalities will be about uh fifteen dollars"
+        },
+        {
+          "meeting_id": "IS1007d",
+          "quote": "Because that's with L_C_D_ just will increase the price"
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "IS1007c",
+        "IS1007d"
+      ],
+      "sentences": 2,
+      "steps": 4,
+      "tool_calls": 4,
+      "cost_usd": 0.0013,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q22",
+    "team": "ES2010",
+    "original_question": "Team ES2010 discussed several battery options. Who suggested a lithium battery, what did another member prefer instead and why, and what was the final choice?",
+    "tests": [
+      "attribution",
+      "reason",
+      "change"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "Speaker B (Industrial Designer) suggested one small lithium battery in ES2010c, arguing lithium is now widely available and lasts longer. Speaker D (Marketing Expert) preferred triple A batteries instead because they are lighter, which suits a thinner remote. The final choice, made in ES2010d, was a single lithium battery, after Speaker A (Project Manager) proposed it and Speaker D agreed.",
+      "citations": [
+        {
+          "meeting_id": "ES2010c",
+          "quote": "we could do one small lithium, 'cause you know the lithium batteries are doing quite well"
+        },
+        {
+          "meeting_id": "ES2010c",
+          "quote": "I think triple A_, it'll be lighter."
+        },
+        {
+          "meeting_id": "ES2010d",
+          "quote": "Yeah, let's let's do a lithium."
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "ES2010c",
+        "ES2010d"
+      ],
+      "sentences": 3,
+      "steps": 6,
+      "tool_calls": 4,
+      "cost_usd": 0.0018,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q23",
+    "team": "ES2006",
+    "original_question": "Team ES2006's final design had to fit the budget. Which of their headline technical features did they keep, and what did they swap out or simplify to get under budget?",
+    "tests": [
+      "reason",
+      "change"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "Speaker A (Industrial Designer) said the team kept all the headline features, including voice recognition, the LCD display, the advanced chip, and the rubber flip-open banana-shaped case. To get under the 12.50 EUR production budget, they dropped the sample sensor, which Speaker B (Marketing Expert) identified as the most expensive part, and replaced the sample speaker with a simple beeper for the locator. They also swapped the scroll wheel for plain push buttons, and the final costing came in within budget with about 1 EUR left over.",
+      "citations": [
+        {
+          "meeting_id": "ES2006d",
+          "quote": "we keep all the features, we keep voice recognition, we keep L_C_D_ display"
+        },
+        {
+          "meeting_id": "ES2006d",
+          "quote": "the sample sensor will have to go, 'cause that's the most expensive thing on there"
+        },
+        {
+          "meeting_id": "ES2006d",
+          "quote": "costs are within budget, well within budget, including a little what have we got?"
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "ES2006d"
+      ],
+      "sentences": 3,
+      "steps": 4,
+      "tool_calls": 4,
+      "cost_usd": 0.0029,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q24",
+    "team": "ES2002",
+    "original_question": "What power source did Team ES2002 first agree on, what addition did their project manager like the idea of, and what did the final design use?",
+    "tests": [
+      "change",
+      "attribution"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "The team first settled on regular batteries, with rechargeable batteries set aside for cost and docking reasons; in the ES2002c meeting Speaker B (Project Manager) said they really liked the idea of kinetic power with battery back-up added. The final design in ES2002d uses batteries only, with no kinetic power, because of cost restraints.",
+      "citations": [
+        {
+          "meeting_id": "ES2002b",
+          "quote": "I don't think rechargeable is something we should you know, we really need to care about."
+        },
+        {
+          "meeting_id": "ES2002c",
+          "quote": "I really like the idea of this kinetic thing where you'd have the back-up of the battery"
+        },
+        {
+          "meeting_id": "ES2002d",
+          "quote": "Do we have kinetic as well? No. Okay, just battery."
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "ES2002b",
+        "ES2002c",
+        "ES2002d"
+      ],
+      "sentences": 2,
+      "steps": 3,
+      "tool_calls": 4,
+      "cost_usd": 0.0011,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  },
+  {
+    "case_id": "Q25",
+    "team": "ES2011",
+    "original_question": "Team ES2011 played with fruit and vegetable ideas for the look of their remote. What did they decide about fruit and vegetable shapes in the end, and why?",
+    "tests": [
+      "reason",
+      "change"
+    ],
+    "expected_behaviour": "Answer every part in 1-3 plain sentences; name speakers as letter + role for that meeting; 1-3 citations, each >= 6 words verbatim from one turn of the named team's meetings; check later meetings before stating what was final; cite both sides of a change when possible.",
+    "required_evidence": "at least two meetings of the named team (per questions.json)",
+    "validation": "automatic: citation verbatim check, count, team, sentences; correctness: held back by Catalist",
+    "actual": {
+      "answer": "The team began with a fruit and vegetable theme, which was left open in the earlier conceptual meeting. In the final detailed design meeting, Speaker B (Industrial Designer) agreed to drop different fruit and vegetable shapes and use a broccoli-like joystick shape, showing the fruit and vegetable names by colour instead. The reasons were cost, since irregular shapes would cost more to produce than printed colours, and comfort, since the broccoli shape was comfortable like a joystick while squashing the fruit flat was still too big to hold.",
+      "citations": [
+        {
+          "meeting_id": "ES2011d",
+          "quote": "Yeah I'd agree with changing the shape. Um, I was just having fun making strawberries and stuff."
+        },
+        {
+          "meeting_id": "ES2011d",
+          "quote": "I bet having different colours is a lot cheaper than having different shapes too."
+        },
+        {
+          "meeting_id": "ES2011c",
+          "quote": "the fruit and vegetable theme is the is the current trend"
+        }
+      ]
+    },
+    "automatic_checks": {
+      "state": "answered",
+      "citations": 3,
+      "citations_valid": 3,
+      "meetings_cited": [
+        "ES2011c",
+        "ES2011d"
+      ],
+      "sentences": 3,
+      "steps": 5,
+      "tool_calls": 4,
+      "cost_usd": 0.0017,
+      "auto_pass": true
+    },
+    "pass_fail": "pass (automatic checks only)",
+    "failure_explanation": ""
+  }
+]

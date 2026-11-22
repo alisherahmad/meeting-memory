@@ -12,7 +12,7 @@ Reviewed: the repository at the final commit, `answers.json`, `evaluation/result
 | **Candidate ownership** | **8/10** (conditional) | ENGINEERING_WALKTHROUGH and INTERVIEW_PREPARATION map every claim to a file/function; decisions have recorded reasons, and the failure analysis is specific. The score depends on the applicant actually studying the six functions listed in INTERVIEW_PREPARATION ("Study these files personally"). |
 
 ## Five biggest remaining weaknesses
-1. **Speaker roles can be wrong where letters change (IS1000d).** This affects any "who" question on such meetings. *Fixable:* deterministic vocative constraints ("Right, Matthew?" means the speaker isn't Matthew) and pass names, not previous mappings, to the extractor. Not done: it needs a name-identity layer, about half a day to do properly and test. Documented as failure 2.
+1. **Speaker roles can still be wrong where letters change and nobody is addressed by name.** The IS1000d swap is now corrected by a code-level name-constraint resolver (1 correction in 138 meetings, verified), but the resolver only sees direct address ("Right, Matthew?"). A fuller fix would stop passing earlier letter mappings to the extractor and add identity linking across meetings.
 2. **"Who first proposed X" depends on memory attribution.** Extraction can merge adjacent ideas (TS3008b). *Partly mitigated:* the agent is told to verify in transcripts, but it doesn't systematically compare timestamps across candidate items.
 3. **Single-pass extraction quality is the ceiling for the brief.** The brief is built entirely from memory items, so a missed or mislabelled item is missing or wrong in the brief. Some brief citations support their point only loosely, because a point inherits the evidence of every item it groups.
 4. **Small evaluation.** 12 gold questions with string-matched key facts plus one human reader. Confidence intervals are wide; one reviewer's judgment is a single point of failure.
@@ -22,6 +22,7 @@ Reviewed: the repository at the final commit, `answers.json`, `evaluation/result
 - Q04's 14-step dead loop (unactionable validation message + unscreened truncated tool calls) → fixed, tested, all 25 re-run.
 - Over-length answers and system-internals leaking into answers → hard 3-sentence limit and format feedback; 23/25 now cite ≥2 meetings (was 15/25).
 - An evaluation-report claim that the role error was a one-off → corrected: it's systematic.
+- The role swap itself → fixed by `roles.resolve_team_roles` (direct-address constraints). A first, broader version was wrong in 9 of 11 meetings and was caught by reading every change before shipping.
 
 ## Verdict
 Submit. The system does what the brief emphasises (scale-aware retrieval, explicit change tracking, a defensible model/code line, honest failure analysis), and it can't produce an unverifiable citation. Its known weaknesses are specific, reproducible and have concrete fixes, which is a better position for the interview than hiding them.

@@ -15,20 +15,21 @@ _Last updated: 2026-11-22. Deadline: 2026-11-23._
 - [x] Bugs found and fixed: Q04 submit loop, strict-schema 400, rate limits, format leakage
 - [x] UI inspected with real data (desktop + 375 px), no console errors
 - [x] Evaluation report, write-up, final review, walkthrough, interview prep
-- [x] 55 tests passing; git checkpoints
+- [x] Role-swap fix (IS1000d) via direct-address resolver; gold re-run confirms
+- [x] 64 tests passing (incl. the other session's UI tests); git checkpoints
 
 ## Remaining
 | Item | Owner | Note |
 |---|---|---|
 | Walkthrough recording (3–5 min) or live-demo prep | applicant | Script in INTERVIEW_PREPARATION.md |
 | Reply to Catalist with links | applicant | Decide where to host the repo (private by default; don't publish the transcripts or questions) |
-| Fix role resolution across letter swaps | optional | Design in EVALUATION_REPORT §3 failure 2 |
+| Commit the other session's UI accessibility pass (static/ + tests/test_ui_accessibility.py) | applicant | Left uncommitted on purpose by that session |
 
 ## Blockers
 None.
 
 ## Failed tests
-None (55/55).
+None (64/64).
 
 ## Spend
 $1.49 of the $4.72 balance (cap set at $4.00 in `.env`).

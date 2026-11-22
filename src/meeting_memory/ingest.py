@@ -204,6 +204,18 @@ def stage_extract(settings: Settings, store: Store, llm: LLM, meetings: list[Mee
     report.seconds["extract"] = round(time.monotonic() - t0, 2)
 
 
+def stage_resolve_roles(store: Store, teams: set[str], report: IngestReport, on_event: Callable[[str], None]) -> None:
+    """Code-only cross-check of speaker roles against name mentions (see roles.resolve_team_roles)."""
+    from .roles import resolve_team_roles
+
+    changed = 0
+    for team in sorted(teams):
+        for mid, notes in resolve_team_roles(store, team).items():
+            changed += 1
+            on_event(f"roles corrected in {mid}: " + "; ".join(notes))
+    report.extraction_stats["role_meetings_corrected"] = changed
+
+
 def run_ingest(settings: Settings, store: Store, llm: LLM, *, extract: bool = True, force: bool = False,
                only_teams: set[str] | None = None, on_event: Callable[[str], None] = print) -> IngestReport:
     report = IngestReport()
@@ -219,5 +231,6 @@ def run_ingest(settings: Settings, store: Store, llm: LLM, *, extract: bool = Tr
         else:
             stage_extract(settings, store, llm, meetings, report, force=force, on_event=on_event)
             stage_embed_items(settings, store, report)
+            stage_resolve_roles(store, {m.team for m in meetings}, report, on_event)
     report.seconds["total"] = round(time.monotonic() - t0, 2)
     return report

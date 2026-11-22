@@ -125,6 +125,18 @@ def cmd_stats(args, settings) -> None:
     print(json.dumps({"meetings": m["n"], "words": m["w"], "extracted": m["ex"], "items": i["n"], "items_verified": i["v"]}, indent=2))
 
 
+def cmd_resolve_roles(args, settings) -> None:
+    from .roles import resolve_team_roles
+
+    store, _, _ = _build(settings)
+    total = 0
+    for team in store.teams():
+        for mid, notes in resolve_team_roles(store, team).items():
+            total += 1
+            print(f"{mid}: " + "; ".join(notes))
+    print(f"{total} meeting(s) with corrected roles")
+
+
 def cmd_serve(args, settings) -> None:
     import uvicorn
 
@@ -158,12 +170,13 @@ def main(argv: list[str] | None = None) -> None:
     a.add_argument("--no-llm", action="store_true")
     a.add_argument("--json", action="store_true")
     sub.add_parser("stats")
+    sub.add_parser("resolve-roles", help="cross-check speaker roles against name mentions (no LLM)")
     a = sub.add_parser("serve")
     a.add_argument("--host", default="127.0.0.1")
     a.add_argument("--port", type=int, default=8765)
     args = p.parse_args(argv)
     settings = get_settings()
-    {"ingest": cmd_ingest, "ask": cmd_ask, "answer-all": cmd_answer_all, "brief": cmd_brief, "stats": cmd_stats,
+    {"ingest": cmd_ingest, "ask": cmd_ask, "answer-all": cmd_answer_all, "brief": cmd_brief, "stats": cmd_stats, "resolve-roles": cmd_resolve_roles,
      "serve": cmd_serve}[args.cmd](args, settings)
 
 

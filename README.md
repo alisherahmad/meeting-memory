@@ -41,6 +41,7 @@ $env:PYTHONPATH = "src"
 | Score our 12 gold questions | `python -m meeting_memory.evaluate gold --concurrency 3` | yes | ~1 min, ~$0.03 |
 | Retrieval recall (BM25 / dense / hybrid) | `python -m meeting_memory.evaluate retrieval` | no | |
 | Cost ledger | `python -m meeting_memory stats` | no | |
+| Re-check speaker roles against direct address | `python -m meeting_memory resolve-roles` | no | seconds |
 
 Embeddings are optional (`MM_EMBEDDINGS=0` for BM25 only). They use the local `all-MiniLM-L6-v2` from the Hugging Face cache and never download at runtime.
 
@@ -63,7 +64,7 @@ docs/             specification, architecture, decisions, evaluation, walkthroug
 25/25 Catalist questions answered with **70/70 citations verbatim-valid**; TS3012 brief with 34/34 valid citations; our 12 hand-checked questions: **9 correct, 2 mostly correct, 1 wrong** (human read); ≈ **$8 per 1,000 meetings** to ingest; the whole build cost **$1.49** on Claude Haiku 5.5. Details and the three failures: [docs/EVALUATION_REPORT.md](docs/EVALUATION_REPORT.md).
 
 ## Known limitations
-See [docs/EVALUATION_REPORT.md](docs/EVALUATION_REPORT.md) and [docs/FINAL_REVIEW.md](docs/FINAL_REVIEW.md). In short: speaker roles can be wrong in meetings where the letters swap (IS1000d); "who first proposed X" can inherit an extraction mistake; memory quality depends on one extraction pass per meeting; the UI has no authentication (local use only).
+See [docs/EVALUATION_REPORT.md](docs/EVALUATION_REPORT.md) and [docs/FINAL_REVIEW.md](docs/FINAL_REVIEW.md). In short: speaker roles can still be wrong where letters swap and nobody is addressed by name (the IS1000d swap is corrected by a code-level resolver); "who first proposed X" can inherit an extraction mistake; memory quality depends on one extraction pass per meeting; the UI has no authentication (local use only).
 
 ## Data
 AMI Meeting Corpus, University of Edinburgh and partners, CC BY 4.0, as reformatted by Catalist. Transcripts, questions and the brief are not committed to this repository.

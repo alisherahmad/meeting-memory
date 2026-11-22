@@ -1,0 +1,12 @@
+# Secrets
+.env
+# Catalist assessment materials and corpus (not redistributed; see README to obtain)
+*.zip
+*.pdf
+data/
+# Generated
+var/
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/

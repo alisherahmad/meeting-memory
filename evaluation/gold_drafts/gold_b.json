@@ -1,0 +1,115 @@
+[
+  {
+    "case_id": "G-IS1004-1",
+    "team": "IS1004",
+    "category": "decision_change",
+    "question": "In team IS1004's conceptual design meeting, the Industrial Designer proposed a two-part power supply for the remote. What was it, what power source did the team end up with in the final meeting, and who questioned the original plan?",
+    "answer": "In meeting c the Industrial Designer (Speaker C) proposed batteries, rechargeable in a base station, plus solar cells. In the final meeting the User Interface Designer (Speaker B) said the solar cells were no longer needed because there was a recharging base station. During costing the team dropped the solar cells (and kinetic/dynamo) and kept only the rechargeable battery.",
+    "key_facts": [
+      {"fact": "Original plan combined (rechargeable) batteries with solar cells", "match_any": ["solar"]},
+      {"fact": "Final power source was the rechargeable battery only (solar cells dropped)", "match_any": ["battery only", "batteries only", "only the rechargeable", "only rechargeable", "just the battery", "just batteries", "just rechargeable", "only a battery", "only the battery", "one battery", "rechargeable batter"]},
+      {"fact": "Speaker B, the User Interface Designer, questioned the need for solar cells", "match_any": ["speaker b", "(b)", " b,", "user interface"]}
+    ],
+    "evidence": [
+      {"meeting_id": "IS1004c", "quote": "So I was of the idea that we can have two kind of power supplies, one is the usual batteries which are there, they could be chargeable batteries if there's a basis station kind of thing and on top of that we can have solar cells"},
+      {"meeting_id": "IS1004d", "quote": "I don't really know if the solar cells are actually necessary any more if you have a recharging base station."},
+      {"meeting_id": "IS1004d", "quote": "I think rechargeable batteries will take care of the power thing. Yeah. To bring the cost"}
+    ],
+    "notes": "Roles from IS1004a introductions: A = Project Manager (Sebastian), B = User Interface Designer (Michael), C = Industrial Designer (Hemant), D = Marketing Expert (Guillermo); these hold through b-d. In meeting d, C still presented 'solar cells and rechargeable batteries' before B objected. In the costing, B said 'we decided against the solar cells' and C agreed ('we said no to that'). Then the PM said 'we stick to battery, one'."
+  },
+  {
+    "case_id": "G-IS1004-2",
+    "team": "IS1004",
+    "category": "number",
+    "question": "Team IS1004's kickoff set a target selling price for the remote. What was it, what production-cost limit did the Project Manager use in the final costing, and what change, suggested by whom, brought the design back within budget?",
+    "answer": "The target selling price was 25 Euro (meant to give a 50 million Euro profit). In the final meeting the PM said production cost had to be below 12.5 Euro. The design came out over budget, so the User Interface Designer (Speaker B) suggested making the case plastic instead of rubber (C agreed), which brought it roughly on budget and then under the limit.",
+    "key_facts": [
+      {"fact": "Target selling price was 25 Euro", "match_any": ["twenty-five", "twenty five", "25"]},
+      {"fact": "Production cost had to be below 12.5 Euro", "match_any": ["12.5", "12,5", "twelve point five", "twelve and a half", "twelve fifty", "twelve euro fifty"]},
+      {"fact": "Switching from rubber to plastic brought it within budget", "match_any": ["plastic instead of rubber", "rubber to plastic", "plastic rather than rubber", "replac", "plastic"]},
+      {"fact": "Speaker B (User Interface Designer) suggested the switch", "match_any": ["speaker b", "(b)", " b,", "user interface"]}
+    ],
+    "evidence": [
+      {"meeting_id": "IS1004a", "quote": "So we should target selling price of twenty-five Euro for this remote control"},
+      {"meeting_id": "IS1004d", "quote": "Um well we are going to calculate the production costs. We should we should be below twelve point five."},
+      {"meeting_id": "IS1004d", "quote": "Make it plastic instead of rubber. And then we're basically o on budget except for you know ten cents."}
+    ],
+    "notes": "A = PM, B = UI Designer, C = Industrial Designer, D = Marketing. In d, B first asked about rubber ('didn't we say we wanted to do a rubber'). A and D called rubber too expensive, but A put rubber on the sheet anyway. Once over budget, B and C (C: 'instead of rubber, let it be plastic') both suggested plastic, B speaking first by timestamp (both turns at 00:26:32). A then said they were under the cost. The 50 million profit figure is also from meeting a."
+  },
+  {
+    "case_id": "G-TS3005-1",
+    "team": "TS3005",
+    "category": "decision_change",
+    "question": "Team TS3005 treated speech recognition as a planned feature in its earlier meetings. What was its status before the final meeting, what happened to it in the final costing, and why?",
+    "answer": "In meeting b the PM recorded speech recognition as an extra only 'when we have enough money left'. In meeting c he called speech control the unique idea of the remote, and the meeting-d prototype had a microphone. In the final costing the design came to about 18.5 against a 12.50 Euro limit, so the Marketing Expert (D) proposed scrapping the sample speaker and the PM agreed. The team dropped speech recognition (together with the push-scroll wheel) even though the UI Designer (B) objected that it was a special new feature.",
+    "key_facts": [
+      {"fact": "Speech recognition was removed in the final costing", "match_any": ["drop", "scrap", "remov", "cut", "eliminat", "abandon"]},
+      {"fact": "Production cost limit was 12.50 Euro", "match_any": ["12.50", "12,50", "12.5", "twelve fifty", "twelve euro fifty", "twelve and a half"]},
+      {"fact": "First cost estimate was about 18.5, over budget", "match_any": ["18.5", "18,5", "eighteen and a half", "eighteen point five", "over budget", "too expensive"]},
+      {"fact": "Speaker D (Marketing Expert) proposed scrapping the sample speaker", "match_any": ["speaker d", "(d)", " d,", "marketing"]}
+    ],
+    "evidence": [
+      {"meeting_id": "TS3005b", "quote": "Okay, so we only do this when we have enough money left."},
+      {"meeting_id": "TS3005d", "quote": "I think we should scrap the sample speaker. It's four pri it four units."},
+      {"meeting_id": "TS3005d", "quote": "So it's curved, it's still that so we we dropped the speech recognition together with the speaker."}
+    ],
+    "notes": "Roles from TS3005a: A = Project Manager, B = User Interface Designer, C = Industrial Designer, D = Marketing Expert; consistent in b-d. Meeting c (A): 'it is the the unique uh idea of our remote, huh, the the speech control.' The 18.5 total was said by D ('Eighteen and a half, damn'). A also said 'you should drop the speech recognition'. The push-scroll wheel was dropped too (first suggested by C)."
+  },
+  {
+    "case_id": "G-TS3005-2",
+    "team": "TS3005",
+    "category": "attribution",
+    "question": "In team TS3005's functional design meeting, who argued for an LCD touch screen and with what evidence, who warned it clashed with keeping the remote cheap, and did the LCD survive the final costing?",
+    "answer": "The Marketing Expert (Speaker D) pushed for the LCD, citing survey figures: 81% of 16-25 year olds were interested in an LCD screen, and the target group was 16-45. The Industrial Designer (Speaker C) warned that LCD screens are very expensive and clash with the mission to make it cheap. The PM settled on 'for now it's LCD', with buttons as a backup. In the final meeting the LCD screen was kept, and the scroll wheel and speech recognition were cut instead.",
+    "key_facts": [
+      {"fact": "Speaker D (Marketing Expert) argued for the LCD", "match_any": ["speaker d", "(d)", " d,", "marketing"]},
+      {"fact": "Cited 81% of 16-25 year olds interested in an LCD", "match_any": ["81", "eighty one", "eighty-one"]},
+      {"fact": "Speaker C (Industrial Designer) warned it was expensive / against making it cheap", "match_any": ["speaker c", "(c)", " c,", "industrial"]},
+      {"fact": "The LCD screen was kept in the final design", "match_any": ["kept", "retained", "stayed", "remained", "survived", "still had", "kept the lcd"]}
+    ],
+    "evidence": [
+      {"meeting_id": "TS3005b", "quote": "younger people have now, sixteen till to twenty five age, are f eighty one percent interested in L_C_D_ screen."},
+      {"meeting_id": "TS3005b", "quote": "But I think that uh that collides with our mission to make it very cheap. Because L_C_D_ screens are very expensive."},
+      {"meeting_id": "TS3005d", "quote": "First of all I didn't think uh that we were able to make an L_C_D_ screen uh first point, but uh it was possible uh uh, yeah."}
+    ],
+    "notes": "A = PM, B = UI Designer, C = Industrial Designer, D = Marketing Expert. Shortly after warning about cost, C also said 'So perhaps we should we should focus on that L_C_D_ screen', so C was not strictly against it. In d, D said a regular chip was impossible ('otherwise we don't have an L_C_D_ screen'), and B said in hindsight 'you could make an L_C_D_ screen but no mic'. Accept answers that say the LCD stayed and the cuts came from elsewhere."
+  },
+  {
+    "case_id": "G-TS3008-1",
+    "team": "TS3008",
+    "category": "attribution",
+    "question": "In team TS3008's conceptual design meeting, who pushed for an LCD display on the remote and how was it settled? In the final meeting, what did the component information say a display would need, and which chip did the team choose?",
+    "answer": "The Industrial Designer (Speaker C) pushed for an LCD (programme info, a trendy colour LCD). The PM (Speaker A) opposed it because it did not fit the sturdy, simple design and the docking station was already the special feature; D raised cost and fragility and B called it too much. A concluded 'we skip the LCD display'. In the final meeting the component information said a display requires an advanced chip, so with no display the team chose the simple chip.",
+    "key_facts": [
+      {"fact": "Speaker C (Industrial Designer) pushed for the LCD", "match_any": ["speaker c", "(c)", " c,", "industrial"]},
+      {"fact": "The LCD was rejected/skipped", "match_any": ["skip", "reject", "dropped", "no lcd", "ruled out", "overruled", "not includ", "voted down"]},
+      {"fact": "A display requires an advanced chip", "match_any": ["advanced chip"]},
+      {"fact": "The team chose the simple chip", "match_any": ["simple chip"]}
+    ],
+    "evidence": [
+      {"meeting_id": "TS3008c", "quote": "But uh I've got a the email with uh with the possibilities. And L_C_D_ was a possibility for the remote control. So why don't we use it."},
+      {"meeting_id": "TS3008c", "quote": "Okay, we s skip the L_C_D_ display. I'm sorry, maybe you can do something if we are at your own place"},
+      {"meeting_id": "TS3008d", "quote": "A scroll-wheel it s uh only states that a scroll-wheel requires a regular chip, and that a display requires an advanced chip. So, we don't need any of them."}
+    ],
+    "notes": "TS3008a has no explicit self-introductions. Roles come from the a closing assignments and the b/c presentations: A = Project Manager (Maarten; runs meetings, takes minutes, 'Team Leader'), B = User Interface Designer (technical functions, interface), C = Industrial Designer (working design, components design), D = Marketing Expert (Joost; market research, trend watching). C first raised the LCD in his c components presentation. In d, B said 'The display requires an advanced chip.' A said 'So we're gonna use the simple chip.'"
+  },
+  {
+    "case_id": "G-TS3008-2",
+    "team": "TS3008",
+    "category": "decision_change",
+    "question": "Team TS3008 adopted a base/docking station in its functional design meeting. Who proposed it and what was it for, and what happened to it in the final costing meeting?",
+    "answer": "In meeting b the Marketing Expert (Speaker D) proposed a base with a button that makes a lost remote beep (about 50% of users often lose their remote), and the PM (A) added making it rechargeable; in meeting c the PM called the docking station 'our killer feature'. In the final costing the docking station was not on the cost sheet. With one battery and a simple chip about 2.30 Euro of the 12.50 budget was left. D and B argued a docking station could be built for that, but the PM thought it unrealistic and suggested forgetting it (pushing kinetic power instead, which was not adopted), so the final concept had no docking station.",
+    "key_facts": [
+      {"fact": "Speaker D (Marketing Expert) proposed the base", "match_any": ["speaker d", "(d)", " d,", "marketing"]},
+      {"fact": "The base was to make a lost remote beep / help find it", "match_any": ["beep", "lost", "find", "locat", "retriev", "noise"]},
+      {"fact": "The docking station was dropped in the final meeting", "match_any": ["dropped", "no docking", "forget", "without", "abandon", "left out", "scrapped", "not includ", "removed"]},
+      {"fact": "About 2.30 Euro was left in the budget", "match_any": ["2.30", "2,30", "2.3", "two thirty", "two euros and thirty", "two euro thirty"]}
+    ],
+    "evidence": [
+      {"meeting_id": "TS3008b", "quote": "I in in the base we could like make uh a button, and if you push it, the remote control itself s makes noise."},
+      {"meeting_id": "TS3008c", "quote": "It has to be developed, but no, but it that's that's our that's our killer feature."},
+      {"meeting_id": "TS3008d", "quote": "Yeah, I don my suggestion is to just forget about the whole docking station thing"}
+    ],
+    "notes": "A = PM, B = UI Designer, C = Industrial Designer, D = Marketing Expert (see G-TS3008-1). In b, D cited 'fifty percent often loses remote control'. A then said 'you don't even need batteries, because you can make it uh chargeable' and that the recharge function would be the first thing cut if too expensive. AMBIGUITY: d ends messily. D ('We can make a docking station for two thirty') and B argued it was affordable. A said 'No no, it's not possible' and 'we leave it like this', and B summed up 'Cheap remote control'. Nobody explicitly says 'the docking station is dropped', but it never went on the cost sheet, which had one battery and a simple chip, and A wanted to forget it. A's kinetic idea was disputed by C and D and not adopted."
+  }
+]

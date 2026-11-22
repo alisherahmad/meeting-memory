@@ -33,7 +33,7 @@ class Settings:
     transcripts_dir: Path = field(default_factory=lambda: Path(_env("MM_TRANSCRIPTS_DIR", str(PROJECT_ROOT / "data" / "transcripts"))))
     db_path: Path = field(default_factory=lambda: Path(_env("MM_DB_PATH", str(PROJECT_ROOT / "var" / "memory.db"))))
     agent_model: str = field(default_factory=lambda: _env("MM_AGENT_MODEL", "claude-opus-5-5"))
-    extract_model: str = field(default_factory=lambda: _env("MM_EXTRACT_MODEL", "claude-opus-5-5"))
+    extract_model: str = field(default_factory=lambda: _env("MM_EXTRACT_MODEL", "claude-haiku-5-5"))
     agent_effort: str = field(default_factory=lambda: _env("MM_AGENT_EFFORT", "medium"))
     extract_effort: str = field(default_factory=lambda: _env("MM_EXTRACT_EFFORT", "medium"))
     use_embeddings: bool = field(default_factory=lambda: _env("MM_EMBEDDINGS", "1") not in ("0", "false", "off"))

@@ -25,7 +25,7 @@ from . import embeddings
 from .chunking import chunk_meeting
 from .config import Settings
 from .extraction import extract_meeting
-from .llm import LLM, LLMError, Usage
+from .llm import LLM, LLMError, LLMRefusal, Usage
 from .roles import detect_self_introductions
 from .store import Store
 from .transcripts import Meeting, TranscriptParseError, discover_transcripts, load_transcript
@@ -138,7 +138,15 @@ def _extract_team(team: str, series: list[Meeting], settings: Settings, store: S
         elif force and m is series[0]:
             store.clear_team_memory_from(team, m.ordinal)
         try:
-            res = extract_meeting(m, store, llm, settings.extract_model, settings.extract_effort)
+            try:
+                res = extract_meeting(m, store, llm, settings.extract_model, settings.extract_effort)
+            except LLMRefusal:
+                if settings.agent_model == settings.extract_model:
+                    raise
+                # Client-side fallback: retry this one meeting on the agent model.
+                on_event(f"{m.meeting_id}: {settings.extract_model} declined; retrying on {settings.agent_model}")
+                res = extract_meeting(m, store, llm, settings.agent_model, settings.extract_effort)
+                res.stats["refusal_fallbacks"] = 1
             on_event(f"extracted {m.meeting_id}: {res.stats['items_kept']} items")
             out.append((m.meeting_id, "ok", res.stats))
         except LLMError as e:

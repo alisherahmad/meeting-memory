@@ -16,7 +16,7 @@ _Last updated: 2026-11-22. Deadline: 2026-11-23._
 - [x] Gold set: 12 questions on 6 teams disjoint from the 25; 36/36 evidence quotes re-verified by code
 - [x] Chunk embeddings: 5,052 chunks in 503 s on CPU (MiniLM, local)
 - [x] Retrieval eval (`evaluation/results/retrieval_eval.json`), gold evidence recall, single query = raw question: k=5 BM25 0.36 / dense 0.33 / hybrid 0.44; k=20 BM25 0.64 / dense 0.61 / hybrid 0.72
-- [x] 43 automated tests passing (no network)
+- [x] 45 automated tests passing (no network)
 - [x] Web UI running; empty states inspected at desktop width
 - [x] Git checkpoints
 
@@ -33,10 +33,10 @@ _Last updated: 2026-11-22. Deadline: 2026-11-23._
 | No `ANTHROPIC_API_KEY` on this machine (no `ant` profile either) | All model-dependent P0 items | Add the key to `.env` |
 
 ## Failed tests
-None (43/43).
+None (45/45).
 
 ## Decisions requiring attention
-- Model for extraction: default `claude-opus-5-5`. Estimated full-corpus extraction cost is ~$10–15 (rough pre-run estimate, replaced by measured numbers after the run). `claude-haiku-5-5` would be ~40× cheaper per token but untested here.
+- Decided: extraction on `claude-haiku-5-5`, agent and brief on `claude-opus-5-5`. A Haiku refusal retries that meeting on Opus.
 
 ## Next three actions
 1. Full ingest with extraction

@@ -158,3 +158,33 @@ def test_ingest_without_credentials_still_indexes(settings, monkeypatch):
     store = Store(settings.db_path)
     rep = run_ingest(settings, store, LLM(settings, store), on_event=lambda s: None)
     assert rep.meetings_parsed == 2 and not rep.extracted and "no ANTHROPIC_API_KEY" in rep.embeddings_note
+
+
+def test_fallback_param_only_for_models_that_accept_it():
+    from meeting_memory.llm import wants_fallback
+
+    assert wants_fallback("claude-opus-5-5", True)
+    assert not wants_fallback("claude-haiku-5-5", True)  # a fallback list 400s on Haiku 5.5
+    assert not wants_fallback("claude-opus-5-5", False)
+
+
+def test_extraction_refusal_retries_on_agent_model(settings):
+    _write_corpus(settings)
+    settings.extract_model, settings.agent_model = "claude-haiku-5-5", "claude-opus-5-5"
+    store = Store(settings.db_path)
+    seen_models = []
+
+    def refuse(kwargs):
+        seen_models.append(kwargs["model"])
+        return message([], stop="refusal")
+
+    def record(kwargs):
+        seen_models.append(kwargs["model"])
+        return _fake_extractor(kwargs)
+
+    llm = LLM(settings, store, backend=FakeBackend([refuse, record, record]))
+    rep = run_ingest(settings, store, llm, on_event=lambda s: None)
+    assert sorted(rep.extracted) == ["ZZ0001a", "ZZ0001b"]
+    assert seen_models == ["claude-haiku-5-5", "claude-opus-5-5", "claude-haiku-5-5"]
+    assert rep.extraction_stats["refusal_fallbacks"] == 1
+    assert store.meeting_row("ZZ0001a")["extract_model"] == "claude-opus-5-5"

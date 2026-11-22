@@ -31,6 +31,19 @@ class LLMUnavailable(LLMError):
     """No credentials configured."""
 
 
+class LLMRefusal(LLMError):
+    """The model declined (stop_reason == "refusal")."""
+
+
+# Models that accept the server-side refusal fallback. Haiku 5.5 does not: a
+# fallback list returns a 400 there, so refusals are handled client-side.
+FALLBACK_MODELS = {"claude-opus-5-5", "claude-sonnet-5-5", "claude-opus-5", "claude-fable-5-2", "claude-fable-5-1"}
+
+
+def wants_fallback(model: str, enabled: bool) -> bool:
+    return enabled and model in FALLBACK_MODELS
+
+
 class MessagesBackend(Protocol):
     def create(self, **kwargs: Any) -> Any: ...
 
@@ -48,7 +61,7 @@ class AnthropicBackend:
     def create(self, **kwargs: Any) -> Any:
         a = self._anthropic
         try:
-            if self._fallback:
+            if wants_fallback(kwargs.get("model", ""), self._fallback):
                 # Streaming avoids HTTP timeouts on long extraction outputs.
                 with self._client.beta.messages.stream(
                     betas=["server-side-fallback-2026-07-01"], fallbacks="default", **kwargs
@@ -154,7 +167,7 @@ class LLM:
         )
         stop = getattr(resp, "stop_reason", None)
         if stop == "refusal":
-            raise LLMError("Model declined the request (refusal)")
+            raise LLMRefusal("Model declined the request (refusal)")
         if stop == "max_tokens":
             raise LLMError("Output truncated at max_tokens", retryable=False)
         text = next((b.text for b in resp.content if getattr(b, "type", "") == "text"), "")

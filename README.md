@@ -54,7 +54,7 @@ src/meeting_memory/
   agent.py        tools.py                   bounded tool-use agent + read-only tools
   brief.py                                   pre-meeting brief (code picks facts, model writes prose)
   llm.py  ingest.py  cli.py  server.py  static/  evaluate.py
-tests/            43 tests, no network (fake model backend)
+tests/            45 tests, no network (fake model backend)
 evaluation/       gold_set.json (12 checked questions), results/
 docs/             specification, architecture, decisions, evaluation, walkthrough
 ```

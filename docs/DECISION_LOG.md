@@ -24,8 +24,10 @@ Considered LangChain/LangGraph and LlamaIndex. Rejected: the loop is ~150 lines,
 ## D3 — Anthropic Messages API, self-hosted manual tool loop (not Managed Agents, not the SDK tool runner)
 The memory store is local SQLite and the loop's control points (verified `submit_answer`, budgets, dedup, terminal states) are part of the product. Managed Agents would host the loop remotely and bill session time; the beta tool runner hides the exit condition. Streaming is used so long extraction outputs don't time out. Server-side refusal fallback (`fallbacks: "default"`) is enabled on the beta endpoint.
 
-## D4 — Models
-Default `claude-opus-5-5` for both extraction and the agent (configurable via `MM_EXTRACT_MODEL`, `MM_AGENT_MODEL`). Effort `medium` (Opus 5.5's default) for both. Extraction is the dominant cost at scale. `claude-haiku-5-5` is ~40× cheaper per token and is the obvious lever for a 10k-meeting backfill, but its extraction quality has not been measured here, so it isn't the default (see EVALUATION_REPORT for the cost comparison).
+## D4 — Models (chosen with the applicant, 2026-11-22)
+- **Extraction: `claude-haiku-5-5`** (`MM_EXTRACT_MODEL`), effort `medium`. This is the bulk step: one call per meeting, and it dominates cost at 1,000–10,000 meetings. Haiku 5.5 costs $0.10 / $0.50 per MTok for prompts up to 100K tokens (our largest meeting is ~16K tokens + prior memory), about 40× cheaper than Opus. The risk is lower extraction quality. It is mitigated because every quote and link is validated by code, and the agent re-verifies in the raw transcript; it is measured on the gold set.
+- **Agent and brief: `claude-opus-5-5`** (`MM_AGENT_MODEL`), effort `medium`. These are few calls where judgment matters (choosing passages, reconciling meetings, wording the answer).
+- **Refusals:** Opus requests use the server-side fallback (`fallbacks: "default"`). Haiku 5.5 has no server-side fallback (a fallback list returns a 400), so `llm.wants_fallback` omits the parameter for it, and `ingest._extract_team` retries a refused meeting once on the agent model, counting it in the report (`refusal_fallbacks`).
 
 ## D5 — SQLite + FTS5 (+ optional embeddings in the same file)
 One file, zero ops, transactional, BM25 built in. FTS5 has an indexed `team` column so scoped search uses the index. Embeddings are float32 blobs ranked with numpy over the filtered set. Rejected: a separate vector DB (another service to run for a 5k-chunk corpus). Production swap: Postgres + pgvector.

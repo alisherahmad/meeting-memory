@@ -32,4 +32,4 @@ None.
 None (64/64).
 
 ## Spend
-$1.49 of the $4.72 balance (cap set at $4.00 in `.env`).
+$1.94 of the $4.72 balance (cap set at $4.00 in `.env`).

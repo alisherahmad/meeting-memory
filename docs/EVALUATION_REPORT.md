@@ -14,7 +14,7 @@ _All numbers are measured on 2026-11-22 with Claude Haiku 5.5 (extraction at eff
 | **Gold set (12, hand-checked)** | **Human read: 9 correct, 2 mostly correct, 1 wrong**, in both the run before and the run after the role fix; the role error inside G-IS1000-1 is gone after the fix. Key-fact proxy 0.875 → 0.833 (run-to-run variance in which details are included); 100% citations valid; 100% cite a gold meeting | `gold_eval_20261122_160739.json`, `gold_eval_20261122_162506.json` (after role fix) |
 | Retrieval (single query = raw question) | gold-evidence recall@5: BM25 0.36, dense 0.33, **hybrid 0.44**; @20: 0.64 / 0.61 / **0.72** | `retrieval_eval.json` |
 | Tests | 55 passing, no network, ~10 s | `pytest` |
-| Total API spend, entire build | **$1.49** (pilots, two extraction passes, three answer runs, three gold runs, briefs) | `llm_calls` ledger |
+| Total API spend, entire build | **$1.94** (pilots, two extraction passes, three answer runs, four Haiku gold runs and one Sonnet gold run, briefs) | `llm_calls` ledger |
 
 **What we can't measure:** correctness on the 25 Catalist questions. Catalist holds the answers back, and we didn't hand-derive them. The gold set is our proxy.
 
@@ -106,3 +106,17 @@ For comparison, **not measured**: the same token profile on Claude Opus 5.5 woul
 - Statistical confidence: 12 gold questions is a smoke test, not a benchmark.
 - Answer stability: the agent is non-deterministic. Across three gold runs the verdicts were stable, with two exceptions: one run named ES2005's Industrial Designer "Arlo" (not established by the transcript), and the IS1000 meeting-d role swap appeared in **every run whose answer named roles in meeting d** (runs 2 and 3). It is systematic, not noise, because the wrong roles are stored in memory.
 - The key-fact proxy both over-matches (generic strings such as "kept", "16") and under-matches (paraphrase), so it's reported only next to the human read.
+
+## 8. Does a stronger answering model help? (measured)
+Same memory, same tools, same 12 gold questions; only the agent model changed (`MM_AGENT_MODEL`). Human read of every answer against the transcripts:
+
+| | Claude Haiku 5.5 (submitted) | Claude Sonnet 5.5 |
+|---|---|---|
+| Fully correct | **9** | 7 |
+| Mostly correct | 2 | 2 |
+| Wrong | 1 (TS3008-2) | 3: TS3008-2 (same error), ES2012-2 (credits the Marketing Expert with the Project Manager's sealed-battery argument), IS1000-1 (basic design "about 12 EUR"; it was about 8) |
+| Citations verbatim-valid | 100% | 100% |
+| Cost for the 12 | $0.033 | $0.411 (12×) |
+| Mean latency | 22 s | 46 s |
+
+Twelve questions can't separate the two models statistically, but there is **no evidence the 12× model helps**, so the submitted answers stay on Haiku. This fits the failure analysis: the error both models share (TS3008-2) comes from an extraction conflation in memory, which a stronger answering model doesn't repair. The next quality lever is extraction and retrieval (re-extracting with a stronger model, or making the agent check transcript order for "who first" questions), not the answering model. Raw run: `evaluation/results/gold_eval_20261122_200305.json`.

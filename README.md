@@ -65,7 +65,7 @@ docs/             specification, architecture, decisions, evaluation, walkthroug
 ```
 
 ## Results at a glance
-25/25 Catalist questions answered with **70/70 citations verbatim-valid**; TS3012 brief with 34/34 valid citations; our 12 hand-checked questions: **9 correct, 2 mostly correct, 1 wrong** (human read); ≈ **$8 per 1,000 meetings** to ingest; the whole build cost **$1.49** on Claude Haiku 5.5. Details and the three failures: [docs/EVALUATION_REPORT.md](docs/EVALUATION_REPORT.md).
+25/25 Catalist questions answered with **70/70 citations verbatim-valid**; TS3012 brief with 34/34 valid citations; our 12 hand-checked questions: **9 correct, 2 mostly correct, 1 wrong** (human read); ≈ **$8 per 1,000 meetings** to ingest; the whole build cost **$1.94** on Claude Haiku 5.5. Details and the three failures: [docs/EVALUATION_REPORT.md](docs/EVALUATION_REPORT.md).
 
 ## Known limitations
 See [docs/EVALUATION_REPORT.md](docs/EVALUATION_REPORT.md) and [docs/FINAL_REVIEW.md](docs/FINAL_REVIEW.md). In short: speaker roles can still be wrong where letters swap and nobody is addressed by name (the IS1000d swap is corrected by a code-level resolver); "who first proposed X" can inherit an extraction mistake; memory quality depends on one extraction pass per meeting; the UI has no authentication (local use only).

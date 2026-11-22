@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meeting Memory</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <header class="masthead">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">§</span>
+      <div>
+        <h1>Meeting Memory</h1>
+        <p class="brand-sub">Ask a team's meetings anything. Every answer is quoted from the transcript.</p>
+      </div>
+    </div>
+    <dl class="status" id="status" aria-live="polite"></dl>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Views">
+    <button role="tab" id="tab-ask" aria-controls="view-ask" aria-selected="true">Ask</button>
+    <button role="tab" id="tab-memory" aria-controls="view-memory" aria-selected="false" tabindex="-1">Memory</button>
+    <button role="tab" id="tab-brief" aria-controls="view-brief" aria-selected="false" tabindex="-1">Brief</button>
+  </nav>
+
+  <main>
+    <!-- ASK -->
+    <section id="view-ask" role="tabpanel" aria-labelledby="tab-ask" class="view">
+      <div class="ask-grid">
+        <form id="ask-form" class="panel" novalidate>
+          <label for="q" class="label">Question</label>
+          <textarea id="q" rows="4" maxlength="600" required placeholder="e.g. Team ES2002: what power source did they first agree on, and what did the final design use?"></textarea>
+          <p class="field-error" id="q-error" role="alert" hidden></p>
+          <div class="row">
+            <div class="field">
+              <label for="ask-team" class="label">Team</label>
+              <select id="ask-team"><option value="">Detect from question</option></select>
+            </div>
+            <div class="field grow">
+              <label for="examples" class="label">Examples</label>
+              <select id="examples"><option value="">Pick a question…</option></select>
+            </div>
+          </div>
+          <button type="submit" class="primary" id="ask-btn">Ask</button>
+          <h2 class="section-title">Agent steps</h2>
+          <ol id="trace" class="trace" aria-live="polite"><li class="empty">Steps appear here as the agent retrieves and verifies.</li></ol>
+        </form>
+        <article id="answer" class="panel answer" aria-live="polite">
+          <div class="empty-state">
+            <h2>No question yet</h2>
+            <p>The agent searches the memory store, checks the transcripts, and only finishes when every quote it cites is found word for word in one speaker turn.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- MEMORY -->
+    <section id="view-memory" role="tabpanel" aria-labelledby="tab-memory" class="view" hidden>
+      <div class="toolbar">
+        <div class="field">
+          <label for="mem-team" class="label">Team</label>
+          <select id="mem-team"></select>
+        </div>
+        <div class="field">
+          <span class="label" id="asof-label">State as of the end of</span>
+          <div class="segmented" id="asof" role="radiogroup" aria-labelledby="asof-label"></div>
+        </div>
+        <div class="field">
+          <span class="label" id="filter-label">Show</span>
+          <div class="segmented" id="mem-filter" role="radiogroup" aria-labelledby="filter-label"></div>
+        </div>
+      </div>
+      <div id="meetings-strip" class="meetings-strip"></div>
+      <div id="threads" class="threads"></div>
+    </section>
+
+    <!-- BRIEF -->
+    <section id="view-brief" role="tabpanel" aria-labelledby="tab-brief" class="view" hidden>
+      <form id="brief-form" class="toolbar" novalidate>
+        <div class="field">
+          <label for="brief-team" class="label">Team</label>
+          <select id="brief-team"></select>
+        </div>
+        <div class="field">
+          <label for="brief-before" class="label">Prepare for meeting</label>
+          <select id="brief-before"></select>
+        </div>
+        <label class="check"><input type="checkbox" id="brief-llm" checked> Write prose with the model</label>
+        <button type="submit" class="primary" id="brief-btn">Write brief</button>
+      </form>
+      <article id="brief" class="panel brief">
+        <div class="empty-state">
+          <h2>Pre-meeting brief</h2>
+          <p>Built only from meetings before the one you prepare for: what is decided, what changed, open actions with owners, and disagreements still open. Each point cites the transcript.</p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <aside id="drawer" class="drawer" aria-hidden="true" aria-labelledby="drawer-title" role="dialog">
+    <div class="drawer-head">
+      <h2 id="drawer-title">Transcript</h2>
+      <button class="ghost" id="drawer-close" aria-label="Close transcript">Close</button>
+    </div>
+    <div id="drawer-body" class="drawer-body" tabindex="-1"></div>
+  </aside>
+  <div id="scrim" class="scrim" hidden></div>
+  <script src="/static/app.js" type="module"></script>
+</body>
+</html>

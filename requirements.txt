@@ -1,0 +1,11 @@
+# Exact versions this project was built and tested with (Python 3.11.9, Windows 11).
+anthropic==1.9.0
+fastapi==0.115.0
+uvicorn==0.30.6
+pydantic==2.11.10
+numpy==2.2.6
+# Optional: local embeddings for hybrid retrieval (pulls in torch, CPU is fine).
+sentence-transformers==5.1.1
+# Tests
+pytest==9.1.1
+httpx==0.28.1

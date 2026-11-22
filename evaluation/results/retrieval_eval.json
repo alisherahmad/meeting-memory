@@ -1,0 +1,30 @@
+{
+  "cases": 12,
+  "query": "raw question text, team-scoped",
+  "results": [
+    {
+      "k": 5,
+      "mode": "bm25",
+      "any_evidence_hit": 0.833,
+      "evidence_recall": 0.361,
+      "gold_meeting_coverage": 0.389,
+      "ms_per_query": 50.8
+    },
+    {
+      "k": 10,
+      "mode": "bm25",
+      "any_evidence_hit": 0.833,
+      "evidence_recall": 0.528,
+      "gold_meeting_coverage": 0.583,
+      "ms_per_query": 28.6
+    },
+    {
+      "k": 20,
+      "mode": "bm25",
+      "any_evidence_hit": 0.917,
+      "evidence_recall": 0.639,
+      "gold_meeting_coverage": 0.708,
+      "ms_per_query": 32.6
+    }
+  ]
+}

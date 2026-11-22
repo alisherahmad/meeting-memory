@@ -9,7 +9,12 @@
 <body>
   <header class="masthead">
     <div class="brand">
-      <span class="brand-mark" aria-hidden="true">§</span>
+      <svg class="brand-mark" viewBox="0 0 34 34" aria-hidden="true" focusable="false">
+        <rect x="11" y="2" width="20" height="25" rx="1.5" fill="#f6eeb4" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="8" y="4.5" width="20" height="25" rx="1.5" fill="#f7dbe7" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="5" y="7" width="20" height="25" rx="1.5" fill="#dbe7f7" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M9 14h12M9 18.5h12M9 23h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
       <div>
         <h1>Meeting Memory</h1>
         <p class="brand-sub">Ask a team's meetings anything. Every answer is quoted from the transcript.</p>
@@ -63,13 +68,14 @@
           <select id="mem-team"></select>
         </div>
         <div class="field">
-          <span class="label" id="asof-label">State as of the end of</span>
+          <span class="label" id="asof-label">Revision as of the end of</span>
           <div class="segmented" id="asof" role="radiogroup" aria-labelledby="asof-label"></div>
         </div>
         <div class="field">
           <span class="label" id="filter-label">Show</span>
           <div class="segmented" id="mem-filter" role="radiogroup" aria-labelledby="filter-label"></div>
         </div>
+        <div class="legend" id="rev-legend" role="group" aria-label="Revision colours: each meeting's page colour"></div>
       </div>
       <div id="meetings-strip" class="meetings-strip"></div>
       <div id="threads" class="threads" aria-busy="false"></div>

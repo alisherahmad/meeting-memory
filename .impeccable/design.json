@@ -1,0 +1,706 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-22T15:40:00+00:00",
+  "title": "Design System: Meeting Memory",
+  "extensions": {
+    "colorMeta": {
+      "desk": {
+        "role": "neutral",
+        "displayName": "Cool Grey Desk",
+        "canonical": "#eceef2",
+        "dark": "#121417",
+        "cssVar": "--paper",
+        "tonalRamp": [
+          "#22252a",
+          "#3a404c",
+          "#515b70",
+          "#667695",
+          "#8a95ab",
+          "#aeb5c2",
+          "#d0d4da",
+          "#f1f2f3"
+        ]
+      },
+      "page": {
+        "role": "neutral",
+        "displayName": "Script Page",
+        "canonical": "#ffffff",
+        "dark": "#1a1d22",
+        "cssVar": "--surface",
+        "tonalRamp": [
+          "#262626",
+          "#434343",
+          "#616161",
+          "#7e7e7e",
+          "#9b9b9b",
+          "#b8b8b8",
+          "#d5d5d5",
+          "#f2f2f2"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Typewriter Ink",
+        "canonical": "#111418",
+        "dark": "#eceef2",
+        "cssVar": "--ink",
+        "tonalRamp": [
+          "#22262a",
+          "#3b424c",
+          "#525f6f",
+          "#687b93",
+          "#8c99aa",
+          "#afb7c1",
+          "#d1d4d9",
+          "#f1f2f3"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Ink Second",
+        "canonical": "#3d4450",
+        "dark": "#c3c8d0",
+        "cssVar": "--ink-2",
+        "tonalRamp": [
+          "#232529",
+          "#3d424a",
+          "#555e6c",
+          "#6d798e",
+          "#8f98a7",
+          "#b1b6bf",
+          "#d2d4d8",
+          "#f1f2f3"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Ink Third",
+        "canonical": "#565e6b",
+        "dark": "#a2a9b4",
+        "cssVar": "--ink-3",
+        "tonalRamp": [
+          "#242629",
+          "#3e4249",
+          "#585e6a",
+          "#707a8b",
+          "#9199a4",
+          "#b2b7be",
+          "#d2d4d8",
+          "#f2f2f3"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Hairline Rule",
+        "canonical": "#dde1e7",
+        "dark": "#2c3138",
+        "cssVar": "--rule",
+        "tonalRamp": [
+          "#22252a",
+          "#3b424c",
+          "#525e6f",
+          "#687993",
+          "#8c98aa",
+          "#afb6c1",
+          "#d1d4d9",
+          "#f1f2f3"
+        ]
+      },
+      "rule-strong": {
+        "role": "neutral",
+        "displayName": "Page Edge",
+        "canonical": "#b9bfc9",
+        "dark": "#3d434c",
+        "cssVar": "--rule-strong",
+        "tonalRamp": [
+          "#232629",
+          "#3d424a",
+          "#565e6b",
+          "#6e7a8e",
+          "#9098a6",
+          "#b1b6bf",
+          "#d2d4d8",
+          "#f1f2f3"
+        ]
+      },
+      "control-border": {
+        "role": "neutral",
+        "displayName": "Control Edge",
+        "canonical": "#7b8391",
+        "dark": "#7d8592",
+        "cssVar": "--control-border",
+        "tonalRamp": [
+          "#242628",
+          "#3f4248",
+          "#595e68",
+          "#727b89",
+          "#9399a3",
+          "#b3b7bd",
+          "#d3d4d7",
+          "#f2f2f3"
+        ]
+      },
+      "revision-red": {
+        "role": "primary",
+        "displayName": "Revision Red",
+        "canonical": "#b3122e",
+        "dark": "#ff6b7d",
+        "cssVar": "--accent",
+        "tonalRamp": [
+          "#38141a",
+          "#6b1c2a",
+          "#a41d35",
+          "#e4183b",
+          "#e2536c",
+          "#e38d9c",
+          "#eac1c8",
+          "#f7edef"
+        ]
+      },
+      "revision-red-ink": {
+        "role": "primary",
+        "displayName": "On Revision Red",
+        "canonical": "#ffffff",
+        "dark": "#1a1d22",
+        "cssVar": "--accent-ink",
+        "tonalRamp": [
+          "#262626",
+          "#434343",
+          "#616161",
+          "#7e7e7e",
+          "#9b9b9b",
+          "#b8b8b8",
+          "#d5d5d5",
+          "#f2f2f2"
+        ]
+      },
+      "action": {
+        "role": "neutral",
+        "displayName": "Press Ink",
+        "canonical": "#111418",
+        "dark": "#eceef2",
+        "cssVar": "--action",
+        "tonalRamp": [
+          "#22262a",
+          "#3b424c",
+          "#525f6f",
+          "#687b93",
+          "#8c99aa",
+          "#afb7c1",
+          "#d1d4d9",
+          "#f1f2f3"
+        ]
+      },
+      "action-ink": {
+        "role": "neutral",
+        "displayName": "On Press Ink",
+        "canonical": "#ffffff",
+        "dark": "#121417",
+        "cssVar": "--action-ink",
+        "tonalRamp": [
+          "#262626",
+          "#434343",
+          "#616161",
+          "#7e7e7e",
+          "#9b9b9b",
+          "#b8b8b8",
+          "#d5d5d5",
+          "#f2f2f2"
+        ]
+      },
+      "current": {
+        "role": "tertiary",
+        "displayName": "Current Green",
+        "canonical": "#14532d",
+        "dark": "#8fd6a5",
+        "cssVar": "--current",
+        "tonalRamp": [
+          "#193423",
+          "#26613d",
+          "#2e9356",
+          "#31ca6e",
+          "#65d090",
+          "#98d8b1",
+          "#c6e4d2",
+          "#eff6f2"
+        ]
+      },
+      "current-bg": {
+        "role": "tertiary",
+        "displayName": "Current Green Wash",
+        "canonical": "#dcefe2",
+        "dark": "#183424",
+        "cssVar": "--current-bg",
+        "tonalRamp": [
+          "#1e2f23",
+          "#31553d",
+          "#427f55",
+          "#4fac6d",
+          "#7abb8f",
+          "#a5cbb1",
+          "#ccded2",
+          "#f0f4f1"
+        ]
+      },
+      "open": {
+        "role": "tertiary",
+        "displayName": "Open Amber",
+        "canonical": "#7a4a00",
+        "dark": "#f0c46a",
+        "cssVar": "--open",
+        "tonalRamp": [
+          "#3c2b10",
+          "#744e13",
+          "#b3720e",
+          "#fa9801",
+          "#f2ad44",
+          "#ecc384",
+          "#eedabc",
+          "#f8f3ec"
+        ]
+      },
+      "open-bg": {
+        "role": "tertiary",
+        "displayName": "Open Amber Wash",
+        "canonical": "#fbecc8",
+        "dark": "#3a2c10",
+        "cssVar": "--open-bg",
+        "tonalRamp": [
+          "#392e13",
+          "#6d551a",
+          "#a87e19",
+          "#e9aa12",
+          "#e6ba4f",
+          "#e5cb8b",
+          "#ebdebf",
+          "#f7f4ed"
+        ]
+      },
+      "gone": {
+        "role": "tertiary",
+        "displayName": "Gone Wine",
+        "canonical": "#5a1622",
+        "dark": "#f0a3ae",
+        "cssVar": "--gone",
+        "tonalRamp": [
+          "#34191e",
+          "#612630",
+          "#932e40",
+          "#c9324d",
+          "#d06679",
+          "#d898a3",
+          "#e4c6cb",
+          "#f6eff0"
+        ]
+      },
+      "gone-bg": {
+        "role": "tertiary",
+        "displayName": "Gone Wine Wash",
+        "canonical": "#f6e3e6",
+        "dark": "#3a1a20",
+        "cssVar": "--gone-bg",
+        "tonalRamp": [
+          "#321b1e",
+          "#5c2b32",
+          "#8b3644",
+          "#be3e52",
+          "#c86e7c",
+          "#d39da6",
+          "#e2c8cc",
+          "#f5eff0"
+        ]
+      },
+      "info": {
+        "role": "tertiary",
+        "displayName": "Info Navy",
+        "canonical": "#1e3a6e",
+        "dark": "#a9c4ef",
+        "cssVar": "--info",
+        "tonalRamp": [
+          "#1a2233",
+          "#283b5f",
+          "#315290",
+          "#3668c5",
+          "#698ccd",
+          "#9aafd6",
+          "#c7d1e3",
+          "#eff1f6"
+        ]
+      },
+      "info-bg": {
+        "role": "tertiary",
+        "displayName": "Info Navy Wash",
+        "canonical": "#dde7f6",
+        "dark": "#1c2a40",
+        "cssVar": "--info-bg",
+        "tonalRamp": [
+          "#192433",
+          "#273e5f",
+          "#315790",
+          "#356fc6",
+          "#6891ce",
+          "#9ab2d6",
+          "#c7d2e4",
+          "#eff2f6"
+        ]
+      },
+      "highlight": {
+        "role": "tertiary",
+        "displayName": "Highlighter Yellow",
+        "canonical": "#f6e08a",
+        "dark": "#6a5714",
+        "cssVar": "--mark",
+        "tonalRamp": [
+          "#393213",
+          "#6d5c1a",
+          "#a78a1a",
+          "#e8bd13",
+          "#e6c750",
+          "#e5d28b",
+          "#ebe2c0",
+          "#f7f5ed"
+        ]
+      },
+      "rev-a-white": {
+        "role": "secondary",
+        "displayName": "Revision A, White",
+        "canonical": "#ffffff",
+        "dark": "#1a1d22",
+        "cssVar": "--rev-a",
+        "tonalRamp": [
+          "#262626",
+          "#434343",
+          "#616161",
+          "#7e7e7e",
+          "#9b9b9b",
+          "#b8b8b8",
+          "#d5d5d5",
+          "#f2f2f2"
+        ]
+      },
+      "rev-b-blue": {
+        "role": "secondary",
+        "displayName": "Revision B, Blue",
+        "canonical": "#dbe7f7",
+        "dark": "#1c2738",
+        "cssVar": "--rev-b",
+        "tonalRamp": [
+          "#182434",
+          "#253f62",
+          "#2c5995",
+          "#2e72cd",
+          "#6393d2",
+          "#97b3d9",
+          "#c5d3e5",
+          "#eff2f6"
+        ]
+      },
+      "rev-c-pink": {
+        "role": "secondary",
+        "displayName": "Revision C, Pink",
+        "canonical": "#f7dbe7",
+        "dark": "#33202a",
+        "cssVar": "--rev-c",
+        "tonalRamp": [
+          "#341824",
+          "#62253f",
+          "#952c59",
+          "#cd2e72",
+          "#d26393",
+          "#d997b3",
+          "#e5c5d3",
+          "#f6eff2"
+        ]
+      },
+      "rev-d-yellow": {
+        "role": "secondary",
+        "displayName": "Revision D, Yellow",
+        "canonical": "#f6eeb4",
+        "dark": "#34301a",
+        "cssVar": "--rev-d",
+        "tonalRamp": [
+          "#383315",
+          "#69601d",
+          "#a19220",
+          "#e0c81c",
+          "#dfcf56",
+          "#e1d78f",
+          "#e9e4c1",
+          "#f7f6ee"
+        ]
+      },
+      "rev-e-green": {
+        "role": "secondary",
+        "displayName": "Revision E, Green",
+        "canonical": "#dcefd9",
+        "dark": "#1d3222",
+        "cssVar": "--rev-e",
+        "tonalRamp": [
+          "#202f1d",
+          "#355730",
+          "#48823f",
+          "#59b04b",
+          "#81be77",
+          "#a9cda3",
+          "#cedfcb",
+          "#f1f5f0"
+        ]
+      },
+      "rev-f-goldenrod": {
+        "role": "secondary",
+        "displayName": "Revision F, Goldenrod",
+        "canonical": "#f3e0c4",
+        "dark": "#352a1c",
+        "cssVar": "--rev-f",
+        "tonalRamp": [
+          "#352918",
+          "#634a23",
+          "#976b2a",
+          "#d08d2b",
+          "#d5a661",
+          "#dabf95",
+          "#e6d8c5",
+          "#f6f3ee"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "wordmark": {
+        "displayName": "Wordmark",
+        "purpose": "Courier Prime 700; the masthead title only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Brief title and empty-state headings (20px)."
+      },
+      "answer": {
+        "displayName": "Answer",
+        "purpose": "The Ask answer sentence, max 62ch; 19px under 860px."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Revision lines, topics, transcript turns (15px), brief items to 78ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels, legend, meeting-card text; tabs and section titles at 15px."
+      },
+      "slug": {
+        "displayName": "Slug Line",
+        "purpose": "Courier caps column heads and Brief section heads on a 2px ink rule; revision header (\"YELLOW REVISION · TS3012d\") at 16px, tinted with the slug row as one block."
+      },
+      "script-id": {
+        "displayName": "Script Id",
+        "purpose": "Meeting ids, Was chips, citation locations, speaker labels, drawer title."
+      },
+      "status-label": {
+        "displayName": "Status Label",
+        "purpose": "Badges (12px) and revision-row marks (13px)."
+      }
+    },
+    "shadows": [
+      {
+        "name": "page",
+        "value": "0 1px 2px rgba(17, 20, 24, .06), 0 8px 24px -12px rgba(17, 20, 24, .18)",
+        "purpose": "Every page-level surface at rest: panels, revision page, meeting cards."
+      },
+      {
+        "name": "drawer",
+        "value": "-16px 0 40px -16px rgba(17, 20, 24, .35)",
+        "purpose": "Open transcript drawer only, over a rgba(17, 20, 24, .32) scrim."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state",
+        "value": ".15s ease-out",
+        "purpose": "Hover changes on buttons, citations and rows."
+      },
+      {
+        "name": "drawer",
+        "value": "transform .25s cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Drawer slide-in; closes in .2s ease."
+      },
+      {
+        "name": "retint",
+        "value": ".6s cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Signature: when Revision as of is scrubbed, the mounted page stays in place (aria-busy) and is swapped when the response lands, so each row crossfades from its previous revision tint where it sits."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "none",
+        "purpose": "All animation and transition disabled under prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "narrow",
+        "value": "860px"
+      },
+      {
+        "name": "column",
+        "value": "1360px"
+      }
+    ],
+    "hover": {
+      "wash": "rgba(17, 20, 24, .06)",
+      "washDark": "rgba(236, 238, 242, .06)"
+    },
+    "focus": {
+      "ring": "2px solid var(--ink)",
+      "offset": "2px; -3px inset on full-width rows and the drawer body"
+    },
+    "constraints": [
+      "Self-hosted fonts and assets only; no CDN, no build step.",
+      "Colour tokens are six-digit hex in app.css :root and the prefers-color-scheme dark block; tests/test_ui_accessibility.py checks AA pairs in both schemes."
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one filled action per form (Ask, Build brief); ink fill that inverts on hover.",
+      "html": "<button class=\"ds-btn-primary\">Ask</button>",
+      "css": ".ds-btn-primary{font-family:var(--sans,'Segoe UI',system-ui,sans-serif);background:var(--action,#111418);color:var(--action-ink,#fff);border:1px solid var(--action,#111418);border-radius:4px;padding:10px 24px;font-weight:700;font-size:16px;cursor:pointer;transition:background-color .15s ease-out,color .15s ease-out}.ds-btn-primary:hover{background:var(--surface,#fff);color:var(--action,#111418)}.ds-btn-primary:focus-visible{outline:2px solid var(--ink,#111418);outline-offset:2px}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary small action, such as closing the drawer.",
+      "html": "<button class=\"ds-btn-ghost\">Close</button>",
+      "css": ".ds-btn-ghost{font-family:var(--sans,'Segoe UI',system-ui,sans-serif);background:var(--surface,#fff);color:var(--ink,#111418);border:1px solid var(--control-border,#7b8391);border-radius:4px;padding:4px 12px;font-weight:600;font-size:16px;cursor:pointer}.ds-btn-ghost:hover{border-color:var(--ink,#111418)}.ds-btn-ghost:focus-visible{outline:2px solid var(--ink,#111418);outline-offset:2px}"
+    },
+    {
+      "name": "View Tabs",
+      "kind": "nav",
+      "refersTo": "tab",
+      "description": "Ask / Memory / Brief tabs standing on the 2px ink rule.",
+      "html": "<nav class=\"ds-tabs\"><button class=\"ds-tab\" aria-selected=\"true\">Ask</button><button class=\"ds-tab\">Memory</button><button class=\"ds-tab\">Brief</button></nav>",
+      "css": ".ds-tabs{display:flex;gap:4px;padding:0 16px;background:var(--surface,#fff);border-bottom:2px solid var(--ink,#111418)}.ds-tab{font-family:var(--sans,'Segoe UI',system-ui,sans-serif);background:none;border:0;padding:12px 16px;color:var(--ink-2,#3d4450);font-weight:600;font-size:15px;border-radius:4px 4px 0 0;cursor:pointer}.ds-tab:hover{color:var(--ink,#111418);background:rgba(17,20,24,.06)}.ds-tab[aria-selected=true]{background:var(--action,#111418);color:var(--action-ink,#fff)}.ds-tab:focus-visible{outline:2px solid var(--ink,#111418);outline-offset:2px}"
+    },
+    {
+      "name": "Segmented Radio Group",
+      "kind": "chip",
+      "refersTo": "segmented-option",
+      "description": "Revision as of / Show filter; the checked option is ink-filled.",
+      "html": "<div class=\"ds-seg\" role=\"radiogroup\"><button role=\"radio\" aria-checked=\"false\">latest</button><button role=\"radio\" aria-checked=\"true\">a</button><button role=\"radio\" aria-checked=\"false\">b</button><button role=\"radio\" aria-checked=\"false\">c</button></div>",
+      "css": ".ds-seg{display:inline-flex;border:1px solid var(--control-border,#7b8391);border-radius:4px;background:var(--surface,#fff)}.ds-seg button{font-family:var(--sans,'Segoe UI',system-ui,sans-serif);position:relative;background:var(--surface,#fff);color:var(--ink,#111418);border:0;border-right:1px solid var(--control-border,#7b8391);padding:7px 14px;font-size:14px;font-weight:600;cursor:pointer}.ds-seg button:first-child{border-radius:3px 0 0 3px}.ds-seg button:last-child{border-right:0;border-radius:0 3px 3px 0}.ds-seg button:hover{background:rgba(17,20,24,.06)}.ds-seg button[aria-checked=true]{background:var(--action,#111418);color:var(--action-ink,#fff)}.ds-seg button:focus-visible{z-index:1;outline:2px solid var(--ink,#111418);outline-offset:2px}"
+    },
+    {
+      "name": "Question Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Textarea and selects: page fill, control-border edge, revision-red caret.",
+      "html": "<label class=\"ds-label\" for=\"ds-q\">Question</label><textarea id=\"ds-q\" class=\"ds-input\" rows=\"3\" placeholder=\"What power source did they first agree on?\"></textarea>",
+      "css": ".ds-label{font-family:var(--sans,'Segoe UI',system-ui,sans-serif);display:block;font-size:13px;font-weight:600;color:var(--ink-2,#3d4450);margin-bottom:4px}.ds-input{font-family:var(--sans,'Segoe UI',system-ui,sans-serif);width:100%;background:var(--surface,#fff);color:var(--ink,#111418);border:1px solid var(--control-border,#7b8391);border-radius:4px;padding:8px 12px;font-size:16px;caret-color:var(--accent,#b3122e)}.ds-input::placeholder{color:var(--ink-3,#565e6b)}.ds-input:hover{border-color:var(--ink-2,#3d4450)}.ds-input:focus-visible{border-color:var(--ink,#111418);outline:2px solid var(--ink,#111418);outline-offset:2px}"
+    },
+    {
+      "name": "Status Labels",
+      "kind": "chip",
+      "refersTo": "status-label-current",
+      "description": "Badges on status pairs, plus the labelled dot marks used in revision rows.",
+      "html": "<span class=\"ds-badge ds-cur\">current</span> <span class=\"ds-badge ds-open\">open</span> <span class=\"ds-badge ds-gone\">superseded</span> <span class=\"ds-mark ds-changed\">Changed</span> <span class=\"ds-mark ds-dispute\">Open dispute</span>",
+      "css": ".ds-badge{font-family:var(--sans,'Segoe UI',system-ui,sans-serif);display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:4px}.ds-cur{background:var(--current-bg,#dcefe2);color:var(--current,#14532d)}.ds-open{background:var(--open-bg,#fbecc8);color:var(--open,#7a4a00)}.ds-gone{background:var(--gone-bg,#f6e3e6);color:var(--accent,#b3122e)}.ds-mark{font-family:var(--sans,'Segoe UI',system-ui,sans-serif);display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700}.ds-mark::before{content:'';width:10px;height:10px;border-radius:50%;background:currentColor;box-sizing:border-box}.ds-changed{color:var(--accent,#b3122e)}.ds-dispute{color:var(--open,#7a4a00)}.ds-dispute::before{background:none;border:2px solid currentColor}"
+    },
+    {
+      "name": "Revision Page",
+      "kind": "custom",
+      "refersTo": "revision-row",
+      "description": "Signature: revision header and Courier slug row tinted as one block by the revision viewed, closed by the ink rule; rows tinted by the meeting that last changed each line, with tinted Was chips before 1px red strikes.",
+      "html": "<div class=\"ds-rp\"><p class=\"ds-rh\"><b>YELLOW REVISION · TS3012d</b> 15 lines revised in this meeting, 1 of them changed earlier decisions · 42 lines shown</p><div class=\"ds-row ds-slug\"><span>Topic</span><span>Current line</span><span>Last revised</span><span>Status</span></div><button class=\"ds-row ds-rr\" style=\"background:var(--rev-d,#f6eeb4)\"><span class=\"ds-t\">Power source</span><span>Use a kinetic battery.<span class=\"ds-was\"><b style=\"background:var(--rev-c,#f7dbe7)\">Was, c pink</b> <s>Use standard AA batteries.</s></span></span><span class=\"ds-w\">TS3012d<small>turn 212</small></span><span class=\"ds-ch\">Changed</span></button></div>",
+      "css": ".ds-rp{font-family:var(--sans,'Segoe UI',system-ui,sans-serif);background:var(--surface,#fff);border:1px solid var(--rule-strong,#b9bfc9);border-radius:4px;box-shadow:0 1px 2px rgba(17,20,24,.06),0 8px 24px -12px rgba(17,20,24,.18);color:var(--ink,#111418)}.ds-rh{margin:0;padding:12px 24px 4px;display:flex;flex-wrap:wrap;gap:4px 16px;align-items:baseline;background:var(--rev-d,#f6eeb4);border-radius:4px 4px 0 0;font-size:14px;color:var(--ink-2,#3d4450)}.ds-rh b{font-family:var(--script,'Courier Prime','Courier New',monospace);font-size:16px;color:var(--ink,#111418)}.ds-row{display:grid;grid-template-columns:1.1fr 3.4fr .9fr 1fr;gap:16px;padding:12px 24px}.ds-slug{font-family:var(--script,'Courier Prime','Courier New',monospace);font-weight:700;font-size:13px;text-transform:uppercase;color:var(--ink-2,#3d4450);background:var(--rev-d,#f6eeb4);border-bottom:2px solid var(--ink,#111418)}.ds-rr{font-family:var(--sans,'Segoe UI',system-ui,sans-serif);width:100%;text-align:left;border:0;font-size:16px;color:var(--ink,#111418);cursor:pointer;transition:box-shadow .15s ease-out}.ds-rr:hover{box-shadow:inset 0 0 0 9999px rgba(17,20,24,.06)}.ds-rr:focus-visible{outline:2px solid var(--ink,#111418);outline-offset:-3px}.ds-t{font-weight:700}.ds-was{display:block;margin-top:4px;font-size:14px;color:var(--ink-2,#3d4450)}.ds-was b{font-family:var(--script,'Courier Prime','Courier New',monospace);font-size:13px;color:var(--ink,#111418);padding:0 6px;border:1px solid var(--rule-strong,#b9bfc9);border-radius:4px;white-space:nowrap}.ds-was s{text-decoration-color:var(--accent,#b3122e);text-decoration-thickness:1px}.ds-w{font-family:var(--script,'Courier Prime','Courier New',monospace);font-weight:700;font-size:14px}.ds-w small{display:block;font-family:var(--sans,'Segoe UI',system-ui,sans-serif);font-weight:400;font-size:13px;color:var(--ink-2,#3d4450);white-space:nowrap}.ds-ch{font-size:13px;font-weight:700;color:var(--accent,#b3122e)}"
+    },
+    {
+      "name": "Revision Legend",
+      "kind": "custom",
+      "refersTo": "rev-a-white",
+      "description": "One tinted swatch per meeting, generated from the same mapping as the rows.",
+      "html": "<div class=\"ds-leg\"><span style=\"background:var(--rev-a,#fff)\"><b>a</b>white</span><span style=\"background:var(--rev-b,#dbe7f7)\"><b>b</b>blue</span><span style=\"background:var(--rev-c,#f7dbe7)\"><b>c</b>pink</span><span style=\"background:var(--rev-d,#f6eeb4)\"><b>d</b>yellow</span></div>",
+      "css": ".ds-leg{font-family:var(--sans,'Segoe UI',system-ui,sans-serif);display:flex;gap:8px;flex-wrap:wrap;font-size:13px;font-weight:600}.ds-leg span{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid var(--rule-strong,#b9bfc9);border-radius:4px;color:var(--ink,#111418)}.ds-leg b{font-family:var(--script,'Courier Prime','Courier New',monospace);font-weight:700}"
+    },
+    {
+      "name": "Citation Card",
+      "kind": "card",
+      "refersTo": "citation",
+      "description": "Verbatim quote tinted by its source meeting; opens the transcript drawer.",
+      "html": "<button class=\"ds-cite\" style=\"background:var(--rev-c,#f7dbe7)\"><span class=\"ds-where\">ES2002c · turn 88 · B</span><q>we should go with the kinetic one after all</q></button>",
+      "css": ".ds-cite{font-family:var(--sans,'Segoe UI',system-ui,sans-serif);display:block;width:100%;text-align:left;border:1px solid var(--rule-strong,#b9bfc9);border-radius:4px;padding:12px 16px;color:var(--ink,#111418);cursor:pointer;transition:border-color .15s ease-out}.ds-cite:hover{border-color:var(--ink,#111418)}.ds-cite:focus-visible{outline:2px solid var(--ink,#111418);outline-offset:2px}.ds-where{font-family:var(--script,'Courier Prime','Courier New',monospace);display:block;font-size:13px;color:var(--ink-2,#3d4450);margin-bottom:4px}.ds-cite q{font-size:17px}"
+    },
+    {
+      "name": "Transcript Drawer",
+      "kind": "custom",
+      "refersTo": "transcript-drawer",
+      "description": "Source page slid over the desk; the cited turn sits on the yellow tint with an ink border.",
+      "html": "<aside class=\"ds-dr\"><div class=\"ds-dh\"><h2>ES2002c · turn 88</h2><button>Close</button></div><div class=\"ds-turn\"><span>A</span><span>So what about the battery.</span></div><div class=\"ds-turn ds-tg\"><span>B</span><span><mark>we should go with the kinetic one after all</mark></span></div></aside>",
+      "css": ".ds-dr{font-family:var(--sans,'Segoe UI',system-ui,sans-serif);width:min(680px,100%);padding-bottom:16px;background:var(--surface,#fff);border-left:1px solid var(--rule-strong,#b9bfc9);box-shadow:-16px 0 40px -16px rgba(17,20,24,.35);color:var(--ink,#111418)}.ds-dh{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:2px solid var(--ink,#111418)}.ds-dh h2{font-family:var(--script,'Courier Prime','Courier New',monospace);margin:0;font-size:18px;font-weight:700}.ds-dh button{font-family:var(--sans,'Segoe UI',system-ui,sans-serif);background:var(--surface,#fff);border:1px solid var(--control-border,#7b8391);border-radius:4px;padding:4px 12px;font-weight:600;cursor:pointer}.ds-dh button:hover{border-color:var(--ink,#111418)}.ds-turn{display:grid;grid-template-columns:78px 1fr;gap:12px;padding:8px;margin:0 16px;border-bottom:1px solid var(--rule,#dde1e7);font-size:15px}.ds-turn>span:first-child{font-family:var(--script,'Courier Prime','Courier New',monospace);font-size:13px;color:var(--ink-2,#3d4450)}.ds-tg{background:var(--rev-d,#f6eeb4);border:1px solid var(--ink,#111418);border-radius:4px}.ds-turn mark{background:var(--mark,#f6e08a);color:inherit}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Revision Pages",
+    "overview": "A team's memory reads like a film or stage script under revision. Each meeting in a series issues a revision on its own page colour (a white, b blue, c pink, d yellow, then e green and f goldenrod), so what changed and when reads from colour before a word is read. White script pages lie on a cool grey desk; a 2px ink rule runs under the header and under every slug line, the way it would on a printed page.\n\nThe system is an operating tool, not a showcase. Density is moderate and tabular: one centred 1360px column, grid rows, tabular figures, short labelled markers. Revision red is the single loud colour and it means change. Everything people read and operate is set in the system sans; Courier Prime appears only where a script would use a typewriter face: the wordmark, slug lines (column heads, the revision header) and identifiers such as meeting ids and speaker labels.\n\nDepth is paper: pages sit on the desk with a soft two-layer shadow, and the transcript drawer slides over the desk like a source page pulled from the stack. Motion is limited to state changes and the signature re-tint, and none of it runs under reduced motion.",
+    "keyCharacteristics": [
+      "Meeting = revision = page colour; the legend, rows, citations and history all use the same six tints.",
+      "Revision red for change marks (and failure states); never decoration.",
+      "Courier Prime for wordmark, slug lines and ids only; system sans for reading and operating.",
+      "One colour for things you press: ink-filled when active or primary.",
+      "Flat 4px corners everywhere; borders carry structure, shadows carry only paper.",
+      "Every token pair is pinned for WCAG AA contrast in both colour schemes."
+    ],
+    "rules": [
+      {
+        "name": "The Page Colour Rule",
+        "body": "A meeting's tint is its identity. Anything that comes from a meeting (row, citation, chip, history line, swatch) wears that meeting's tint, and the legend is generated from the same mapping so it always matches exactly.",
+        "section": "colors"
+      },
+      {
+        "name": "The Red Means Change Rule",
+        "body": "Revision red marks a change or a failure and nothing else. It is never a brand accent, a hover colour or a heading colour.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Press Colour Rule",
+        "body": "Things you press are ink. Selected tabs, checked segments and the primary button are ink-filled with page-coloured text; there is no blue link or brand-coloured button.",
+        "section": "colors"
+      },
+      {
+        "name": "The Pinned Contrast Rule",
+        "body": "Colour tokens are hex values in `app.css` that tests/test_ui_accessibility.py parses and checks for WCAG AA in both schemes. Change a token only together with that test passing; de-emphasise with colour and dashed edges, never opacity.",
+        "section": "colors"
+      },
+      {
+        "name": "The Typewriter Is Furniture Rule",
+        "body": "Courier Prime is for the wordmark, slug lines and identifiers. Never set sentences, answers, buttons or form text in it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Figures Rule",
+        "body": "Counts, step numbers, turn numbers and the status bar use tabular numerals.",
+        "section": "typography"
+      },
+      {
+        "name": "The Paper Only Rule",
+        "body": "Shadows describe sheets of paper, not interactivity. Hover is shown by an ink border or a 6% ink wash, never by lifting.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** tint anything that comes from a meeting with that meeting's revision tint, and derive the legend from the same mapping.",
+      "**Do** keep revision red for change marks, superseded strikethroughs and failure or error states.",
+      "**Do** set the wordmark, slug lines and ids in Courier Prime, and everything people read or operate in the system sans.",
+      "**Do** put a 2px ink rule under the header and under each slug line; where the slug line is hidden, the element above it carries the rule.",
+      "**Do** keep every control edge on control-border (3:1) and every text pair at 4.5:1 in both schemes; run tests/test_ui_accessibility.py after any token change.",
+      "**Do** self-host every font and asset; no CDN and no build step.",
+      "**Do** de-emphasise with colour and dashed edges, and disable all animation and transition under reduced motion."
+    ],
+    "donts": [
+      "**Don't** use revision red as an accent, a hover colour or decoration.",
+      "**Don't** set body text, answers, buttons or form fields in Courier Prime.",
+      "**Don't** use opacity to fade content; it drops text below AA.",
+      "**Don't** put overflow clipping on segmented groups; it hides focus rings.",
+      "**Don't** show a status as a dot alone; every marker carries its word.",
+      "**Don't** add a second press colour; pressed and primary controls are ink."
+    ]
+  }
+}

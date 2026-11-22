@@ -98,7 +98,12 @@ function drawerFocusables() {
   return [...$("#drawer").querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')]
     .filter((el) => !el.disabled && !el.closest("[hidden]"));
 }
-async function openTranscript(meetingId, turnIdx, quote) {
+// Revision colours: each meeting of a series is a revision issued in its own page colour.
+const REV_NAMES = { a: "white", b: "blue", c: "pink", d: "yellow", e: "green", f: "goldenrod" };
+const revLetter = (meetingId) => String(meetingId || "").slice(-1);
+const revClass = (meetingId) => (REV_NAMES[revLetter(meetingId)] ? `rev-${revLetter(meetingId)}` : "rev-a");
+
+async function openTranscript(meetingId, turnIdx, quote, lead = null) {
   if (!drawerOpen()) lastFocus = document.activeElement;
   const drawer = $("#drawer"), body = $("#drawer-body");
   $("#drawer-title").textContent = `${meetingId} · turn ${turnIdx ?? ""}`;
@@ -114,7 +119,7 @@ async function openTranscript(meetingId, turnIdx, quote) {
   try {
     const start = Math.max(0, (turnIdx ?? 0) - 12);
     const turns = await (await api(`/api/meetings/${encodeURIComponent(meetingId)}/turns?start=${start}&end=${(turnIdx ?? 0) + 25}`)).json();
-    body.replaceChildren(...turns.map((t) => {
+    body.replaceChildren(...(lead ? [lead] : []), ...turns.map((t) => {
       const isTarget = t.idx === turnIdx;
       return h("div", { class: `turn${isTarget ? " target" : ""}`, id: isTarget ? "target-turn" : null },
         h("div", { class: "who" }, `[${t.idx}] ${t.speaker}`, h("br"), t.time),
@@ -162,12 +167,12 @@ document.addEventListener("keydown", (e) => {
 });
 
 function citeButton(c) {
-  return h("button", { class: "cite", type: "button", onclick: () => openTranscript(c.meeting_id, c.turn, c.quote) },
+  return h("button", { class: `cite ${revClass(c.meeting_id)}`, type: "button", onclick: () => openTranscript(c.meeting_id, c.turn, c.quote) },
     h("span", { class: "where" }, `${c.meeting_id} · turn ${c.turn} · Speaker ${c.speaker} · ${c.time}${c.method && c.method !== "exact" ? ` · ${c.method}` : ""}`),
     h("q", {}, c.quote));
 }
 function citeChip(c) {
-  return h("button", { class: "chip-cite", type: "button", title: c.quote, onclick: () => openTranscript(c.meeting_id, c.turn ?? c.turn_idx, c.quote) },
+  return h("button", { class: `chip-cite ${revClass(c.meeting_id)}`, type: "button", title: c.quote, onclick: () => openTranscript(c.meeting_id, c.turn ?? c.turn_idx, c.quote) },
     `${c.meeting_id}·${c.turn ?? c.turn_idx}`);
 }
 
@@ -329,7 +334,11 @@ async function loadMemory() {
   if (!team) return;
   const holder = $("#threads");
   const req = ++memRequest; // rapid arrow-key picks: only the latest response renders
-  holder.replaceChildren(h("p", { class: "working" }, "Loading memory…"));
+  // Scrubbing or filtering the same team keeps the current page mounted (busy) and
+  // swaps it when the response lands, so lines re-tint where they sit.
+  if (shownTeam !== team || !holder.querySelector(".revision-page")) {
+    holder.replaceChildren(h("p", { class: "working" }, "Loading memory…"));
+  }
   setBusy(holder, true);
   try {
     const q = asOf ? `?as_of=${asOf}` : "";
@@ -338,11 +347,17 @@ async function loadMemory() {
     segmented($("#asof"), [[null, "latest"], ...m.meetings.map((x) => [x.ordinal, x.meeting_id.slice(-1)])], asOf, (v) => { asOf = v; loadMemory(); });
     segmented($("#mem-filter"), [["all", "all"], ["changed", "changed"], ["actions", "open actions"], ["disputes", "open disputes"]], memFilter,
       (v) => { memFilter = v; loadMemory(); });
+    // Legend built from this team's meetings, so it always matches the row tints exactly.
+    $("#rev-legend").replaceChildren(...m.meetings.map((mt) =>
+      h("span", { class: `swatch ${revClass(mt.meeting_id)}` }, h("b", {}, revLetter(mt.meeting_id)), REV_NAMES[revLetter(mt.meeting_id)] || "")));
     $("#meetings-strip").replaceChildren(...m.meetings.map((mt) => {
       const roles = m.roles[mt.meeting_id] || {};
       const rtxt = Object.entries(roles).sort().map(([sp, r]) => `${sp} ${r.role.split(" ").map((w) => w[0]).join("")}${r.name ? " " + r.name : ""}`).join(" · ");
-      return h("div", { class: `meeting-card${asOf && mt.ordinal > asOf ? " future" : ""}` },
-        h("h3", {}, mt.meeting_id), h("div", { class: "roles" }, rtxt || "roles unresolved"), mt.summary || "Not extracted yet.");
+      const future = asOf && mt.ordinal > asOf;
+      // One complete line per meeting; the full summary is the card's tooltip, never a clipped sentence.
+      return h("div", { class: `meeting-card ${future ? "future" : revClass(mt.meeting_id)}`, title: mt.summary || "Not extracted yet." },
+        h("h3", {}, mt.meeting_id, h("span", {}, future ? "not yet held" : `${REV_NAMES[revLetter(mt.meeting_id)] || ""} pages`)),
+        h("div", { class: "roles" }, `${rtxt || "roles unresolved"} · ${mt.n_turns} turns`));
     }));
     const threads = m.threads.filter(threadMatches);
     const when = asOf ? `as of the end of meeting ${m.meetings.find((x) => x.ordinal === asOf)?.meeting_id ?? asOf}` : "latest state";
@@ -356,7 +371,25 @@ async function loadMemory() {
       announce(`${team}, ${when}: no threads match this filter.`);
       return;
     }
-    holder.replaceChildren(...threads.map(renderThread));
+    // What changed leads: changed lines first, then open items, then settled ones;
+    // newest revision first within each group (the server already orders by recency).
+    const rank = (t) => { const k = statusMarks(t); return k.includes("changed") ? 0 : k.includes("open") || k.includes("dispute") ? 1 : k.includes("current") ? 2 : 3; };
+    const rows = threads.map((t, i) => [rank(t), i, t]).sort((a, b) => a[0] - b[0] || a[1] - b[1]).map(([, , t]) => renderRevisionRow(t));
+    // Script pages state their revision at the top: colour, meeting, what this revision touched.
+    const atMeeting = asOf ? m.meetings.find((x) => x.ordinal === asOf) : m.meetings.at(-1);
+    const revId = atMeeting?.meeting_id || "";
+    const touched = threads.filter((t) => t.items.at(-1).meeting_id === revId).length;
+    const changedHere = threads.filter((t) => t.changed && t.items.at(-1).meeting_id === revId).length;
+    shownTeam = team;
+    holder.replaceChildren(h("div", { class: "revision-page" },
+      h("p", { class: `rev-head ${revClass(revId)}` },
+        h("b", {}, `${(REV_NAMES[revLetter(revId)] || "").toUpperCase()} REVISION · ${revId}`),
+        h("span", { class: "long" }, `${plural(touched, "line")} revised in this meeting, ${changedHere} of them changed earlier decisions · ${plural(threads.length, "line")} shown`),
+        h("span", { class: "short", "aria-hidden": "true" }, `${touched} revised · ${changedHere} changed`)),
+      h("div", { class: `slug ${revClass(revId)}`, "aria-hidden": "true" }, h("span", {}, "Topic"), h("span", {}, "Current line"), h("span", {}, "Last revised"), h("span", {}, "Status")),
+      h("ol", { class: "rev-list", "aria-label": `${team} decision threads, ${when}` }, rows.map((r) => h("li", {}, r)))));
+    lastTint = nextTint;
+    nextTint = new Map();
     announce(`${team}, ${when}: ${plural(threads.length, "thread")} shown.`);
   } catch (e) {
     if (req !== memRequest) return;
@@ -367,23 +400,63 @@ async function loadMemory() {
   }
 }
 
-function renderThread(t) {
+// The tint each row had at the previous render, so a scrub of "Revision as of"
+// can animate a line from its old revision colour to its new one.
+let lastTint = new Map();
+let nextTint = new Map();
+let shownTeam = null;
+const GONE = ["superseded", "cancelled", "rejected"];
+const MARKS = {
+  changed: ["Changed", "An earlier decision on this topic was replaced or dropped in a later meeting."],
+  open: ["Open action", "Someone committed to do this and no later meeting records it done."],
+  dispute: ["Open dispute", "A disagreement, objection or question that no later meeting settled."],
+  current: ["Current", "Decided, and not changed since."],
+  noted: ["Noted", "Recorded in the meetings; no decision on it yet."],
+};
+
+function statusMarks(t) {
+  const has = (kinds, status = "open") => t.items.some((i) => kinds.includes(i.kind) && i.status === status);
+  const keys = [];
+  if (t.changed) keys.push("changed");
+  if (has(["action_item"])) keys.push("open");
+  if (has(["disagreement", "objection", "question"])) keys.push("dispute");
+  if (!keys.length) keys.push(t.current.length ? "current" : "noted");
+  return keys;
+}
+
+function threadHistory(t) {
+  return h("div", {},
+    h("p", { class: "history-title" }, `${t.topic}: every revision`),
+    h("ol", { class: "history" }, t.items.map((i) => h("li", { class: revClass(i.meeting_id) },
+      h("span", { class: "mid" }, i.meeting_id),
+      h("span", {}, GONE.includes(i.status) ? h("s", {}, i.statement) : i.statement, ` (${i.kind.replace("_", " ")}, ${i.status})`)))));
+}
+
+function renderRevisionRow(t) {
   const current = t.items.filter((i) => t.current.includes(i.item_id));
-  const openActions = t.items.filter((i) => i.kind === "action_item" && i.status === "open").length;
-  const flags = [];
-  if (t.changed) flags.push(badge("changed", "superseded"));
-  if (openActions) flags.push(badge(`${openActions} open action${openActions > 1 ? "s" : ""}`, "open"));
-  const now = current.length ? `Now: ${current.map((i) => i.statement).join(" / ")}` : `${t.items.length} item${t.items.length > 1 ? "s" : ""}`;
-  return h("details", { class: "thread" },
-    h("summary", {}, h("div", {}, h("div", { class: "topic" }, t.topic), h("div", { class: "now" }, now)), h("div", { class: "flags" }, flags)),
-    h("ol", { class: "timeline" }, t.items.map((i) => h("li", {},
-      h("div", { class: "mid" }, i.meeting_id),
-      h("div", {},
-        h("div", {}, badge(i.kind.replace("_", " "), "kind"), " ", badge(i.status, i.status), i.inferred ? h("span", { class: "by" }, " inferred") : null),
-        h("p", { class: `stmt${["superseded", "cancelled", "rejected"].includes(i.status) ? " struck" : ""}` }, i.statement,
-          ...(i.evidence || []).slice(0, 2).map((ev) => citeChip({ ...ev, turn: ev.turn_idx }))),
-        i.status_by?.length ? h("div", { class: "by" }, `${i.status} by ${i.status_by.join(", ")}`) : null,
-      )))));
+  const latest = t.items.at(-1);
+  const lead = current.at(-1) || latest;
+  const was = t.items.filter((i) => ["decision", "proposal"].includes(i.kind) && GONE.includes(i.status)).reverse().slice(0, 2);
+  const ev = (lead.evidence && lead.evidence[0]) || t.items.flatMap((i) => i.evidence || []).at(-1);
+  const tint = revClass(latest.meeting_id);
+  const prev = lastTint.get(t.thread_id);
+  nextTint.set(t.thread_id, tint);
+  const marks = statusMarks(t);
+  const row = h("button", {
+    type: "button", class: `rev-row ${tint}${prev && prev !== tint ? " retint" : ""}`,
+    style: prev && prev !== tint ? `--from: var(--${prev})` : null,
+    disabled: ev ? null : true,
+    onclick: ev ? () => openTranscript(ev.meeting_id, ev.turn_idx, ev.quote, threadHistory(t)) : null,
+  },
+    h("span", { class: "topic" }, t.topic),
+    h("span", {},
+      h("span", { class: "line" }, current.length ? current.map((i) => i.statement).join(" ") : lead.statement),
+      was.length ? h("ul", { class: "was" }, was.map((i) => h("li", {},
+        h("b", { class: `rev-chip ${revClass(i.meeting_id)}` }, `Was, ${revLetter(i.meeting_id)} ${REV_NAMES[revLetter(i.meeting_id)] || ""}`), " ",
+        h("s", {}, i.statement)))) : null),
+    h("span", { class: "when" }, latest.meeting_id, ev ? h("small", {}, `turn ${ev.turn_idx}`) : null),
+    h("span", { class: "marks" }, marks.map((k) => h("span", { class: `mark-label ${k}`, title: MARKS[k][1] }, MARKS[k][0]))));
+  return row;
 }
 
 // ---------- Brief ----------

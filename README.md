@@ -4,6 +4,10 @@ An agent that turns meeting transcripts into **time-aware memory** you can quest
 
 Built for the Catalist Agentic AI Intern build test (138 AMI meetings, 676,745 words, 25 questions, TS3012 brief).
 
+![Memory view for team TS3012: each decision thread is a revision line tinted by the meeting that last changed it (b blue, c pink, d yellow); speech recognition shows its current decision with the struck-through earlier versions from meetings c and b.](docs/images/memory-view.png)
+
+*The Memory view: every line is tinted by the meeting that last revised it, earlier versions are struck through with the meeting that changed them, and clicking a line opens the exact transcript turn.*
+
 - **How it works:** [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · **one-page write-up:** [docs/WRITEUP.md](docs/WRITEUP.md)
 - **Model vs code, and why:** [docs/DECISION_LOG.md](docs/DECISION_LOG.md)
 - **Results and failures:** [docs/EVALUATION_REPORT.md](docs/EVALUATION_REPORT.md) · **status:** [docs/EXECUTION_STATUS.md](docs/EXECUTION_STATUS.md)

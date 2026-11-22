@@ -145,7 +145,7 @@ def test_ingest_builds_time_aware_memory(settings):
 def test_ingest_failure_blocks_later_meetings(settings):
     _write_corpus(settings)
     store = Store(settings.db_path)
-    llm = LLM(settings, store, backend=FakeBackend([LLMError("boom", retryable=True)]))
+    llm = LLM(settings, store, backend=FakeBackend([LLMError("boom", retryable=False)]))
     rep = run_ingest(settings, store, llm, on_event=lambda s: None)
     assert "ZZ0001a" in rep.extraction_failed and rep.blocked == ["ZZ0001b"] and not rep.extracted
     assert store.query("SELECT ok FROM llm_calls")[0]["ok"] == 0
@@ -218,3 +218,15 @@ def test_linked_item_is_refiled_into_target_thread(store, meetings):
          "evidence": [{"turn": 3, "quote": "we drop the solar cells and use a rechargeable battery"}]}]}, meetings[1], store)
     assert b.items[0]["thread_id"] == "ZZ0001a-T01" and b.new_threads == [] and b.touched_threads == ["ZZ0001a-T01"]
     assert b.stats["rethreaded"] == 1
+
+
+def test_retryable_error_backs_off_then_succeeds(settings, monkeypatch):
+    import meeting_memory.ingest as ing
+
+    _write_corpus(settings)
+    store = Store(settings.db_path)
+    waits = []
+    monkeypatch.setattr(ing.time, "sleep", lambda s: waits.append(s))
+    llm = LLM(settings, store, backend=FakeBackend([LLMError("Rate limited", retryable=True), _fake_extractor, _fake_extractor]))
+    rep = run_ingest(settings, store, llm, on_event=lambda s: None)
+    assert sorted(rep.extracted) == ["ZZ0001a", "ZZ0001b"] and waits == [30]

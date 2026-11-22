@@ -122,8 +122,38 @@ def _team_series(meetings: list[Meeting]) -> dict[str, list[Meeting]]:
     return {t: sorted(ms, key=lambda m: m.ordinal) for t, ms in by_team.items()}
 
 
+RETRY_WAITS_S = (30, 60, 120)  # on top of the SDK's own short retries; rate limits need minutes, not seconds
+
+
+def _extract_with_backoff(m: Meeting, settings: Settings, store: Store, llm: LLM, on_event: Callable[[str], None],
+                          sleep: Callable[[float], None] | None = None):
+    sleep = sleep or time.sleep  # resolved at call time (testable)
+    for attempt in range(len(RETRY_WAITS_S) + 1):
+        try:
+            return _extract_once(m, settings, store, llm, on_event)
+        except LLMError as e:
+            if not e.retryable or attempt == len(RETRY_WAITS_S) or isinstance(e, LLMRefusal):
+                raise
+            wait = RETRY_WAITS_S[attempt]
+            on_event(f"{m.meeting_id}: {e} - retrying in {wait}s (attempt {attempt + 2})")
+            sleep(wait)
+
+
+def _extract_once(m: Meeting, settings: Settings, store: Store, llm: LLM, on_event: Callable[[str], None]):
+    try:
+        return extract_meeting(m, store, llm, settings.extract_model, settings.extract_effort)
+    except LLMRefusal:
+        if settings.agent_model == settings.extract_model:
+            raise
+        # Client-side fallback: retry this one meeting on the agent model.
+        on_event(f"{m.meeting_id}: {settings.extract_model} declined; retrying on {settings.agent_model}")
+        res = extract_meeting(m, store, llm, settings.agent_model, settings.extract_effort)
+        res.stats["refusal_fallbacks"] = 1
+        return res
+
+
 def _extract_team(team: str, series: list[Meeting], settings: Settings, store: Store, llm: LLM, force: bool,
-                  on_event: Callable[[str], None]) -> list[tuple[str, str, object]]:
+                  on_event: Callable[[str], None], sleep: Callable[[float], None] | None = None) -> list[tuple[str, str, object]]:
     """Sequential within a team. Returns [(meeting_id, status, payload)]."""
     out = []
     dirty = force
@@ -138,15 +168,7 @@ def _extract_team(team: str, series: list[Meeting], settings: Settings, store: S
         elif force and m is series[0]:
             store.clear_team_memory_from(team, m.ordinal)
         try:
-            try:
-                res = extract_meeting(m, store, llm, settings.extract_model, settings.extract_effort)
-            except LLMRefusal:
-                if settings.agent_model == settings.extract_model:
-                    raise
-                # Client-side fallback: retry this one meeting on the agent model.
-                on_event(f"{m.meeting_id}: {settings.extract_model} declined; retrying on {settings.agent_model}")
-                res = extract_meeting(m, store, llm, settings.agent_model, settings.extract_effort)
-                res.stats["refusal_fallbacks"] = 1
+            res = _extract_with_backoff(m, settings, store, llm, on_event, sleep)
             on_event(f"extracted {m.meeting_id}: {res.stats['items_kept']} items")
             out.append((m.meeting_id, "ok", res.stats))
         except LLMError as e:

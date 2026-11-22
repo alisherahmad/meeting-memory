@@ -135,6 +135,7 @@ button.ghost { background: none; border: 1px solid var(--control-border); border
 .segmented button:first-child { border-radius: calc(var(--r) - 1px) 0 0 calc(var(--r) - 1px); }
 .segmented button:last-child { border-right: 0; border-radius: 0 calc(var(--r) - 1px) calc(var(--r) - 1px) 0; }
 .segmented button:focus-visible { z-index: 1; }
+.segmented:empty { border-color: transparent; }
 .segmented button[aria-checked="true"] { background: var(--ink); color: var(--paper); }
 .meetings-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--s3); margin-bottom: var(--s5); }
 .meeting-card { border-top: 2px solid var(--ink); padding-top: var(--s2); font-size: 13px; color: var(--ink-2); }
@@ -176,6 +177,7 @@ button.ghost { background: none; border: 1px solid var(--control-border); border
 .drawer-head { display: flex; justify-content: space-between; align-items: center; padding: var(--s4) var(--s5); border-bottom: 1px solid var(--rule); }
 .drawer-head h2 { font-size: 18px; font-family: var(--mono); }
 .drawer-body { overflow: auto; padding: var(--s3) var(--s5) var(--s7); }
+.drawer-body:focus-visible { outline-offset: -3px; }
 .turn { display: grid; grid-template-columns: 70px 1fr; gap: var(--s3); padding: var(--s2) 0; border-bottom: 1px solid var(--rule); font-size: 14px; }
 .turn .who { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
 .turn.target { background: var(--paper); box-shadow: inset 3px 0 0 var(--accent); padding-left: var(--s2); }

@@ -68,18 +68,49 @@ async function loadStatus() {
       h("div", {}, h("dt", {}, "Search"), h("dd", {}, s.chunks_embedded ? "BM25 + embeddings" : "BM25 only")),
       h("div", {}, h("dt", {}, "Model"), h("dd", { class: s.llm_available ? "" : "warn" }, s.llm_available ? s.agent_model : "no API key")),
     );
-  } catch (e) { $("#status").textContent = `Status unavailable: ${e.message}`; }
+  } catch (e) {
+    $("#status").textContent = `Status unavailable: ${e.message}`;
+    announce(`Status unavailable: ${e.message}`, { urgent: true });
+  }
 }
 
-// ---------- Transcript drawer ----------
+// ---------- Announcements ----------
+// One polite region (#announcer) for outcomes, one assertive region (#alerter)
+// for failures. Results panels are not live regions: they would read the whole
+// answer, every citation and the cost line in one go.
+function announce(msg, { urgent = false } = {}) {
+  const el = $(urgent ? "#alerter" : "#announcer");
+  el.textContent = "";
+  // Clear, then set after a tick, so a repeat of the same message is re-announced.
+  setTimeout(() => { el.textContent = msg; }, 60);
+}
+const setBusy = (el, busy) => el.setAttribute("aria-busy", String(busy));
+const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
+
+// ---------- Transcript drawer (modal dialog) ----------
+const BACKGROUND = ["header.masthead", "nav.tabs", "main"];
 let lastFocus = null;
+const drawerOpen = () => $("#drawer").getAttribute("aria-hidden") === "false";
+function setBackgroundInert(on) {
+  for (const sel of BACKGROUND) $(sel).toggleAttribute("inert", on);
+}
+function drawerFocusables() {
+  return [...$("#drawer").querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')]
+    .filter((el) => !el.disabled && !el.closest("[hidden]"));
+}
 async function openTranscript(meetingId, turnIdx, quote) {
-  lastFocus = document.activeElement;
+  if (!drawerOpen()) lastFocus = document.activeElement;
   const drawer = $("#drawer"), body = $("#drawer-body");
   $("#drawer-title").textContent = `${meetingId} · turn ${turnIdx ?? ""}`;
   body.replaceChildren(h("p", { class: "working" }, "Loading transcript…"));
+  setBusy(body, true);
   drawer.setAttribute("aria-hidden", "false");
   $("#scrim").hidden = false;
+  setBackgroundInert(true);
+  // Focus moves into the dialog at once (the trigger is now inert); the dialog
+  // name, meeting and turn, is read on entry. The body is focusable so the
+  // transcript can be scrolled from the keyboard.
+  body.focus();
   try {
     const start = Math.max(0, (turnIdx ?? 0) - 12);
     const turns = await (await api(`/api/meetings/${encodeURIComponent(meetingId)}/turns?start=${start}&end=${(turnIdx ?? 0) + 25}`)).json();
@@ -93,8 +124,10 @@ async function openTranscript(meetingId, turnIdx, quote) {
     if (target) target.scrollIntoView({ block: "center" });
   } catch (e) {
     body.replaceChildren(h("p", { class: "notice" }, `Could not load transcript: ${e.message}`));
+    announce(`Could not load transcript: ${e.message}`, { urgent: true });
+  } finally {
+    setBusy(body, false);
   }
-  body.focus();
 }
 function highlight(text, quote) {
   const i = text.toLowerCase().indexOf(quote.toLowerCase());
@@ -104,13 +137,29 @@ function highlight(text, quote) {
   return frag;
 }
 function closeDrawer() {
+  if (!drawerOpen()) return;
   $("#drawer").setAttribute("aria-hidden", "true");
   $("#scrim").hidden = true;
-  if (lastFocus) lastFocus.focus();
+  setBackgroundInert(false);
+  // Return focus to the citation that opened the drawer; if it is gone, to the current tab.
+  const back = lastFocus && document.contains(lastFocus) ? lastFocus : $('.tabs [aria-selected="true"]');
+  lastFocus = null;
+  back?.focus();
 }
 $("#drawer-close").addEventListener("click", closeDrawer);
 $("#scrim").addEventListener("click", closeDrawer);
-document.addEventListener("keydown", (e) => { if (e.key === "Escape" && $("#drawer").getAttribute("aria-hidden") === "false") closeDrawer(); });
+document.addEventListener("keydown", (e) => {
+  if (!drawerOpen()) return;
+  if (e.key === "Escape") { e.preventDefault(); closeDrawer(); return; }
+  if (e.key !== "Tab") return;
+  // Focus trap: Tab and Shift+Tab cycle inside the dialog.
+  const items = drawerFocusables();
+  if (!items.length) { e.preventDefault(); return; }
+  const first = items[0], last = items.at(-1), active = document.activeElement;
+  if (!$("#drawer").contains(active)) { e.preventDefault(); (e.shiftKey ? last : first).focus(); }
+  else if (e.shiftKey && active === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus(); }
+});
 
 function citeButton(c) {
   return h("button", { class: "cite", type: "button", onclick: () => openTranscript(c.meeting_id, c.turn, c.quote) },
@@ -164,19 +213,40 @@ function renderAnswer(r) {
   a.replaceChildren(...nodes);
 }
 
+function clearQuestionError() {
+  $("#q-error").hidden = true;
+  $("#q").removeAttribute("aria-invalid");
+  $("#q").removeAttribute("aria-describedby");
+}
+$("#q").addEventListener("input", () => { if ($("#q").getAttribute("aria-invalid")) clearQuestionError(); });
+
+// Busy buttons use aria-disabled, not disabled, so keyboard focus stays on them.
+function setButtonBusy(btn, busy, label) {
+  btn.setAttribute("aria-disabled", String(busy));
+  btn.textContent = label;
+}
+const isBusy = (btn) => btn.getAttribute("aria-disabled") === "true";
+
 $("#ask-form").addEventListener("submit", async (e) => {
   e.preventDefault();
+  const btn = $("#ask-btn");
+  if (isBusy(btn)) return;
   const q = $("#q").value.trim();
   const err = $("#q-error");
   if (q.length < 5) {
+    // Focus moves to the field, which reads its label, invalid state and this description.
     err.textContent = "Write a question of at least a few words."; err.hidden = false;
-    $("#q").setAttribute("aria-invalid", "true"); $("#q").focus(); return;
+    $("#q").setAttribute("aria-invalid", "true");
+    $("#q").setAttribute("aria-describedby", "q-error");
+    $("#q").focus(); return;
   }
-  err.hidden = true; $("#q").removeAttribute("aria-invalid");
-  const btn = $("#ask-btn");
-  btn.disabled = true; btn.textContent = "Working…";
+  clearQuestionError();
+  setButtonBusy(btn, true, "Working…");
   $("#trace").replaceChildren();
   $("#answer").replaceChildren(h("p", { class: "working" }, "Retrieving and verifying. Each step below is a real tool call."));
+  setBusy($("#answer"), true);
+  announce("Working on your question. Searching transcripts and verifying quotes.");
+  let settled = false;
   try {
     const res = await api("/api/ask", { method: "POST", body: JSON.stringify({ question: q, team: $("#ask-team").value || null }) });
     const reader = res.body.getReader();
@@ -194,26 +264,56 @@ $("#ask-form").addEventListener("submit", async (e) => {
         if (!ev || !data) continue;
         const payload = JSON.parse(data);
         if (ev === "trace") addTrace(payload);
-        else if (ev === "result") renderAnswer(payload);
-        else if (ev === "error") $("#answer").replaceChildren(badge("failed"), h("p", { class: "notice" }, payload.message));
+        else if (ev === "result") { renderAnswer(payload); announceAnswer(payload); settled = true; }
+        else if (ev === "error") {
+          $("#answer").replaceChildren(badge("failed"), h("p", { class: "notice" }, payload.message));
+          announce(`Question failed: ${payload.message}`, { urgent: true }); settled = true;
+        }
       }
     }
+    if (!settled) announce("The answer stream ended without a result.", { urgent: true });
   } catch (ex) {
     $("#answer").replaceChildren(badge("failed"), h("p", { class: "notice" }, ex.message));
+    announce(`Question failed: ${ex.message}`, { urgent: true });
   } finally {
-    btn.disabled = false; btn.textContent = "Ask"; loadStatus();
+    setBusy($("#answer"), false);
+    setButtonBusy(btn, false, "Ask"); loadStatus();
   }
 });
+
+// A short outcome line; the answer itself is read when the user moves to it.
+function announceAnswer(r) {
+  const state = String(r.state || "").replace(/_/g, " ");
+  const n = r.citations?.length || 0;
+  if (r.answer) announce(`Answer ready, ${state}, ${plural(n, "verified citation")}.`);
+  else announce(`No verified answer, ${state}. ${r.error || ""}`.trim(), { urgent: true });
+}
 
 // ---------- Memory ----------
 let memFilter = "all";
 let asOf = null;
 
+// Radio group pattern: one Tab stop (the checked option); arrow keys, Home and
+// End move the selection. Focus survives the re-render that follows a pick.
+const RADIO_KEYS = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1, Home: "first", End: "last" };
 function segmented(container, options, current, onPick) {
-  container.replaceChildren(...options.map(([value, label]) => h("button", {
-    type: "button", role: "radio", "aria-checked": String(value === current),
+  const hadFocus = container.contains(document.activeElement);
+  const buttons = options.map(([value, label], i) => h("button", {
+    type: "button", role: "radio", "aria-checked": String(value === current), tabindex: value === current ? "0" : "-1",
     onclick: () => onPick(value),
-  }, label)));
+    onkeydown: (e) => {
+      const k = RADIO_KEYS[e.key];
+      if (k === undefined) return;
+      e.preventDefault();
+      const j = k === "first" ? 0 : k === "last" ? buttons.length - 1 : (i + k + buttons.length) % buttons.length;
+      buttons.forEach((b, n) => { b.setAttribute("aria-checked", String(n === j)); b.tabIndex = n === j ? 0 : -1; });
+      buttons[j].focus();
+      onPick(options[j][0]);
+    },
+  }, label));
+  if (buttons.length && !buttons.some((b) => b.tabIndex === 0)) buttons[0].tabIndex = 0;
+  container.replaceChildren(...buttons);
+  if (hadFocus) buttons.find((b) => b.tabIndex === 0)?.focus();
 }
 
 function threadMatches(t) {
@@ -223,14 +323,18 @@ function threadMatches(t) {
   return true;
 }
 
+let memRequest = 0;
 async function loadMemory() {
   const team = $("#mem-team").value;
   if (!team) return;
   const holder = $("#threads");
+  const req = ++memRequest; // rapid arrow-key picks: only the latest response renders
   holder.replaceChildren(h("p", { class: "working" }, "Loading memory…"));
+  setBusy(holder, true);
   try {
     const q = asOf ? `?as_of=${asOf}` : "";
     const m = await (await api(`/api/teams/${team}/memory${q}`)).json();
+    if (req !== memRequest) return;
     segmented($("#asof"), [[null, "latest"], ...m.meetings.map((x) => [x.ordinal, x.meeting_id.slice(-1)])], asOf, (v) => { asOf = v; loadMemory(); });
     segmented($("#mem-filter"), [["all", "all"], ["changed", "changed"], ["actions", "open actions"], ["disputes", "open disputes"]], memFilter,
       (v) => { memFilter = v; loadMemory(); });
@@ -241,14 +345,25 @@ async function loadMemory() {
         h("h3", {}, mt.meeting_id), h("div", { class: "roles" }, rtxt || "roles unresolved"), mt.summary || "Not extracted yet.");
     }));
     const threads = m.threads.filter(threadMatches);
+    const when = asOf ? `as of the end of meeting ${m.meetings.find((x) => x.ordinal === asOf)?.meeting_id ?? asOf}` : "latest state";
     if (!m.threads.length) {
       holder.replaceChildren(h("p", { class: "notice" }, "No extracted memory for this team yet. Run: python -m meeting_memory ingest"));
+      announce(`No extracted memory for ${team} yet.`);
       return;
     }
-    if (!threads.length) { holder.replaceChildren(h("p", { class: "notice" }, "No threads match this filter at this point in time.")); return; }
+    if (!threads.length) {
+      holder.replaceChildren(h("p", { class: "notice" }, "No threads match this filter at this point in time."));
+      announce(`${team}, ${when}: no threads match this filter.`);
+      return;
+    }
     holder.replaceChildren(...threads.map(renderThread));
+    announce(`${team}, ${when}: ${plural(threads.length, "thread")} shown.`);
   } catch (e) {
+    if (req !== memRequest) return;
     holder.replaceChildren(h("p", { class: "notice" }, `Could not load memory: ${e.message}`));
+    announce(`Could not load memory: ${e.message}`, { urgent: true });
+  } finally {
+    if (req === memRequest) setBusy(holder, false);
   }
 }
 
@@ -282,12 +397,18 @@ function fillMeetings(team) {
 $("#brief-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const btn = $("#brief-btn"), out = $("#brief");
-  btn.disabled = true; btn.textContent = "Writing…";
+  if (isBusy(btn)) return;
+  setButtonBusy(btn, true, "Writing…");
   out.replaceChildren(h("p", { class: "working" }, $("#brief-llm").checked ? "Selecting facts from memory, then writing prose with the model…" : "Selecting facts from memory…"));
+  setBusy(out, true);
+  announce(`Writing the brief for ${$("#brief-before").value || "the next meeting"}.`);
   try {
     const b = await (await api("/api/brief", { method: "POST", body: JSON.stringify({ team: $("#brief-team").value, before: $("#brief-before").value || null, use_llm: $("#brief-llm").checked }) })).json();
     const titles = { decided: "What has been decided", changed: "What changed along the way", open_actions: "Open actions and owners", open_disagreements: "Disagreements and questions still open" };
-    const copy = h("button", { class: "ghost", type: "button", onclick: async () => { await navigator.clipboard.writeText(b.text); copy.textContent = "Copied"; } }, "Copy as text");
+    const copy = h("button", { class: "ghost", type: "button", onclick: async () => {
+      try { await navigator.clipboard.writeText(b.text); copy.textContent = "Copied"; announce("Brief copied to the clipboard."); }
+      catch (err) { announce(`Could not copy: ${err.message}`, { urgent: true }); }
+    } }, "Copy as text");
     out.replaceChildren(
       h("h2", {}, `Before ${b.before_meeting}`),
       h("p", { class: "basis" }, `Based on ${b.based_on.join(", ")} · ${b.mode === "llm" ? "prose by model, facts and quotes by code" : "deterministic"}${b.dropped_points ? ` · ${b.dropped_points} uncited point(s) dropped` : ""}`),
@@ -298,9 +419,12 @@ $("#brief-form").addEventListener("submit", async (e) => {
       ]),
       h("p", {}, copy),
     );
+    const points = Object.keys(titles).reduce((n, k) => n + (b.sections[k]?.length || 0), 0);
+    announce(`Brief ready for ${b.before_meeting}: ${plural(points, "cited point")}.`);
   } catch (ex) {
     out.replaceChildren(h("p", { class: "notice" }, `Could not write the brief: ${ex.message}`));
-  } finally { btn.disabled = false; btn.textContent = "Write brief"; }
+    announce(`Could not write the brief: ${ex.message}`, { urgent: true });
+  } finally { setBusy(out, false); setButtonBusy(btn, false, "Write brief"); }
 });
 
 // ---------- Boot ----------
@@ -317,7 +441,10 @@ $("#brief-form").addEventListener("submit", async (e) => {
     fillMeetings("TS3012");
     $("#mem-team").addEventListener("change", () => { asOf = null; loadMemory(); });
     $("#brief-team").addEventListener("change", (e) => fillMeetings(e.target.value));
-  } catch (e) { $("#status").textContent = `Server unreachable: ${e.message}`; }
+  } catch (e) {
+    $("#status").textContent = `Server unreachable: ${e.message}`;
+    announce(`Server unreachable: ${e.message}`, { urgent: true });
+  }
   const initial = location.hash.slice(1);
   selectTab(tabs.includes(initial) ? initial : "ask");
   window.addEventListener("hashchange", () => {

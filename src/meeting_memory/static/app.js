@@ -320,4 +320,8 @@ $("#brief-form").addEventListener("submit", async (e) => {
   } catch (e) { $("#status").textContent = `Server unreachable: ${e.message}`; }
   const initial = location.hash.slice(1);
   selectTab(tabs.includes(initial) ? initial : "ask");
+  window.addEventListener("hashchange", () => {
+    const t = location.hash.slice(1);
+    if (tabs.includes(t)) selectTab(t);
+  });
 })();
